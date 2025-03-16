@@ -18,4 +18,9 @@ describe('App Tests', () => {
   })
 })
 
-
+describe('App Tests', () => {
+  it.todo('Should render App component correctly')
+  it.todo('Should render a navigation menu')
+  it.todo('Should render the home page initially')
+  it.todo('Should contain a footer component')
+})
