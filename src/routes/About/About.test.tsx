@@ -1,4 +1,13 @@
+import { screen, render } from "@testing-library/react";
+import { About } from "./About";
+
 describe('Home Tests', () => {
-  it.todo('Should render about component correctly');
-  it.todo('Should contain a heading')
-})
+  beforeEach(() => {
+    render(<About />)
+  })
+
+  it('Should contain a heading', async () => {
+    const heading = await screen.findByRole('heading')
+    expect(heading).toBeDefined()
+  });
+});
