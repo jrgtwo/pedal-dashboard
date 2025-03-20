@@ -1,7 +1,7 @@
 import { screen, render } from "@testing-library/react";
 import { About } from "./About";
 
-describe('Home Tests', () => {
+describe('About Tests', () => {
   beforeEach(() => {
     render(<About />)
   })
