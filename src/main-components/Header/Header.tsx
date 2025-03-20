@@ -1,8 +1,8 @@
 const Header = () => {
 
   return (
-    <header>
-      <h2>Pedal Dashboard</h2>
+    <header role="header">
+      <h1>PedalDashboard.com</h1>
     </header>
   )
 }

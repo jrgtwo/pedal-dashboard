@@ -7,20 +7,23 @@ describe('App Tests', () => {
     render(<App />)
   })
 
-  it('Should Render the header correctly', async () => {
-    const heading = await screen.findByRole('heading')
-    expect(heading).toHaveTextContent('Home')
+  it('Should render Header component correctly', async () => {
+    const header = await screen.findByRole('header')
+    expect(header).toBeDefined()
   })
 
-  it('Should render a link to About page', async () => {
-    const link = await screen.findByText(/about/i)
-    expect(link).toBeDefined()
+  it('Should render a navigation menu', async () => {
+    const navigation = await screen.findByRole('navigation')
+    expect(navigation).toBeDefined()
   })
-})
 
-describe('App Tests', () => {
-  it.todo('Should render App component correctly')
-  it.todo('Should render a navigation menu')
-  it.todo('Should render the home page initially')
-  it.todo('Should contain a footer component')
+  it('Should render the home page initially', async () => {
+    const headings = await screen.findAllByRole('heading')
+    expect(headings[1]).toHaveTextContent(/welcome/i)
+  })
+
+  it('Should contain a footer component', async () => {
+    const footer = await screen.findByRole('footer')
+    expect(footer).toBeDefined()
+  })
 })

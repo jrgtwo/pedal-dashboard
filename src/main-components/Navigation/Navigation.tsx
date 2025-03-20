@@ -4,8 +4,10 @@ const Navigation = () => {
 
   return (
     <nav>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
+      <ol>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+      </ol>
     </nav>
   )
 }
