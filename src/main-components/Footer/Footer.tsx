@@ -1,10 +1,11 @@
-import type { FooterProps } from "./Footer.types"
-const Footer = (props: FooterProps) => {
-  console.log(props)
+import { Link } from 'react-router';
+
+const Footer = () => {
+
   return (
-    <>
-      <h2>Footer</h2>
-    </>
+    <footer>
+      <Link to="/">PedalDashboard.com</Link>
+    </footer>
   )
 }
 

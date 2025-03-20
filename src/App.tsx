@@ -1,25 +1,20 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router'
+import { BrowserRouter, Routes, Route } from 'react-router'
+import { Header } from './main-components/Header/Header'
+import { Footer } from './main-components/Footer/Footer'
+import { Home } from './routes/Home/Home'
+import { About } from './routes/About/About'
+import { Navigation } from './main-components/Navigation/Navigation'
 
 function App() {
-  const [state] = useState(true)
-
   return (
     <BrowserRouter>
+      <Header />
+      <Navigation />
       <Routes>
-        <Route index element={(
-          <>
-            <h2>Home - state= {`${state}`}</h2>
-            <Link to="/about">About</Link>
-          </>
-        )} />
-        <Route path="/about" element={(
-          <>
-            <h2>About</h2>
-            <Link to="/">Home</Link>
-          </>
-        )} />
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

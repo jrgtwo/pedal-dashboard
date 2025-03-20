@@ -1,12 +1,9 @@
-import type { HomeProps } from "./Home.types";
-
-const Home = (props: HomeProps) => {
-  console.log(props)
+const Home = () => {
 
   return (
-    <>
-      <h2>Home</h2>
-    </>
+    <section>
+      <h2>Welcome to PedalDashboard.com</h2>
+    </section>
   )
 }
 

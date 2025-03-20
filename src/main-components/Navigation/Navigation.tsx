@@ -1,12 +1,12 @@
-import type { NavigationProps } from "./Navigation.types";
+import { Link } from 'react-router'
 
-const Navigation = (props: NavigationProps) => {
-  console.log(props)
+const Navigation = () => {
 
   return (
-    <>
-      <h2>Navigation</h2>
-    </>
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+    </nav>
   )
 }
 

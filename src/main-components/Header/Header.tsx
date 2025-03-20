@@ -1,12 +1,9 @@
-import type { HeaderProps } from "./Header.types";
-
-const Header = (props: HeaderProps) => {
-  console.log(props)
+const Header = () => {
 
   return (
-    <>
-      <h2>Header Component</h2>
-    </>
+    <header>
+      <h2>Pedal Dashboard</h2>
+    </header>
   )
 }
 
