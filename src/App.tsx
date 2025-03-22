@@ -7,15 +7,18 @@ import { Navigation } from './main-components/Navigation/Navigation'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Navigation />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <section role="app"
+      className="flex flex-col min-h-screen max-w-3xl m-auto">
+      <BrowserRouter>
+        <Header />
+        <Navigation />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </section>
   )
 }
 
