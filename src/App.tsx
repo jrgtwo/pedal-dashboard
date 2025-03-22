@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { Header } from './main-components/Header/Header'
+import { Navigation } from './main-components/Navigation/Navigation'
 import { Footer } from './main-components/Footer/Footer'
 import { Home } from './routes/Home/Home'
 import { About } from './routes/About/About'
-import { Navigation } from './main-components/Navigation/Navigation'
+import { Create } from './routes/Create/Create'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Navigation />
         <Routes>
           <Route index element={<Home />} />
+          <Route path="/create" element={<Create />} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer />

@@ -7,7 +7,7 @@ describe('Create Tests', () => {
   })
 
   it('Should render Create component correctly', async () => {
-    const heading = await screen.findByRole('heading')
-    expect(heading).toBeDefined()
+    const heading = await screen.findAllByRole('heading')
+    expect(heading[0].tagName).toBe('H2')
   })
 })
