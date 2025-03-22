@@ -8,7 +8,7 @@ import { Navigation } from './main-components/Navigation/Navigation'
 function App() {
   return (
     <section role="app"
-      className="flex flex-col min-h-screen max-w-3xl m-auto">
+      className="flex flex-col min-h-screen max-w-4xl m-auto">
       <BrowserRouter>
         <Header />
         <Navigation />
