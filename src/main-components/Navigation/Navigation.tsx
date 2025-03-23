@@ -4,7 +4,7 @@ const Navigation = () => {
 
   return (
     <nav role="navigation"
-      className="mt-5 mb-15">
+      className="mt-5 mb-5 border-b border-zinc-300">
       <ol
         className="flex flex-row justify-self-end gap-4">
         <li
