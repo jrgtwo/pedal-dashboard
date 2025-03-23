@@ -14,12 +14,15 @@ const Sandbox = () => {
   const [sandboxHeight, setSandboxHeight] = useState(0)
   const [currPedalWidth, setCurrPedalWidth] = useState(0)
   const [currPedalHeight, setCurrPedalHeight] = useState(0)
+  const [currPedalXOffset, setCurrPedalXOffset] = useState(0)
+  const [currPedalYOffset, setCurrPedalYOffset] = useState(0)
 
   const handleMouseDown = (event: MouseEvent) => {
     event.preventDefault()
 
     if (
       event.target instanceof HTMLElement
+      && event.currentTarget instanceof HTMLElement
       && event.target.classList.contains('draggable')
     ) {
       setSandboxTop(event.currentTarget.offsetTop)
@@ -28,6 +31,9 @@ const Sandbox = () => {
       setSandboxHeight(event.currentTarget.clientHeight)
       setCurrPedalHeight(event.target.clientHeight)
       setCurrPedalWidth(event.target.clientWidth)
+      setCurrPedalXOffset(event.clientX - event.currentTarget.offsetLeft - event.target.offsetLeft)
+      setCurrPedalYOffset(event.clientY - event.currentTarget.offsetTop - event.target.offsetTop)
+
       setIsDragging(true)
     }
   }
@@ -39,8 +45,8 @@ const Sandbox = () => {
 
   const handleMouseMove = (event: MouseEvent) => {
     if (isDragging) {
-      setX(keepInBounds(event.clientX - sandboxLeft, sandboxWidth - currPedalWidth))
-      setY(keepInBounds(event.clientY - sandboxTop, sandboxHeight - currPedalHeight))
+      setX(keepInBounds(event.clientX - sandboxLeft - currPedalXOffset, sandboxWidth - currPedalWidth))
+      setY(keepInBounds(event.clientY - sandboxTop - currPedalYOffset, sandboxHeight - currPedalHeight))
     }
   }
 
