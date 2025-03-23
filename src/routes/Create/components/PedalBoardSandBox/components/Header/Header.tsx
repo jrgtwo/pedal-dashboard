@@ -1,0 +1,22 @@
+const Header = () => {
+  return (
+    <header
+      className="bg-zinc-300">
+      <menu
+        role="menu"
+        className="flex flex-row justify-end mb-5">
+        <li
+          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900"
+        ><button>Save</button></li>
+        <li
+          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900"
+        ><button>Undo</button></li>
+        <li
+          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900"
+        ><button>Clear</button></li>
+      </menu>
+    </header>
+  )
+}
+
+export { Header }

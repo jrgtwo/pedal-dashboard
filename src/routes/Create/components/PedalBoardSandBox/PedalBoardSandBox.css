@@ -1,0 +1,18 @@
+.pedal-dashboard-grid {
+  /* options */
+  --grid-size: 30px;
+  --grid-strength: 1px;
+  --grid-dash: 5px;
+  --grid-gap: 10px;
+  --grid-color: rgb(206, 207, 207);
+  --paper-color: rgb(236, 236, 236);
+
+  /* styling */
+  background-color: var(--paper-color);
+  background-size: var(--grid-gap) var(--grid-gap), var(--grid-size) var(--grid-size);
+  background-image:
+    linear-gradient(to bottom, transparent var(--grid-dash), var(--paper-color) var(--grid-dash)),
+    linear-gradient(to right, var(--grid-color) var(--grid-strength), transparent var(--grid-strength)),
+    linear-gradient(to right, transparent var(--grid-dash), var(--paper-color) var(--grid-dash)),
+    linear-gradient(to bottom, var(--grid-color) var(--grid-strength), transparent var(--grid-strength));
+}
