@@ -1,4 +1,7 @@
 import { useState, MouseEvent } from 'react'
+
+import type { PedalShape } from '../Pedal/Pedal.types'
+
 import { Pedal } from '../Pedal/Pedal'
 
 const mockPedalJSON = [{
@@ -33,9 +36,7 @@ const keepInBounds = (value: number, max: number) => {
 }
 const Sandbox = () => {
   const [pedalMap, setPedalMap] = useState(mockPedalMap)
-  // const [x, setX] = useState(0)
-  // const [y, setY] = useState(0)
-  const [currPedal, setCurrPedal] = useState(null)
+  const [currPedal, setCurrPedal] = useState<PedalShape | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [sandboxTop, setSandboxTop] = useState(0)
   const [sandboxLeft, setSandboxLeft] = useState(0)
@@ -56,11 +57,13 @@ const Sandbox = () => {
     ) {
       const pedalId = event.target.getAttribute('data-pedal-id')
       const pedal = pedalMap.get(Number(pedalId))
+
       if (!pedal) {
         setIsDragging(false)
         setCurrPedal(null)
         return
       }
+
       setCurrPedal(pedal)
       setSandboxTop(event.currentTarget.offsetTop)
       setSandboxLeft(event.currentTarget.offsetLeft)
@@ -101,8 +104,6 @@ const Sandbox = () => {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}>
-
-      { /*<Pedal x={x} y={y} />*/}
 
       {[...pedalMap.values()].map((pedal) => (
         <Pedal
