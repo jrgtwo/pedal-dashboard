@@ -1,10 +1,12 @@
 import type { PedalProps } from "./Pedal.types";
-const Pedal = ({ x, y }: PedalProps) => {
+const Pedal = ({ w, h, x, y, pedalId }: PedalProps) => {
+
   return (
     <div
+      data-pedal-id={pedalId}
       role="pedal"
-      className={`draggable w-[100px] h-[100px] bg-green-400`}
-      style={{ position: 'absolute', top: y, left: x }}>
+      className={`draggable bg-green-400`}
+      style={{ position: 'absolute', top: y, left: x, width: w, height: h }}>
       {`${x}-${y}`}
     </div>
   );
