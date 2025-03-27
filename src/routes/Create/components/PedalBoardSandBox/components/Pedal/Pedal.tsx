@@ -1,5 +1,5 @@
 import type { PedalProps } from "./Pedal.types";
-const Pedal = ({ w, h, x, y, pedalId }: PedalProps) => {
+const Pedal = ({ w, h, x, y, pedalId, img, name }: PedalProps) => {
 
   return (
     <div
@@ -7,7 +7,15 @@ const Pedal = ({ w, h, x, y, pedalId }: PedalProps) => {
       role="pedal"
       className={`draggable bg-green-400`}
       style={{ position: 'absolute', top: y, left: x, width: w, height: h }}>
-      {`${x}-${y}`}
+      {`${name}-${x}-${y}`}
+      {
+        img &&
+        <img
+          src={`/src/assets/${img}`}
+          alt={name}
+          className={`w-${w} h-${h} absolute top-0 left-0`}
+        />
+      }
     </div>
   );
 }

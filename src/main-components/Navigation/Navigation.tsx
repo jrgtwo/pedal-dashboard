@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { NavLink } from 'react-router'
 
 const Navigation = () => {
 
@@ -7,12 +7,27 @@ const Navigation = () => {
       className="mt-5 mb-5 border-b border-zinc-300">
       <ol
         className="flex flex-row justify-self-end gap-4">
-        <li
-          className="font-black hover:underline"><Link to="/">Home</Link></li>
-        <li
-          className="font-black hover:underline text-zinc-400"><Link to="/create">Create</Link></li>
-        <li
-          className="font-black hover:underline text-zinc-400"><Link to="/about">About</Link></li>
+        <li>
+          <NavLink
+            to="/"
+            className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/create"
+            className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
+            Create
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
+            About
+          </NavLink>
+        </li>
       </ol>
     </nav>
   )

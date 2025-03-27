@@ -4,6 +4,8 @@ type PedalProps = {
   x: number,
   y: number,
   pedalId: string,
+  img?: string,
+  name?: string
 }
 
 type PedalShape = {
