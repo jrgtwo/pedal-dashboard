@@ -20,7 +20,8 @@ export default tseslint.config(
     },
     rules: {
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+      "react-hooks/exhaustive-deps": "warn",
+      "eol-last": "error",
     }
     // rules: {
     //   ...reactHooks.configs.recommended.rules,

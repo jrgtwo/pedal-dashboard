@@ -13,15 +13,15 @@ const keepInBounds = (value: number, max: number) => {
   return Math.min(Math.max(value, 0), max)
 }
 
+const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((acc, item) => {
+  acc.set(item.id, item)
+  return acc
+}, new Map())
+
 const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   // TODO: Add error handling
-  const dataToMap = data.reduce((acc, item) => {
-    acc.set(item.id, item)
-    return acc
-  }, new Map())
-
-  const [draggableMap, setDraggableMap] = useState(dataToMap)
+  const [draggableMap, setDraggableMap] = useState(dataToMap<T>(data))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [sandboxTop, setSandboxTop] = useState(0)
@@ -29,7 +29,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
   const [sandboxLeft, setSandboxLeft] = useState(0)
   const [sandboxWidth, setSandboxWidth] = useState(0)
   const [sandboxHeight, setSandboxHeight] = useState(0)
-  
+
   const [currDraggableWidth, setCurrDraggableWidth] = useState(0)
   const [currDraggableHeight, setCurrDraggableHeight] = useState(0)
   const [currDraggableXOffset, setCurrDraggableXOffset] = useState(0)
@@ -89,6 +89,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       const yPos = (keepInBounds(event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight))
       currDraggable.location.x = xPos
       currDraggable.location.y = yPos
+
       setDraggableMap((prevDraggableMap) => {
         return new Map(prevDraggableMap.set(currDraggable.id, currDraggable))
       })
@@ -99,7 +100,13 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setDraggableMap
   ])
 
-  return { handleMouseDown, handleMouseUp, handleMouseMove, draggableMap }
+  const draggableArray = [...draggableMap.values()]
+
+  const setter = useCallback((updatedData: T[]) => {
+    setDraggableMap(dataToMap(updatedData))
+  }, [])
+
+  return { handleMouseDown, handleMouseUp, handleMouseMove, draggableArray, setter }
 }
 
 export { useDraggable }
