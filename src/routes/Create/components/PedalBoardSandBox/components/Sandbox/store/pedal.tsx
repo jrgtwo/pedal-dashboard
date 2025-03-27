@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { PedalShape } from '../../Pedal/Pedal.types'
+
 const mockPedalJSON = [{
   id: 1,
   name: 'test pedal',
@@ -18,17 +19,6 @@ const mockPedalJSON = [{
     w: 200,
     h: 100,
     x: 200,
-    y: 200
-  }
-}, {
-  id: 3,
-  name: 'bmp',
-  brand: '-',
-  img: 'bmp.png',
-  location: {
-    w: 192,
-    h: 253,
-    x: 450,
     y: 200
   }
 }]

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 import type { PedalShape } from '../Pedal/Pedal.types'
 
@@ -10,14 +10,17 @@ import testboard from '../../../../../../assets/test-board.png'
 const Sandbox = () => {
   const pedals = usePedalStore((state) => state.pedals)
 
-  const [pedalData] = useState<PedalShape[]>(pedals)
-
   const {
-    draggableMap: pedalMap,
+    setter,
+    draggableArray,
     handleMouseDown,
     handleMouseUp,
     handleMouseMove
-  } = useDraggable<PedalShape>(pedalData)
+  } = useDraggable<PedalShape>(pedals)
+
+  useEffect(() => {
+    setter(pedals)
+  }, [pedals, setter])
 
   return (
     <section
@@ -29,7 +32,7 @@ const Sandbox = () => {
 
       <img src={testboard} alt="testboard" />
 
-      {[...pedalMap.values()].map((pedal) => (
+      {draggableArray.map((pedal) => (
         <Pedal
           pedalId={pedal.id}
           name={pedal.name}

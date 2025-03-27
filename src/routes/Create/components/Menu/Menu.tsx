@@ -1,4 +1,19 @@
+import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
+const mockPedal = {
+  id: 3,
+  name: 'bmp',
+  brand: '-',
+  img: 'bmp.png',
+  location: {
+    w: 192,
+    h: 253,
+    x: 450,
+    y: 200
+  }
+}
 const Menu = () => {
+
+  const addNewPedal = usePedalStore((state) => state.addNewPedals)
 
   return (
     <section
@@ -11,7 +26,7 @@ const Menu = () => {
           <button>Boards v</button>
         </li>
         <li>
-          <button>Pedals v</button>
+          <button onClick={() => addNewPedal(mockPedal)}>Pedals v</button>
         </li>
       </menu>
     </section>
