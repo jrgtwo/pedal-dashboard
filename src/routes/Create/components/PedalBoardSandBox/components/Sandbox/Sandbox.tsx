@@ -29,9 +29,7 @@ const Sandbox = () => {
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
-
       <img src={testboard} alt="testboard" />
-
       {draggableArray.map((pedal) => (
         <Pedal
           pedalId={pedal.id}
@@ -43,7 +41,6 @@ const Sandbox = () => {
           x={pedal.location.x}
           y={pedal.location.y} />
       ))}
-
     </section >
   )
 }
