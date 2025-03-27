@@ -39,7 +39,7 @@ const mockPedalJSON = [{
 
 const Sandbox = () => {
   const {
-    pedalMap,
+    draggableMap: pedalMap,
     handleMouseDown,
     handleMouseUp,
     handleMouseMove

@@ -3,7 +3,7 @@ const Pedal = ({ w, h, x, y, pedalId, img, name }: PedalProps) => {
 
   return (
     <div
-      data-pedal-id={pedalId}
+      data-draggable-id={pedalId}
       role="pedal"
       className={`draggable bg-green-400`}
       style={{ position: 'absolute', top: y, left: x, width: w, height: h }}>
