@@ -32,11 +32,17 @@ const mockPedalJSON = [{
     y: 200
   }
 }]
-const usePedalStore = create<{ pedals: PedalShape[] }>((set) => ({
+
+interface PedalStore {
+  pedals: PedalShape[];
+  addNewPedals: (newPedal: PedalShape) => void;
+}
+const usePedalStore = create<PedalStore>((set) => ({
   pedals: mockPedalJSON,
-  updatePedals: (newPedal: PedalShape) => {
-    return set((state) => ({ pedals: state.pedals.push(newPedal) }))
-  }
+  addNewPedals: (newPedal) => set((state) => ({
+    pedals: [...state.pedals, newPedal]
+  }))
+
 }))
 
 export { usePedalStore }
