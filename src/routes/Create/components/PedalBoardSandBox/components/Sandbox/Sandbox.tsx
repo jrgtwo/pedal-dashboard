@@ -1,49 +1,23 @@
+import { useState } from 'react'
+
 import type { PedalShape } from '../Pedal/Pedal.types'
 
+import { usePedalStore } from './store/pedal'
 import { Pedal } from '../Pedal/Pedal'
 import { useDraggable } from './hooks/useDraggable'
 import testboard from '../../../../../../assets/test-board.png'
 
-const mockPedalJSON = [{
-  id: 1,
-  name: 'test pedal',
-  brand: 'JRGarcia Amps',
-  location: {
-    w: 100,
-    h: 100,
-    x: 0,
-    y: 0
-  }
-}, {
-  id: 2,
-  name: 'test pedal 2',
-  brand: 'JRGarcia Amps',
-  location: {
-    w: 200,
-    h: 100,
-    x: 200,
-    y: 200
-  }
-}, {
-  id: 3,
-  name: 'bmp',
-  brand: '-',
-  img: 'bmp.png',
-  location: {
-    w: 192,
-    h: 253,
-    x: 450,
-    y: 200
-  }
-}]
-
 const Sandbox = () => {
+  const pedals = usePedalStore((state) => state.pedals)
+
+  const [pedalData] = useState<PedalShape[]>(pedals)
+
   const {
     draggableMap: pedalMap,
     handleMouseDown,
     handleMouseUp,
     handleMouseMove
-  } = useDraggable<PedalShape>(mockPedalJSON)
+  } = useDraggable<PedalShape>(pedalData)
 
   return (
     <section
