@@ -1,4 +1,8 @@
+import { usePedalStore } from "../Sandbox/store/pedal"
 const Header = () => {
+  const history = usePedalStore((state) => state.history)
+  const undoHistory = usePedalStore((state) => state.undoHistory)
+  console.log('===', history)
   return (
     <header
       className="bg-zinc-300">
@@ -10,7 +14,7 @@ const Header = () => {
         ><button>Save</button></li>
         <li
           className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900"
-        ><button>Undo</button></li>
+        ><button onClick={() => undoHistory()}>Undo {history.length}</button></li>
         <li
           className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900"
         ><button>Clear</button></li>

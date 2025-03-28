@@ -9,6 +9,7 @@ import testboard from '../../../../../../assets/test-board.png'
 
 const Sandbox = () => {
   const pedals = usePedalStore((state) => state.pedals)
+  const updateHistory = usePedalStore((state) => state.updateHistory)
 
   const {
     setter,
@@ -20,7 +21,8 @@ const Sandbox = () => {
 
   useEffect(() => {
     setter(pedals)
-  }, [pedals, setter])
+    updateHistory(pedals)
+  }, [pedals, setter, updateHistory])
 
   return (
     <section
