@@ -27,22 +27,30 @@ interface PedalStore {
   pedals: PedalShape[];
   addNewPedals: (newPedal: PedalShape) => void;
   history: PedalShape[][];
-  updateHistory: (updatedState: PedalShape[]) => void;
+  updateHistory: (newPedals: PedalShape[]) => void;
   undoHistory: () => void;
 }
+
 const usePedalStore = create<PedalStore>((set) => ({
-  pedals: mockPedalJSON,
+  pedals: [...mockPedalJSON],
+
   addNewPedals: (newPedal) => set((state) => {
     const updatedState = [...state.pedals, newPedal]
     return ({
-      pedals: updatedState,
-      history: [...state.history, updatedState]
+      pedals: [...updatedState],
+      history: [...state.history, { ...updatedState }]
     })
   }),
-  history: [mockPedalJSON],
-  updateHistory: (updatedState) => set((state) => ({
-    history: [...state.history, updatedState]
-  })),
+
+  history: [{ ...mockPedalJSON }],
+
+  updateHistory: (newPedals) => set((state) => {
+    debugger
+    return ({
+      history: [...state.history, structuredClone(newPedals)]
+    })
+  }),
+
   undoHistory: () => set((state) => {
     debugger
     if (state.history.length < 2) return state

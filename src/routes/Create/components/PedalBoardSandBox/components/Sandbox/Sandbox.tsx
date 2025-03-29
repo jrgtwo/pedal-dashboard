@@ -13,6 +13,7 @@ const Sandbox = () => {
 
   const {
     setter,
+    onDraggingComplete,
     draggableArray,
     handleMouseDown,
     handleMouseUp,
@@ -22,6 +23,19 @@ const Sandbox = () => {
   useEffect(() => {
     setter(pedals)
   }, [pedals, setter])
+
+
+  useEffect(() => {
+    let ignore = false
+    onDraggingComplete((updatedDraggableArray) => {
+      if (ignore) return
+      console.log(updatedDraggableArray)
+      updateHistory(updatedDraggableArray)
+    })
+
+    return () => { ignore = true }
+  }, [])
+
 
   return (
     <section

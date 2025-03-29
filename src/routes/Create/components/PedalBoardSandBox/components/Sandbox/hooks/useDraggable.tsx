@@ -1,4 +1,4 @@
-import { useState, useCallback, type MouseEvent } from 'react'
+import { useState, useCallback, useEffect, type MouseEvent } from 'react'
 
 type RequiredDataValues = {
   id: number,
@@ -14,20 +14,20 @@ const keepInBounds = (value: number, max: number) => {
 }
 
 const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((acc, item) => {
-  acc.set(item.id, item)
+  acc.set(item.id, { ...item })
   return acc
 }, new Map())
 
-const triggerOnComplete = (listeners: (() => void)[]) => {
+const triggerOnComplete = (data, listeners: ((data) => void)[]) => {
   listeners.forEach((listener) => {
-    listener()
+    listener(data)
   })
 }
 
 const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   // TODO: Add error handling
-  const [draggableMap, setDraggableMap] = useState(dataToMap<T>(data))
+  const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [sandboxTop, setSandboxTop] = useState(0)
@@ -41,7 +41,9 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
   const [currDraggableXOffset, setCurrDraggableXOffset] = useState(0)
   const [currDraggableYOffset, setCurrDraggableYOffset] = useState(0)
 
-  const [oncCompleteListeners, setOnCompleteListeners] = useState<(() => void)[]>([])
+  const [draggableArray, setDraggableArray] = useState<T[]>([])
+
+  const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T) => void)[]>([])
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -88,8 +90,9 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     event.preventDefault()
     setIsDragging(false)
     setCurrDraggable(null)
-    triggerOnComplete(oncCompleteListeners)
-  }, [oncCompleteListeners])
+
+    triggerOnComplete(draggableArray, onCompleteListeners)
+  }, [onCompleteListeners, draggableArray])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
 
@@ -97,11 +100,15 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
       const xPos = (keepInBounds(event.clientX - sandboxLeft - currDraggableXOffset, sandboxWidth - currDraggableWidth))
       const yPos = (keepInBounds(event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight))
-      currDraggable.location.x = xPos
-      currDraggable.location.y = yPos
+      const newCurrDraggable = { ...currDraggable }
+      /// We found the culprit...nested array was still linked
+      newCurrDraggable.location = { ...newCurrDraggable.location }
+      newCurrDraggable.location.x = xPos
+      newCurrDraggable.location.y = yPos
 
       setDraggableMap((prevDraggableMap) => {
-        return new Map(prevDraggableMap.set(currDraggable.id, currDraggable))
+
+        return new Map(prevDraggableMap.set(currDraggable.id, newCurrDraggable))
       })
     }
   }, [isDragging, currDraggable,
@@ -110,18 +117,20 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setDraggableMap
   ])
 
-  const draggableArray = [...draggableMap.values()]
+  useEffect(() => {
+    setDraggableArray([...draggableMap.values()])
+  }, [draggableMap])
+
 
   const setter = useCallback((updatedData: T[]) => {
     setDraggableMap(dataToMap(updatedData))
   }, [])
 
-  const onDraggingComplete = (callback: () => void) => {
+  const onDraggingComplete = (callback: (data: T) => void) => {
     setOnCompleteListeners((prev) => [...prev, callback])
   }
 
-
-  return { handleMouseDown, handleMouseUp, handleMouseMove, draggableArray, setter, isDragging, onDraggingComplete }
+  return { handleMouseDown, handleMouseUp, handleMouseMove, draggableArray, setter, isDragging, onDraggingComplete, onCompleteListeners }
 }
 
 export { useDraggable }
