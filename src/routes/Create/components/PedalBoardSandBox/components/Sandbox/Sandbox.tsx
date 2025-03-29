@@ -16,13 +16,12 @@ const Sandbox = () => {
     draggableArray,
     handleMouseDown,
     handleMouseUp,
-    handleMouseMove
+    handleMouseMove,
   } = useDraggable<PedalShape>(pedals)
 
   useEffect(() => {
     setter(pedals)
-    updateHistory(pedals)
-  }, [pedals, setter, updateHistory])
+  }, [pedals, setter])
 
   return (
     <section
