@@ -47,7 +47,7 @@ const Sandbox = () => {
       <img src={testboard} alt="testboard" />
       {draggableArray.map((pedal) => (
         <Pedal
-          pedalId={pedal.id}
+          pedalId={`${pedal.id}`}
           name={pedal.name}
           key={pedal.id}
           img={pedal.img}

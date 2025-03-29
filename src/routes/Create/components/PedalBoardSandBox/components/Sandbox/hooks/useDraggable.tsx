@@ -18,7 +18,7 @@ const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((a
   return acc
 }, new Map())
 
-const triggerOnComplete = (data, listeners: ((data) => void)[]) => {
+const triggerOnComplete = <T,>(data: T[], listeners: ((data: T[]) => void)[]) => {
   listeners.forEach((listener) => {
     listener(data)
   })
@@ -43,7 +43,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   const [draggableArray, setDraggableArray] = useState<T[]>([])
 
-  const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T) => void)[]>([])
+  const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T[]) => void)[]>([])
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -92,6 +92,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setCurrDraggable(null)
 
     triggerOnComplete(draggableArray, onCompleteListeners)
+
   }, [onCompleteListeners, draggableArray])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -121,12 +122,11 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setDraggableArray([...draggableMap.values()])
   }, [draggableMap])
 
-
   const setter = useCallback((updatedData: T[]) => {
     setDraggableMap(dataToMap(updatedData))
   }, [])
 
-  const onDraggingComplete = (callback: (data: T) => void) => {
+  const onDraggingComplete = (callback: (data: T[]) => void) => {
     setOnCompleteListeners((prev) => [...prev, callback])
   }
 
