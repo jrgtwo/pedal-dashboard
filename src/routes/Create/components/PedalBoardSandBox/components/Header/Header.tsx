@@ -2,7 +2,7 @@ import { usePedalStore } from "../Sandbox/store/pedal"
 const Header = () => {
   const history = usePedalStore((state) => state.history)
   const undoHistory = usePedalStore((state) => state.undoHistory)
-  console.log('===', history)
+
   return (
     <header
       className="bg-zinc-300">

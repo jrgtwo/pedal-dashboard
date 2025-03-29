@@ -43,16 +43,16 @@ const usePedalStore = create<PedalStore>((set) => ({
     })
   }),
 
-  history: [{ ...mockPedalJSON }],
+  history: [mockPedalJSON],
 
   updateHistory: (newPedals) => set((state) => {
     return ({
+      pedals: structuredClone(newPedals),
       history: [...state.history, structuredClone(newPedals)]
     })
   }),
 
   undoHistory: () => set((state) => {
-
     if (state.history.length < 2) return state
     const updatedState = [...state.history]
     // TODO Add redo feature with last state

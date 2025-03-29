@@ -26,39 +26,43 @@ const triggerOnComplete = <T,>(data: T[], listeners: ((data: T[]) => void)[]) =>
 
 const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
-  // TODO: Add error handling
+  // Draggable state
+  const [lastDragTime, setLastDragTime] = useState<number | null>()
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  const [sandboxTop, setSandboxTop] = useState(0)
 
+  // Sandbox state
+  const [sandboxTop, setSandboxTop] = useState(0)
   const [sandboxLeft, setSandboxLeft] = useState(0)
   const [sandboxWidth, setSandboxWidth] = useState(0)
   const [sandboxHeight, setSandboxHeight] = useState(0)
 
+  // Position settings
   const [currDraggableWidth, setCurrDraggableWidth] = useState(0)
   const [currDraggableHeight, setCurrDraggableHeight] = useState(0)
   const [currDraggableXOffset, setCurrDraggableXOffset] = useState(0)
   const [currDraggableYOffset, setCurrDraggableYOffset] = useState(0)
 
+  // Output data 
   const [draggableArray, setDraggableArray] = useState<T[]>([])
 
+  // Client Listeners
   const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T[]) => void)[]>([])
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     event.preventDefault()
+    setLastDragTime(Date.now())
+    const target = event.target as HTMLElement
+    const sandboxElem = event.currentTarget as HTMLElement
 
     if (
-      event.target instanceof HTMLElement
-      && event.currentTarget instanceof HTMLElement
-      && (
-        event.target.classList.contains('draggable')
-        || event.target.parentElement?.classList.contains('draggable')
-      )
+      target.classList.contains('draggable')
+      || target.parentElement?.classList.contains('draggable')
     ) {
-      const draggableElement = event.target.classList.contains('draggable')
-        ? event.target
-        : event.target.parentElement
+      const draggableElement = target.classList.contains('draggable')
+        ? target
+        : target.parentElement
 
       if (draggableElement === null) return
 
@@ -72,14 +76,14 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       }
 
       setCurrDraggable(draggable)
-      setSandboxTop(event.currentTarget.offsetTop)
-      setSandboxLeft(event.currentTarget.offsetLeft)
-      setSandboxWidth(event.currentTarget.clientWidth)
-      setSandboxHeight(event.currentTarget.clientHeight)
+      setSandboxTop(sandboxElem.offsetTop)
+      setSandboxLeft(sandboxElem.offsetLeft)
+      setSandboxWidth(sandboxElem.clientWidth)
+      setSandboxHeight(sandboxElem.clientHeight)
       setCurrDraggableHeight(draggableElement.clientHeight)
       setCurrDraggableWidth(draggableElement.clientWidth)
-      setCurrDraggableXOffset(event.clientX - event.currentTarget.offsetLeft - draggableElement.offsetLeft)
-      setCurrDraggableYOffset(event.clientY - event.currentTarget.offsetTop - draggableElement.offsetTop)
+      setCurrDraggableXOffset(event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft)
+      setCurrDraggableYOffset(event.clientY - sandboxElem.offsetTop - draggableElement.offsetTop)
 
       setIsDragging(true)
     }
@@ -90,32 +94,38 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     event.preventDefault()
     setIsDragging(false)
     setCurrDraggable(null)
-
+    setLastDragTime(null)
     triggerOnComplete(draggableArray, onCompleteListeners)
-
   }, [onCompleteListeners, draggableArray])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
+    const now = Date.now()
+    if (isDragging && !!currDraggable && lastDragTime && now - lastDragTime > 9) {
 
-    if (isDragging && !!currDraggable) {
-
-      const xPos = (keepInBounds(event.clientX - sandboxLeft - currDraggableXOffset, sandboxWidth - currDraggableWidth))
-      const yPos = (keepInBounds(event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight))
+      const xPos = (keepInBounds(
+        event.clientX - sandboxLeft - currDraggableXOffset, sandboxWidth - currDraggableWidth
+      ))
+      const yPos = (keepInBounds(
+        event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
+      ))
+      
       const newCurrDraggable = { ...currDraggable }
-      /// We found the culprit...nested array was still linked
+
       newCurrDraggable.location = { ...newCurrDraggable.location }
       newCurrDraggable.location.x = xPos
       newCurrDraggable.location.y = yPos
 
       setDraggableMap((prevDraggableMap) => {
-
         return new Map(prevDraggableMap.set(currDraggable.id, newCurrDraggable))
       })
+
+      setLastDragTime(Date.now())
     }
-  }, [isDragging, currDraggable,
+  }, [
+    isDragging, currDraggable,
     sandboxTop, sandboxLeft, sandboxWidth, sandboxHeight,
     currDraggableWidth, currDraggableHeight, currDraggableXOffset, currDraggableYOffset,
-    setDraggableMap
+    setDraggableMap, lastDragTime
   ])
 
   useEffect(() => {
@@ -126,9 +136,9 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setDraggableMap(dataToMap(updatedData))
   }, [])
 
-  const onDraggingComplete = (callback: (data: T[]) => void) => {
+  const onDraggingComplete = useCallback((callback: (data: T[]) => void) => {
     setOnCompleteListeners((prev) => [...prev, callback])
-  }
+  }, [])
 
   return { handleMouseDown, handleMouseUp, handleMouseMove, draggableArray, setter, isDragging, onDraggingComplete, onCompleteListeners }
 }

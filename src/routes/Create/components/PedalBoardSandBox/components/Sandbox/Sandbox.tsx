@@ -29,12 +29,11 @@ const Sandbox = () => {
     let ignore = false
     onDraggingComplete((updatedDraggableArray) => {
       if (ignore) return
-      console.log(updatedDraggableArray)
       updateHistory(updatedDraggableArray)
     })
 
     return () => { ignore = true }
-  }, [])
+  }, [onDraggingComplete, updateHistory])
 
 
   return (
