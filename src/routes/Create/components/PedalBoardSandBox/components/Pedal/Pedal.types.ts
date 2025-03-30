@@ -13,6 +13,7 @@ type PedalShape = {
   name: string,
   brand: string,
   img?: string,
+  dragId: number,
   location: {
     w: number,
     h: number,

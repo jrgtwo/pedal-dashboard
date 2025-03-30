@@ -17,7 +17,7 @@ const usePedalStore = create<PedalStore>((set) => ({
 
   addNewPedals: (newPedal) => set((state) => {
     const updatedState = [...state.pedals, newPedal]
-
+    
     return ({
       pedals: [...updatedState],
       history: [...state.history, updatedState]

@@ -43,7 +43,7 @@ const Menu = () => {
 
     if (!pedalById) return
 
-    return addNewPedal(pedalById)
+    return addNewPedal({ ...pedalById, dragId: Date.now() })
 
   }, [pedalList, addNewPedal])
 
@@ -61,7 +61,7 @@ const Menu = () => {
           <button>Pedals v</button>
           <ol>
             {pedalList.map((item) => (
-              <li>
+              <li key={`${item.name}:${item.id}`}>
                 <button
                   data-pedal-id={`${item.id}`}
                   onClick={savePedalDataById}>{item.name}</button>

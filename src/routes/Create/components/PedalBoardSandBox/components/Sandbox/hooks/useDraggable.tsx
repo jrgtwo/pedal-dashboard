@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, type MouseEvent } from 'react'
 
 type RequiredDataValues = {
   id: number,
+  dragId: number,
   location: {
     w: number,
     h: number,
@@ -14,7 +15,7 @@ const keepInBounds = (value: number, max: number) => {
 }
 
 const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((acc, item) => {
-  acc.set(item.id, { ...item })
+  acc.set(item.dragId, { ...item })
   return acc
 }, new Map())
 
@@ -108,7 +109,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       const yPos = (keepInBounds(
         event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
       ))
-      
+
       const newCurrDraggable = { ...currDraggable }
 
       newCurrDraggable.location = { ...newCurrDraggable.location }
@@ -116,7 +117,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       newCurrDraggable.location.y = yPos
 
       setDraggableMap((prevDraggableMap) => {
-        return new Map(prevDraggableMap.set(currDraggable.id, newCurrDraggable))
+        return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))
       })
 
       setLastDragTime(Date.now())

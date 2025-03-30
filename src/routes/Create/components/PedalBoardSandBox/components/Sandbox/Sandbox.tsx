@@ -44,11 +44,11 @@ const Sandbox = () => {
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
       <img src={testboard} alt="testboard" />
-      {draggableArray.map((pedal) => (
+      {draggableArray.map((pedal,) => (
         <Pedal
-          pedalId={`${pedal.id}`}
+          pedalId={`${pedal.dragId}`}
           name={pedal.name}
-          key={pedal.id}
+          key={pedal.dragId}
           img={pedal.img}
           w={pedal.location.w}
           h={pedal.location.h}
