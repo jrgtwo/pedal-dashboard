@@ -5,7 +5,8 @@ type PedalProps = {
   y: number,
   pedalId: string,
   img?: string,
-  name?: string
+  name?: string,
+  handleRemove: (key: keyof PedalShape, value: string) => void
 }
 
 type PedalShape = {

@@ -19,9 +19,9 @@ const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((a
   return acc
 }, new Map())
 
-const triggerOnComplete = <T,>(data: T[], listeners: ((data: T[]) => void)[]) => {
+const triggerOnComplete = <T,>(data: T[], target: HTMLElement | null, listeners: ((data: T[], target: HTMLElement | null) => void)[]) => {
   listeners.forEach((listener) => {
-    listener(data)
+    listener(data, target)
   })
 }
 
@@ -44,12 +44,13 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
   const [currDraggableHeight, setCurrDraggableHeight] = useState(0)
   const [currDraggableXOffset, setCurrDraggableXOffset] = useState(0)
   const [currDraggableYOffset, setCurrDraggableYOffset] = useState(0)
+  const [currDraggableElement, setCurrDraggableElement] = useState<HTMLElement | null>(null)
 
   // Output data 
   const [draggableArray, setDraggableArray] = useState<T[]>([])
 
   // Client Listeners
-  const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T[]) => void)[]>([])
+  const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T[], target: HTMLElement | null) => void)[]>([])
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -66,6 +67,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
         : target.parentElement
 
       if (draggableElement === null) return
+      setCurrDraggableElement(target)
 
       const draggableId = draggableElement.getAttribute('data-draggable-id')
       const draggable = draggableMap.get(Number(draggableId))
@@ -93,11 +95,13 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
     event.preventDefault()
+    triggerOnComplete(draggableArray, currDraggableElement, onCompleteListeners)
     setIsDragging(false)
+    setCurrDraggableElement(null)
     setCurrDraggable(null)
     setLastDragTime(null)
-    triggerOnComplete(draggableArray, onCompleteListeners)
-  }, [onCompleteListeners, draggableArray])
+
+  }, [onCompleteListeners, draggableArray, currDraggableElement])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
     const now = Date.now()
@@ -137,7 +141,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     setDraggableMap(dataToMap(updatedData))
   }, [])
 
-  const onDraggingComplete = useCallback((callback: (data: T[]) => void) => {
+  const onDraggingComplete = useCallback((callback: (data: T[], target: HTMLElement | null) => void) => {
     setOnCompleteListeners((prev) => [...prev, callback])
   }, [])
 

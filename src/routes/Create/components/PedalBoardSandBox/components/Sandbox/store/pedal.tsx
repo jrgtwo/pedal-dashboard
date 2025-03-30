@@ -7,7 +7,9 @@ interface PedalStore {
   history: PedalShape[][];
   updateHistory: (newPedals: PedalShape[]) => void;
   undoHistory: () => void;
-  redoLastHistory: PedalShape[] | null
+  redoLastHistory: PedalShape[] | null;
+  removeBy: (key: keyof PedalShape, value: string) => void
+
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
@@ -17,9 +19,9 @@ const usePedalStore = create<PedalStore>((set) => ({
 
   addNewPedals: (newPedal) => set((state) => {
     const updatedState = [...state.pedals, newPedal]
-    
+
     return ({
-      pedals: [...updatedState],
+      pedals: updatedState,
       history: [...state.history, updatedState]
     })
   }),
@@ -43,6 +45,18 @@ const usePedalStore = create<PedalStore>((set) => ({
       redoLastHistory: lastState
     })
   }),
+
+  removeBy: (key, value) => set((state) => {
+    const prevPedals = state.pedals
+    const updatedPedals = prevPedals.filter((item) => {
+      return `${item[key]}` !== `${value}`
+    })
+
+    return {
+      pedals: updatedPedals,
+      history: [...state.history, structuredClone(updatedPedals)]
+    }
+  })
 }))
 
 export { usePedalStore }
