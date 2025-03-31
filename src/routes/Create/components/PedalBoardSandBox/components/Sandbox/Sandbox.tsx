@@ -22,8 +22,6 @@ const Sandbox = () => {
   } = useDraggable<PedalShape>(pedals)
 
   useEffect(() => {
-    console.log('setting')
-    console.log(pedals)
     setter(pedals)
   }, [pedals, setter])
 
