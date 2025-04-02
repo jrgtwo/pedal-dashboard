@@ -1,34 +1,22 @@
-import { useState, useCallback, type MouseEvent } from 'react'
-
+import { useState, useCallback, useEffect, type MouseEvent } from 'react'
+import type { PedalShape } from '../PedalBoardSandBox/components/Pedal/Pedal.types'
+import { API } from '../../../../api/api'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
-
-const mockPedalList = [{
-  id: 1,
-  name: 'Big Muff Pi',
-  brand: '-',
-  img: 'bmp.png',
-  location: {
-    w: 192,
-    h: 253,
-    x: 0,
-    y: 0
-  }
-}, {
-  id: 2,
-  name: 'ProCo Rat',
-  brand: '-',
-  img: 'rat.png',
-  location: {
-    w: 263,
-    h: 300,
-    x: 0,
-    y: 0
-  }
-}]
 
 const Menu = () => {
 
-  const [pedalList] = useState(mockPedalList)
+  const [pedalList, setPedalList] = useState<PedalShape[]>([])
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await API.getAllPedals()
+
+      if (error) return
+
+      setPedalList(data)
+    })()
+  }, [])
+
   const addNewPedal = usePedalStore((state) => state.addNewPedals)
 
   const savePedalDataById = useCallback((event: MouseEvent) => {
@@ -60,7 +48,7 @@ const Menu = () => {
         <li>
           <button>Pedals v</button>
           <ol>
-            {pedalList.map((item) => (
+            {pedalList && pedalList.map((item) => (
               <li key={`${item.name}:${item.id}`}>
                 <button
                   data-pedal-id={`${item.id}`}
