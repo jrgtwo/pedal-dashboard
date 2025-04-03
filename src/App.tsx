@@ -5,6 +5,8 @@ import { Footer } from './main-components/Footer/Footer'
 import { Home } from './routes/Home/Home'
 import { About } from './routes/About/About'
 import { Create } from './routes/Create/Create'
+import { Login } from './routes/Login/Login'
+import { Register } from './routes/Register/Register'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/create" element={<Create />} />
           <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />
       </BrowserRouter>
