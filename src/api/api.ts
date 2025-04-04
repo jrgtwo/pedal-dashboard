@@ -15,7 +15,7 @@ const login = async ({
 }: {
   email: string, password: string
 }) => {
-  let { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password
   })
@@ -28,10 +28,16 @@ const register = async ({
 }: {
   email: string, password: string
 }) => {
-  let { data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password
   })
+
+  return { data, error }
+}
+
+const getSession = async () => {
+  const { data, error } = await supabase.auth.getSession()
 
   return { data, error }
 }
@@ -40,6 +46,7 @@ class _API {
   getAllPedals = getAllPedals
   register = register
   login = login
+  getSession = getSession
 }
 const API = new _API();
 export { API }

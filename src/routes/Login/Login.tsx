@@ -1,16 +1,25 @@
 import { useCallback, type FormEvent } from 'react'
 import { API } from '../../api/api';
+import { useLoginStore } from '../../store/login';
 
 const Login = () => {
+  const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
+
   const handleFormSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault()
+    const currentTarget = event.currentTarget as HTMLFormElement
+    const email = (currentTarget.elements.namedItem('email') as HTMLInputElement).value
+    const password = (currentTarget.elements.namedItem('password') as HTMLInputElement).value
 
-    const email = event.currentTarget.elements.email.value
-    const password = event.currentTarget.elements.password.value
-
-    const tryLogin = await API.login({ email, password });
+    const { data, error } = await API.login({ email, password });
     // TODO: Do something after logging in
-  }, []);
+    if (error) {
+      console.error(error)
+      return
+    }
+    setLoginStatus(data)
+
+  }, [setLoginStatus]);
 
   return (
     <section>
