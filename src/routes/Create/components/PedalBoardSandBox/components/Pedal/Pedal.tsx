@@ -5,7 +5,7 @@ const Pedal = ({ w, h, x, y, pedalId, img, name, handleRemove }: PedalProps) => 
     <div
       data-draggable-id={pedalId}
       role="pedal"
-      className={`draggable bg-green-400`}
+      className={`draggable`}
       style={{ position: 'absolute', top: y, left: x, width: w, height: h }}>
       {`${name}-${x}-${y}`}
       <button

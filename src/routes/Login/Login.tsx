@@ -12,7 +12,6 @@ const Login = () => {
     const password = (currentTarget.elements.namedItem('password') as HTMLInputElement).value
 
     const { data, error } = await API.login({ email, password });
-    // TODO: Do something after logging in
     if (error) {
       console.error(error)
       return

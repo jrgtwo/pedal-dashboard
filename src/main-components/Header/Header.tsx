@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
-import { useLoginStore } from '../../store/login'
+import { useLoginStore, LOGIN_STATES } from '../../store/login'
+
 
 const Header = () => {
   const isLoggedIn = useLoginStore((state) => state.isLoggedIn)
@@ -12,7 +13,7 @@ const Header = () => {
         <p>Layout and save your dream pedalboard</p>
       </Link>
       {
-        isLoggedIn
+        isLoggedIn === LOGIN_STATES.LOGGED_IN
           ? <span>IsLoggedIn</span>
           : <Link to="/login">Login</Link>
       }

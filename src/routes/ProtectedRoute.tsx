@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router';
-import { useLoginStore } from '../store/login';
+import { useLoginStore, LOGIN_STATES } from '../store/login';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -9,7 +9,7 @@ type ProtectedRouteProps = {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const isLoggedIn = useLoginStore((state) => state.isLoggedIn)
 
-  if (!isLoggedIn) {
+  if (isLoggedIn !== LOGIN_STATES.LOGGED_IN) {
     return <Navigate to="/login" />
   }
 
