@@ -31,7 +31,6 @@ const MyBoards = () => {
                   className="hover:underline">
                   Board: {board.id} - {board.name}
                 </Link>
-                <pre>{JSON.stringify(board, null, 2)}</pre>
               </div>
             )
           }) : <p>No Boards found</p>

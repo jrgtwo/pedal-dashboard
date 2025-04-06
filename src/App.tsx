@@ -8,6 +8,7 @@ import { Home } from './routes/Home/Home'
 import { About } from './routes/About/About'
 import { Create } from './routes/Create/Create'
 import { Login } from './routes/Login/Login'
+import { Logout } from './routes/Logout/Logout'
 import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 import { useLoginStore } from './store/login'
@@ -57,6 +58,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />

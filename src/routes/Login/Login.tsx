@@ -1,8 +1,10 @@
 import { useCallback, type FormEvent } from 'react'
+import { useNavigate } from 'react-router'
 import { API } from '../../api/api';
 import { useLoginStore } from '../../store/login';
 
 const Login = () => {
+  const navigate = useNavigate()
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
 
   const handleFormSubmit = useCallback(async (event: FormEvent) => {
@@ -17,8 +19,9 @@ const Login = () => {
       return
     }
     setLoginStatus(data)
+    navigate('/')
 
-  }, [setLoginStatus]);
+  }, [setLoginStatus, navigate]);
 
   return (
     <section>

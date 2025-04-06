@@ -19,7 +19,7 @@ const PedalBoardSandBox = () => {
       <input
         type="text"
         value={name || ''}
-        placeholder="Untitled"
+        placeholder="Untitled Pedal Board"
         name="board-name"
         onChange={handleChange}
         className="font-black text-2xl" />

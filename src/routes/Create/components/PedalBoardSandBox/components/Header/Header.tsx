@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { API } from "../../../../../../api/api"
 import { usePedalStore } from "../Sandbox/store/pedal"
 import { useLoginStore } from '../../../../../../store/login'
+import type { PedalShape } from '../Pedal/Pedal.types'
 const Header = () => {
   const user = useLoginStore((state) => state.user)
   const pedals = usePedalStore((state) => state.pedals)
@@ -9,21 +10,31 @@ const Header = () => {
   const undoHistory = usePedalStore((state) => state.undoHistory)
   const clear = usePedalStore((state) => state.clear)
   const boardName = usePedalStore((state) => state.name)
+  const boardId = usePedalStore((state) => state.boardId)
 
   const saveBoard = useCallback(async () => {
     if (!user || !pedals) return
-
-    const { data, error } = await API.saveBoard({
+    const toSave: {
+      board: PedalShape[],
+      name: string | null,
+      id?: string
+    } = {
       board: pedals,
       name: boardName,
-    })
+    };
+    if (boardId) {
+      toSave.id = boardId
+    }
+    debugger
+    const { data, error } = await API.saveBoard(toSave)
 
     if (error) {
       console.log(error)
       return
     }
+    debugger
     // Do something after saving
-  }, [pedals, user, boardName])
+  }, [pedals, user, boardName, boardId])
 
   return (
     <header

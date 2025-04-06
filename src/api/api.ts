@@ -23,6 +23,12 @@ const login = async ({
   return { data, error }
 }
 
+const logout = async () => {
+  const { data, error } = await supabase.auth.signOut()
+
+  return { data, error }
+}
+
 const register = async ({
   email, password
 }: {
@@ -42,12 +48,12 @@ const getSession = async () => {
   return { data, error }
 }
 
-const saveBoard = async ({ name, board }) => {
+const saveBoard = async ({ id, name, board }) => {
   if (!board) return false
 
   const { data, error } = await supabase
     .from('user_boards')
-    .upsert({ name, board })
+    .upsert({ id, name, board })
     .select()
 
   return { data, error }
@@ -66,6 +72,7 @@ const getBoardById = async (id: string) => {
     .from('user_boards')
     .select('*')
     .eq('id', id)
+    .limit(1)
 
   return { data, error }
 }
@@ -74,6 +81,7 @@ class _API {
   getAllPedals = getAllPedals
   register = register
   login = login
+  logout = logout
   getSession = getSession
   saveBoard = saveBoard
   getBoards = getBoards

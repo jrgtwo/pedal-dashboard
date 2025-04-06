@@ -14,10 +14,10 @@ const Header = () => {
       </Link>
       {
         isLoggedIn === LOGIN_STATES.LOGGED_IN
-          ? <span>IsLoggedIn</span>
+          ? <Link to="/logout">Logout</Link>
           : <Link to="/login">Login</Link>
       }
-    </header>
+    </header >
   )
 }
 

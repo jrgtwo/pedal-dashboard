@@ -21,16 +21,14 @@ const Sandbox = () => {
     (async () => {
       const { data, error } = await API.getBoardById(boardId)
 
-      if (error) {
+      if (error || !data) {
         console.log(error)
         return
       }
 
-      updateFromFetch({ pedals: data[0].board, name: data[0].name })
+      updateFromFetch({ id: data[0].id, pedals: data[0].board, name: data[0].name })
     })()
   }, [boardId, updateFromFetch])
-
-
 
   const {
     setter,

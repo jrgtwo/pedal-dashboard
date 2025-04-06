@@ -6,15 +6,16 @@ interface PedalStore {
   history: PedalShape[][];
   redoLastHistory: PedalShape[] | null;
   name: string | null,
+  boardId: string | null,
 
   addNewPedals: (newPedal: PedalShape) => void;
   updateHistory: (newPedals: PedalShape[]) => void;
   undoHistory: () => void;
-  removeBy: (key: keyof PedalShape, value: string) => void
-  clear: () => void
-  updateBoardName: (name: string) => void
-
-  updateFromFetch: ({ pedals, name }: { pedals: PedalShape[], name: string }) => void;
+  removeBy: (key: keyof PedalShape, value: string) => void;
+  clear: () => void;
+  updateBoardName: (name: string) => void;
+  updateBoardId: (id: string) => void;
+  updateFromFetch: ({ id, pedals, name }: { id: string, pedals: PedalShape[], name: string }) => void;
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
@@ -22,6 +23,7 @@ const usePedalStore = create<PedalStore>((set) => ({
   history: [],
   redoLastHistory: null,
   name: null,
+  boardId: null,
 
   addNewPedals: (newPedal) => set((state) => {
     const updatedState = [...state.pedals, newPedal]
@@ -42,7 +44,6 @@ const usePedalStore = create<PedalStore>((set) => ({
   undoHistory: () => set((state) => {
     if (state.history.length < 1) return state
     const updatedState = [...state.history]
-
     const lastState = updatedState.pop()
 
     return ({
@@ -68,7 +69,15 @@ const usePedalStore = create<PedalStore>((set) => ({
     return {
       pedals: [],
       history: [],
-      redoLastHistory: null
+      redoLastHistory: null,
+      name: null,
+      boardId: null
+    }
+  }),
+
+  updateBoardId: (id) => set(() => {
+    return {
+      boardId: id
     }
   }),
 
@@ -78,8 +87,9 @@ const usePedalStore = create<PedalStore>((set) => ({
     }
   }),
 
-  updateFromFetch: ({ pedals, name }) => set(() => {
+  updateFromFetch: ({ id, pedals, name }) => set(() => {
     return {
+      boardId: id,
       pedals,
       name,
       history: [structuredClone(pedals)],
