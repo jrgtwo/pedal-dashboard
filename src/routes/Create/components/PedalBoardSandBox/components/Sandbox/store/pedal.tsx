@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import type { PedalShape } from '../../Pedal/Pedal.types'
 
 interface PedalStore {
+  saveId: null,
   pedals: PedalShape[];
   addNewPedals: (newPedal: PedalShape) => void;
   history: PedalShape[][];
@@ -10,12 +11,15 @@ interface PedalStore {
   redoLastHistory: PedalShape[] | null;
   removeBy: (key: keyof PedalShape, value: string) => void
   clear: () => void
+
+  saveBoard: () => void
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
   pedals: [],
   history: [],
   redoLastHistory: null,
+  saveId: null,
 
   addNewPedals: (newPedal) => set((state) => {
     const updatedState = [...state.pedals, newPedal]
@@ -64,6 +68,11 @@ const usePedalStore = create<PedalStore>((set) => ({
       history: [],
       redoLastHistory: null
     }
+  }),
+
+  saveBoard: () => set(() => {
+    
+    return
   })
 }))
 
