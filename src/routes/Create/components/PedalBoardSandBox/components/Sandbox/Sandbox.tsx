@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react'
 import { useParams } from 'react-router'
 import type { PedalShape } from '../Pedal/Pedal.types'
-
+import { API } from '../../../../../../api/api'
 import { usePedalStore } from './store/pedal'
 import { Pedal } from '../Pedal/Pedal'
 import { useDraggable } from './hooks/useDraggable'
@@ -9,15 +9,28 @@ import testboard from '../../../../../../assets/test-board.png'
 
 
 const Sandbox = () => {
-  const { boardId } = useParams()
-
-  useEffect(() => {
-    //TODO: fetch teh board data and populate pedal board
-  }, [boardId])
-
   const pedals = usePedalStore((state) => state.pedals)
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
+  const { boardId } = useParams()
+
+  const updateFromFetch = usePedalStore((state) => state.updateFromFetch)
+  useEffect(() => {
+    if (!boardId) return
+
+    (async () => {
+      const { data, error } = await API.getBoardById(boardId)
+
+      if (error) {
+        console.log(error)
+        return
+      }
+
+      updateFromFetch({ pedals: data[0].board, name: data[0].name })
+    })()
+  }, [boardId, updateFromFetch])
+
+
 
   const {
     setter,

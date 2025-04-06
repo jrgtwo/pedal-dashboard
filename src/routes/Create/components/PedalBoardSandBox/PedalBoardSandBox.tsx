@@ -1,23 +1,24 @@
-import { useCallback } from 'react'
+import { useCallback, type ChangeEvent } from 'react'
 import './PedalBoardSandBox.css'
 import { Header } from './components/Header/Header'
 import { Sandbox } from './components/Sandbox/Sandbox'
 import { usePedalStore } from './components/Sandbox/store/pedal'
 
 const PedalBoardSandBox = () => {
+  const name = usePedalStore((store) => store.name)
+  const updateBoardName = usePedalStore((store) => store.updateBoardName)
 
-  const saveBoardName = usePedalStore((store) => store.saveBoardName)
-
-  const handleChange = useCallback((event) => {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value
-    saveBoardName(val)
-  }, [saveBoardName])
+    updateBoardName(val)
+  }, [updateBoardName])
 
   return (
     <section role="section"
       className="w-full">
       <input
         type="text"
+        value={name || ''}
         placeholder="Untitled"
         name="board-name"
         onChange={handleChange}

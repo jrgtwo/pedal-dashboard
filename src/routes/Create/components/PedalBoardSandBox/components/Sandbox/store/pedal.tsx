@@ -2,26 +2,25 @@ import { create } from 'zustand'
 import type { PedalShape } from '../../Pedal/Pedal.types'
 
 interface PedalStore {
-  saveId: null,
-  name: string | null,
   pedals: PedalShape[];
-  addNewPedals: (newPedal: PedalShape) => void;
   history: PedalShape[][];
+  redoLastHistory: PedalShape[] | null;
+  name: string | null,
+
+  addNewPedals: (newPedal: PedalShape) => void;
   updateHistory: (newPedals: PedalShape[]) => void;
   undoHistory: () => void;
-  redoLastHistory: PedalShape[] | null;
   removeBy: (key: keyof PedalShape, value: string) => void
   clear: () => void
+  updateBoardName: (name: string) => void
 
-  saveBoard: () => void
-  saveBoardName: (name: string) => void
+  updateFromFetch: ({ pedals, name }: { pedals: PedalShape[], name: string }) => void;
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
   pedals: [],
   history: [],
   redoLastHistory: null,
-  saveId: null,
   name: null,
 
   addNewPedals: (newPedal) => set((state) => {
@@ -73,14 +72,18 @@ const usePedalStore = create<PedalStore>((set) => ({
     }
   }),
 
-  saveBoard: () => set(() => {
-
-    return {}
-  }),
-
-  saveBoardName: (name) => set(() => {
+  updateBoardName: (name) => set(() => {
     return {
       name
+    }
+  }),
+
+  updateFromFetch: ({ pedals, name }) => set(() => {
+    return {
+      pedals,
+      name,
+      history: [structuredClone(pedals)],
+      redoLastHistory: null
     }
   })
 }))
