@@ -9,6 +9,7 @@ import { About } from './routes/About/About'
 import { Create } from './routes/Create/Create'
 import { Login } from './routes/Login/Login'
 import { Register } from './routes/Register/Register'
+import { MyBoards } from './routes/MyBoards/MyBoards'
 import { useLoginStore } from './store/login'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 
@@ -41,6 +42,10 @@ function App() {
         <Navigation />
         <Routes>
           <Route index element={<Home />} />
+          <Route path="/my-boards" element={
+            <ProtectedRoute>
+              <MyBoards />
+            </ProtectedRoute>} />
           <Route path="/create" element={<Create />} />
           <Route path="/about" element={
             <ProtectedRoute>

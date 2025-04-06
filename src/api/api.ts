@@ -53,12 +53,23 @@ const saveBoard = async ({ board }) => {
   return { data, error }
 }
 
+const getBoards = async () => {
+  const { data, error } = await supabase
+    .from('user_boards')
+    .select('*')
+
+  debugger
+
+  return { data, error }
+}
+
 class _API {
   getAllPedals = getAllPedals
   register = register
   login = login
   getSession = getSession
   saveBoard = saveBoard
+  getBoards = getBoards
 }
 const API = new _API();
 export { API }
