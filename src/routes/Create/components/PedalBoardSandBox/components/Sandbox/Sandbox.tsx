@@ -19,7 +19,7 @@ const Sandbox = () => {
     if (!boardId) return
 
     (async () => {
-      const { data, error } = await API.getBoardById(boardId)
+      const { data, error } = await API.pedalBoard.getBoardById(parseInt(boardId, 10))
 
       if (error || !data) {
         console.log(error)

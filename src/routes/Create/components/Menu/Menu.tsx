@@ -5,11 +5,11 @@ import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/ped
 
 const Menu = () => {
 
-  const [pedalList, setPedalList] = useState<PedalShape[]>([])
+  const [pedalList, setPedalList] = useState<PedalShape[] | null>([])
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await API.getAllPedals()
+      const { data, error } = await API.pedalBoard.getAllPedals()
 
       if (error) return
 
@@ -25,7 +25,7 @@ const Menu = () => {
     const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
     if (!pedalId) return
-    const pedalById = pedalList.find((item) => {
+    const pedalById = pedalList?.find((item) => {
       return item.id === pedalId
     })
 

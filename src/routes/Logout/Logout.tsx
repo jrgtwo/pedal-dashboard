@@ -9,7 +9,7 @@ const Logout = () => {
 
   useEffect(() => {
     (async () => {
-      const tryLogout = await API.logout()
+      const tryLogout = await API.auth.logout()
       const { error } = tryLogout
 
       if (error) {

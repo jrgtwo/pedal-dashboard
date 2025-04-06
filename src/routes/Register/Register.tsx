@@ -7,7 +7,7 @@ const Register = () => {
     const email = event.currentTarget.elements.email.value
     const password = event.currentTarget.elements.password.value
 
-    const tryRegister = await API.register({ email, password });
+    const tryRegister = await API.auth.register({ email, password });
     // TODO: do something after registering
   }, []);
 

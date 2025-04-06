@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await API.getSession()
+      const { data, error } = await API.auth.getSession()
 
       if (error) {
         console.error(error)

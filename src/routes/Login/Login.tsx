@@ -13,7 +13,7 @@ const Login = () => {
     const email = (currentTarget.elements.namedItem('email') as HTMLInputElement).value
     const password = (currentTarget.elements.namedItem('password') as HTMLInputElement).value
 
-    const { data, error } = await API.login({ email, password });
+    const { data, error } = await API.auth.login({ email, password });
     if (error) {
       console.error(error)
       return
