@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
+import { Database } from '../../supabase/database.types'
+import type { PedalShape } from '../routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types'
+
 const supabaseUrl = import.meta.env.VITE_DB_URL
 const supabaseKey = import.meta.env.VITE_DB_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient<Database>(supabaseUrl, supabaseKey)
 
 const getAllPedals = async () => {
   const { data, error } = await supabase
@@ -24,9 +27,9 @@ const login = async ({
 }
 
 const logout = async () => {
-  const { data, error } = await supabase.auth.signOut()
+  const { error } = await supabase.auth.signOut()
 
-  return { data, error }
+  return { error }
 }
 
 const register = async ({
@@ -48,7 +51,11 @@ const getSession = async () => {
   return { data, error }
 }
 
-const saveBoard = async ({ id, name, board }) => {
+const saveBoard = async ({
+  id, name, board
+}: {
+  id: number, name: string, board: PedalShape[]
+}) => {
   if (!board) return false
 
   const { data, error } = await supabase
@@ -67,7 +74,7 @@ const getBoards = async () => {
   return { data, error }
 }
 
-const getBoardById = async (id: string) => {
+const getBoardById = async (id: number) => {
   const { data, error } = await supabase
     .from('user_boards')
     .select('*')
