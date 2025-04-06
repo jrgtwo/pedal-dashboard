@@ -47,6 +47,10 @@ function App() {
               <MyBoards />
             </ProtectedRoute>} />
           <Route path="/create" element={<Create />} />
+          <Route path="/create/:boardId" element={
+            <ProtectedRoute>
+              <Create />
+            </ProtectedRoute>} />
           <Route path="/about" element={
             <ProtectedRoute>
               <About />

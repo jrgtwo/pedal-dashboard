@@ -42,12 +42,12 @@ const getSession = async () => {
   return { data, error }
 }
 
-const saveBoard = async ({ board }) => {
+const saveBoard = async ({ name, board }) => {
   if (!board) return false
 
   const { data, error } = await supabase
     .from('user_boards')
-    .upsert({ board })
+    .upsert({ name, board })
     .select()
 
   return { data, error }
@@ -57,8 +57,6 @@ const getBoards = async () => {
   const { data, error } = await supabase
     .from('user_boards')
     .select('*')
-
-  debugger
 
   return { data, error }
 }

@@ -8,12 +8,14 @@ const Header = () => {
   const history = usePedalStore((state) => state.history)
   const undoHistory = usePedalStore((state) => state.undoHistory)
   const clear = usePedalStore((state) => state.clear)
+  const boardName = usePedalStore((state) => state.name)
 
   const saveBoard = useCallback(async () => {
-    if (!user?.id || !pedals) return
+    if (!user || !pedals) return
 
     const { data, error } = await API.saveBoard({
       board: pedals,
+      name: boardName,
     })
 
     if (error) {
@@ -21,7 +23,7 @@ const Header = () => {
       return
     }
     // Do something after saving
-  }, [pedals, user?.id])
+  }, [pedals, user, boardName])
 
   return (
     <header
