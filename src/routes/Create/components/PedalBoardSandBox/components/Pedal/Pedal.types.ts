@@ -5,13 +5,17 @@ export type PedalShape = Database['public']['Tables']['pedals']['Row']
 export type BoardShape = Database['public']['Tables']['user_boards']['Row']
 export type UpdateBoardShape = Database['public']['Tables']['user_boards']['Insert']
 
+export interface DraggablePedalShape extends PedalShape {
+  dragId: number
+}
+
 export type PedalProps = {
   w: number,
   h: number,
   x: number,
   y: number,
   pedalId: string,
-  img?: string,
+  img?: string | null,
   name?: string,
-  handleRemove: (key: keyof PedalShape, value: string) => void
+  handleRemove: (key: keyof DraggablePedalShape, value: string) => void
 }

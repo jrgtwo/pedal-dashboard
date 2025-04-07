@@ -1,13 +1,9 @@
 import { Link } from 'react-router'
 import { useLoginStore, LOGIN_STATES } from '../../store/login'
-import { useEffect } from 'react'
 
 const Header = () => {
   const user_status = useLoginStore((state) => state.user_status)
 
-  useEffect(() => {
-    console.log('===>', user_status)
-  }, [user_status])
   return (
     <header role="header"
       className="mt-20 flex flex-row justify-between">

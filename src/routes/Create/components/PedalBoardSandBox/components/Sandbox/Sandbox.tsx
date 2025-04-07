@@ -1,12 +1,11 @@
 import { useEffect, useCallback } from 'react'
 import { useParams } from 'react-router'
-import type { PedalShape } from '../Pedal/Pedal.types'
+import type { DraggablePedalShape } from '../Pedal/Pedal.types'
 import { API } from '../../../../../../api/api'
 import { usePedalStore } from './store/pedal'
 import { Pedal } from '../Pedal/Pedal'
 import { useDraggable } from './hooks/useDraggable'
 import testboard from '../../../../../../assets/test-board.png'
-
 
 const Sandbox = () => {
   const pedals = usePedalStore((state) => state.pedals)
@@ -15,6 +14,7 @@ const Sandbox = () => {
   const { boardId } = useParams()
 
   const updateFromFetch = usePedalStore((state) => state.updateFromFetch)
+
   useEffect(() => {
     if (!boardId) return
 
@@ -37,7 +37,7 @@ const Sandbox = () => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
-  } = useDraggable<PedalShape>(pedals)
+  } = useDraggable<DraggablePedalShape>(pedals)
 
   useEffect(() => {
     setter(pedals)
@@ -55,7 +55,7 @@ const Sandbox = () => {
     return () => { ignore = true }
   }, [onDraggingComplete, updateHistory])
 
-  const handleRemove = useCallback((key: keyof PedalShape, value: string) => {
+  const handleRemove = useCallback((key: keyof DraggablePedalShape, value: string) => {
     removeBy(key, value)
   }, [removeBy])
 
@@ -67,7 +67,7 @@ const Sandbox = () => {
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
       <img src={testboard} alt="testboard" />
-      {draggableArray.map((pedal,) => (
+      {draggableArray.map((pedal) => (
         <Pedal
           handleRemove={handleRemove}
           pedalId={`${pedal.dragId}`}

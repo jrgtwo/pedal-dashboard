@@ -17,7 +17,6 @@ const MyBoards = () => {
       }
       setBoards(data)
     })()
-
   }, [])
 
   return (

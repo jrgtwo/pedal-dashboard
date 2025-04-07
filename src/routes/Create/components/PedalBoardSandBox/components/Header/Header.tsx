@@ -3,6 +3,7 @@ import { API } from "../../../../../../api/api"
 import { usePedalStore } from "../Sandbox/store/pedal"
 import { useLoginStore } from '../../../../../../store/login'
 import type { UpdateBoardShape } from '../Pedal/Pedal.types'
+
 const Header = () => {
   const user = useLoginStore((state) => state.user)
   const pedals = usePedalStore((state) => state.pedals)
@@ -23,7 +24,7 @@ const Header = () => {
     }
 
     if (boardId) {
-      toSave.id = parseInt(boardId, 10)
+      toSave.id = boardId
     }
 
     const { data, error } = await API.pedalBoard.saveBoard(toSave)

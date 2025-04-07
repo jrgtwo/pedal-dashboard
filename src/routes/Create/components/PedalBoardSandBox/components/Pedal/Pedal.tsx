@@ -1,5 +1,14 @@
 import type { PedalProps } from "./Pedal.types";
-const Pedal = ({ w, h, x, y, pedalId, img, name, handleRemove }: PedalProps) => {
+const Pedal = ({
+  w,
+  h,
+  x,
+  y,
+  pedalId,
+  img,
+  name,
+  handleRemove
+}: PedalProps) => {
 
   return (
     <div
