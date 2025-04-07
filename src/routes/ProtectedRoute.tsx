@@ -7,13 +7,13 @@ type ProtectedRouteProps = {
 };
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isLoggedIn = useLoginStore((state) => state.isLoggedIn)
+  const user_status = useLoginStore((state) => state.user_status)
 
-  if (isLoggedIn === LOGIN_STATES.LOGGED_OUT) {
+  if (user_status === LOGIN_STATES.LOGGED_OUT) {
     return <Navigate to="/login" />
   }
 
-  if (isLoggedIn === LOGIN_STATES.NOT_CHECKED) {
+  if (user_status === LOGIN_STATES.NOT_CHECKED) {
     return null
   }
 

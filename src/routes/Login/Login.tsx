@@ -14,12 +14,11 @@ const Login = () => {
     const password = (currentTarget.elements.namedItem('password') as HTMLInputElement).value
 
     const { data, error } = await API.auth.login({ email, password });
-    if (error || !data) {
+    if (error || !data || !data?.user) {
       console.error(error)
       return
     }
-
-    setLoginStatus(data)
+    setLoginStatus(data.user)
     navigate('/')
 
   }, [setLoginStatus, navigate]);

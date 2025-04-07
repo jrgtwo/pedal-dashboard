@@ -26,7 +26,6 @@ function App() {
         console.error(error)
         return
       }
-
       if (data?.session?.user) {
         setLoginStatus(data.session.user)
       } else {

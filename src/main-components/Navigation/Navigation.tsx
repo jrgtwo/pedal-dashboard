@@ -3,7 +3,7 @@ import { useLoginStore, LOGIN_STATES } from '../../store/login'
 
 const Navigation = () => {
 
-  const isLoggedIn = useLoginStore((store) => store.isLoggedIn)
+  const user_status = useLoginStore((store) => store.user_status)
 
   return (
     <nav role="navigation"
@@ -11,7 +11,7 @@ const Navigation = () => {
       <ol
         className="flex flex-row justify-self-end gap-4">
         {
-          isLoggedIn === LOGIN_STATES.LOGGED_IN &&
+          user_status === LOGIN_STATES.LOGGED_IN &&
           <li>
             <NavLink
               to="/my-boards"

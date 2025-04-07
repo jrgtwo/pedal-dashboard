@@ -1,10 +1,13 @@
 import { Link } from 'react-router'
 import { useLoginStore, LOGIN_STATES } from '../../store/login'
-
+import { useEffect } from 'react'
 
 const Header = () => {
-  const isLoggedIn = useLoginStore((state) => state.isLoggedIn)
+  const user_status = useLoginStore((state) => state.user_status)
 
+  useEffect(() => {
+    console.log('===>', user_status)
+  }, [user_status])
   return (
     <header role="header"
       className="mt-20 flex flex-row justify-between">
@@ -13,7 +16,7 @@ const Header = () => {
         <p>Layout and save your dream pedalboard</p>
       </Link>
       {
-        isLoggedIn === LOGIN_STATES.LOGGED_IN
+        user_status === LOGIN_STATES.LOGGED_IN
           ? <Link to="/logout">Logout</Link>
           : <Link to="/login">Login</Link>
       }
