@@ -1,15 +1,28 @@
-import { useCallback, type FormEvent } from 'react'
+import { useState, useCallback, type FormEvent, ChangeEvent } from 'react'
 import { API } from '../../api/api'
 
 const Register = () => {
+
+  const [email, setEmail] = useState<string>()
+  const [password, setPassword] = useState<string>()
+
   const handleFormSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault()
-    const email = event.currentTarget.elements.email.value
-    const password = event.currentTarget.elements.password.value
 
+    if (!email || !password) return false
     const tryRegister = await API.auth.register({ email, password });
     // TODO: do something after registering
-  }, []);
+  }, [email, password]);
+
+  const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setEmail(value)
+  }, [])
+
+  const handlePasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setPassword(value)
+  }, [])
 
   return (
     <section>
@@ -27,6 +40,7 @@ const Register = () => {
             type="email"
             name="email"
             required
+            onChange={handleEmailChange}
             className="ml-2 bg-gray-50 border-1 border-gray-300 rounded-md" />
         </div>
         <div
@@ -38,6 +52,7 @@ const Register = () => {
             type="password"
             name="password"
             required
+            onChange={handlePasswordChange}
             className="ml-2 bg-gray-50 border-1 border-gray-300 rounded-md" />
         </div>
         <input
