@@ -1,4 +1,4 @@
-import { useCallback, type FormEvent } from 'react'
+import { ChangeEvent, useCallback, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
 import { API } from '../../api/api';
 import { useLoginStore } from '../../store/login';
@@ -7,11 +7,13 @@ const Login = () => {
   const navigate = useNavigate()
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
 
+  const [email, setEmail] = useState<string>()
+  const [password, setPassword] = useState<string>()
+
   const handleFormSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault()
-    const currentTarget = event.currentTarget as HTMLFormElement
-    const email = (currentTarget.elements.namedItem('email') as HTMLInputElement).value
-    const password = (currentTarget.elements.namedItem('password') as HTMLInputElement).value
+
+    if (!email || !password) return false
 
     const { data, error } = await API.auth.login({ email, password });
     if (error || !data || !data?.user) {
@@ -21,7 +23,17 @@ const Login = () => {
     setLoginStatus(data.user)
     navigate('/')
 
-  }, [setLoginStatus, navigate]);
+  }, [setLoginStatus, navigate, email, password]);
+
+
+  const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setEmail(value)
+  }, [])
+  const handlePasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setPassword(value)
+  }, [])
 
   return (
     <section>
@@ -39,6 +51,7 @@ const Login = () => {
             type="email"
             name="email"
             required
+            onChange={handleEmailChange}
             className="ml-2 bg-gray-50 border-1 border-gray-300 rounded-md" />
         </div>
         <div
@@ -50,6 +63,7 @@ const Login = () => {
             type="password"
             name="password"
             required
+            onChange={handlePasswordChange}
             className="ml-2 bg-gray-50 border-1 border-gray-300 rounded-md" />
         </div>
         <input
