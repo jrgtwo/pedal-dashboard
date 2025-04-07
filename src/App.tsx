@@ -13,7 +13,7 @@ import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 import { useLoginStore } from './store/login'
 import { ProtectedRoute } from './routes/ProtectedRoute'
-import { ROUTES } from './constants/urls'
+import { ROUTES } from './constants/routes'
 
 function App() {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
@@ -72,17 +72,17 @@ function App() {
             } />
 
           <Route
-            path="/login"
+            path={ROUTES.LOGIN}
             element={
               <Login />
             } />
           <Route
-            path="/logout"
+            path={ROUTES.LOGOUT}
             element={
               <Logout />
             } />
           <Route
-            path="/register"
+            path={ROUTES.REGISTER}
             element={
               <Register />
             } />

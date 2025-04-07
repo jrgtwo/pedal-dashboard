@@ -3,7 +3,11 @@ const ROUTES = {
   HOME: '/',
   CREATE: '/create',
   CREATE_BY_BOARD_ID: '/create/:boardId',
-  ABOUT: '/about'
+  ABOUT: '/about',
+
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  REGISTER: '/register'
 }
 
 export { ROUTES }
