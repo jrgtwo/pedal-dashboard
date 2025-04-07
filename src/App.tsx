@@ -13,7 +13,7 @@ import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 import { useLoginStore } from './store/login'
 import { ProtectedRoute } from './routes/ProtectedRoute'
-
+import { ROUTES } from './constants/urls'
 
 function App() {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
@@ -22,7 +22,7 @@ function App() {
     (async () => {
       const { data, error } = await API.auth.getSession()
 
-      if (error) {
+      if (error || !data) {
         console.error(error)
         return
       }
@@ -42,24 +42,51 @@ function App() {
         <Header />
         <Navigation />
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/my-boards" element={
-            <ProtectedRoute>
-              <MyBoards />
-            </ProtectedRoute>} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/create/:boardId" element={
-            <ProtectedRoute>
+          <Route
+            index
+            element={
+              <Home />
+            } />
+          <Route
+            path={ROUTES.MY_BOARDS} element={
+              <ProtectedRoute>
+                <MyBoards />
+              </ProtectedRoute>
+            } />
+          <Route
+            path={ROUTES.CREATE}
+            element={
               <Create />
-            </ProtectedRoute>} />
-          <Route path="/about" element={
-            <ProtectedRoute>
-              <About />
-            </ProtectedRoute>
-          } />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/register" element={<Register />} />
+            } />
+          <Route
+            path={ROUTES.CREATE_BY_BOARD_ID}
+            element={
+              <ProtectedRoute>
+                <Create />
+              </ProtectedRoute>
+            } />
+          <Route
+            path={ROUTES.ABOUT} element={
+              <ProtectedRoute>
+                <About />
+              </ProtectedRoute>
+            } />
+
+          <Route
+            path="/login"
+            element={
+              <Login />
+            } />
+          <Route
+            path="/logout"
+            element={
+              <Logout />
+            } />
+          <Route
+            path="/register"
+            element={
+              <Register />
+            } />
         </Routes>
         <Footer />
       </BrowserRouter>

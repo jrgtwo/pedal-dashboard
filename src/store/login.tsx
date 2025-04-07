@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-
+import type { UserResponse } from '@supabase/supabase-js'
 export enum LOGIN_STATES {
   LOGGED_IN,
   LOGGED_OUT,
@@ -7,10 +7,10 @@ export enum LOGIN_STATES {
 }
 
 interface LoginStore {
-  user: any | null
+  user: UserResponse['data'] | null
   logout: () => void
   isLoggedIn: LOGIN_STATES,
-  setLoginStatus: (userData: any | null) => void
+  setLoginStatus: (userData: UserResponse['data']) => void
 }
 
 const useLoginStore = create<LoginStore>((set) => ({
