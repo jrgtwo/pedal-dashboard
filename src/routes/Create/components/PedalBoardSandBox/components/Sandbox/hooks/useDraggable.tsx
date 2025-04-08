@@ -128,8 +128,8 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
           ((location.y + pedalH) > yPos)
         )
       })
-      // make blocking collision optional because its not the best experience
-      // if (isColliding) return
+
+      console.log(isColliding)
 
       const newCurrDraggable = { ...currDraggable };
 
