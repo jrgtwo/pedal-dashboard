@@ -114,7 +114,24 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
         event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
       ))
 
-      const newCurrDraggable = { ...currDraggable }
+
+
+      const isColliding = [...draggableMap].find(([id, { location }]) => {
+        if (id === currDraggable.dragId) return
+        const pedalW = location.w * 30
+        const pedalH = location.h * 30
+
+        return (
+          (location.x < (xPos + currDraggableWidth)) &&
+          ((location.x + pedalW) > xPos) &&
+          (location.y < (yPos + currDraggableHeight)) &&
+          ((location.y + pedalH) > yPos)
+        )
+      })
+      // make blocking collision optional because its not the best experience
+      // if (isColliding) return
+
+      const newCurrDraggable = { ...currDraggable };
 
       newCurrDraggable.location = { ...newCurrDraggable.location }
       newCurrDraggable.location.x = xPos
@@ -127,7 +144,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       setLastDragTime(Date.now())
     }
   }, [
-    isDragging, currDraggable,
+    isDragging, currDraggable, draggableMap,
     sandboxTop, sandboxLeft, sandboxWidth, sandboxHeight,
     currDraggableWidth, currDraggableHeight, currDraggableXOffset, currDraggableYOffset,
     setDraggableMap, lastDragTime
