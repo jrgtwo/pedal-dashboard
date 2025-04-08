@@ -66,7 +66,12 @@ const Sandbox = () => {
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
-      <img src={testboard} alt="testboard" />
+      <img
+        src={testboard}
+        alt="testboard"
+        width={24 * 30}
+        height={14.5 * 30}
+        className="max-w-none" />
       {draggableArray.map((pedal) => (
         <Pedal
           handleRemove={handleRemove}

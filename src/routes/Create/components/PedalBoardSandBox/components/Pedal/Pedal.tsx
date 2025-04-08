@@ -15,7 +15,7 @@ const Pedal = ({
       data-draggable-id={pedalId}
       role="pedal"
       className={`draggable`}
-      style={{ position: 'absolute', top: y, left: x, width: w, height: h }}>
+      style={{ position: 'absolute', top: y, left: x, height: (h * 30), width: (w * 30) }}>
       {`${name}-${x}-${y}`}
       <button
         onClick={(event) => {
@@ -28,7 +28,7 @@ const Pedal = ({
         <img
           src={`/src/assets/${img}`}
           alt={name}
-          className={`w-${w} h-${h} absolute top-0 left-0 z-0`}
+          className={`w-${w * 30} h-${h * 30} absolute top-0 left-0 z-0`}
         />
       }
     </div >
