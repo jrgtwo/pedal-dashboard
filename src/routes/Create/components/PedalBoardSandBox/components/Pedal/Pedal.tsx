@@ -14,15 +14,14 @@ const Pedal = ({
     <div
       data-draggable-id={pedalId}
       role="pedal"
-      className={`draggable`}
+      className="group draggable hover:z-20 hover:cursor-grab active:cursor-grabbing"
       style={{ position: 'absolute', top: y, left: x, height: (h * 30), width: (w * 30) }}>
-      {`${name}-${x}-${y}`}
       <button
         onClick={(event) => {
           event.preventDefault()
           handleRemove('dragId', pedalId)
         }}
-        className="remove text-red-700 absolute top-2 right-2 z-10 bg-amber-50">X</button>
+        className="group-hover:opacity-100 opacity-0 remove text-red-700 absolute top-2 right-2 z-10 bg-amber-50">X</button>
       {
         img &&
         <img
