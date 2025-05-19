@@ -16,10 +16,13 @@ interface LoginStore {
 const useLoginStore = create<LoginStore>((set) => ({
   user: null,
   user_status: LOGIN_STATES.NOT_CHECKED,
-  setLoginStatus: (userData) => set(() => ({
-    user_status: userData ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.LOGGED_OUT,
-    user: userData,
-  })),
+  setLoginStatus: (userData) => set(() => {
+    // debugger
+    return ({
+      user_status: userData ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.LOGGED_OUT,
+      user: userData,
+    })
+  }),
   logout: () => set(() => ({
     user_status: LOGIN_STATES.LOGGED_OUT,
     user: null
