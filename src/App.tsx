@@ -11,30 +11,13 @@ import { Login } from './routes/Login/Login'
 import { Logout } from './routes/Logout/Logout'
 import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
-import { useLoginStore } from './store/login'
+
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
 
 function App() {
-  const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
-  useGetSession({ setLoginStatus })
-  // debugger
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data, error } = await API.auth.getSession()
-
-  //     if (error || !data) {
-  //       console.error(error)
-  //       return
-  //     }
-  //     if (data?.session?.user) {
-  //       setLoginStatus(data.session.user)
-  //     } else {
-  //       setLoginStatus(null)
-  //     }
-  //   })()
-  // }, [setLoginStatus])
+  useGetSession()
 
   return (
     <section role="app"

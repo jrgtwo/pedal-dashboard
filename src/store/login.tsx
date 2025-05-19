@@ -17,7 +17,6 @@ const useLoginStore = create<LoginStore>((set) => ({
   user: null,
   user_status: LOGIN_STATES.NOT_CHECKED,
   setLoginStatus: (userData) => set(() => {
-    // debugger
     return ({
       user_status: userData ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.LOGGED_OUT,
       user: userData,

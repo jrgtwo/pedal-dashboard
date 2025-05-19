@@ -8,7 +8,6 @@ class Auth {
 
   getSession = async () => {
     const { data, error } = await this.db.auth.getSession()
-
     return { data, error }
   }
 

@@ -1,33 +1,24 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { API } from '../../api/api'
+import { useLoginStore } from '../../store/login'
 
-function useGetSession({ setLoginStatus }) {
-  const { isLoading, isSuccess, data, isError } = useQuery({ queryKey: ['session'], queryFn: API.auth.getSession })
-  // debugger
-
+function useGetSession() {
+  const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
+  const {
+    isLoading, isSuccess, data, isError
+  } = useQuery({
+    queryKey: ['session'], queryFn: API.auth.getSession
+  })
 
   if (isError) {
-    debugger
     console.error(error)
     return
   }
 
-  if (!isLoading) {
-    debugger
-  }
   if (isSuccess && data && data.data?.session?.user) {
-    debugger
     setLoginStatus(data.data.session.user)
-  } else {
-    // debugger
+  } else if (!isLoading && isSuccess) {
     setLoginStatus(null)
-    // setLoginStatus(query)
   }
 }
 
