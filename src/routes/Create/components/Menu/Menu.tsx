@@ -1,21 +1,9 @@
-import { useState, useCallback, useEffect, type MouseEvent } from 'react'
-import type { PedalShape } from '../PedalBoardSandBox/components/Pedal/Pedal.types'
-import { API } from '../../../../api/api'
+import { useCallback, type MouseEvent } from 'react'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
-
+import { useGetAllPedals } from '../../../../queryHooks/useGetAllPedals'
 const Menu = () => {
 
-  const [pedalList, setPedalList] = useState<PedalShape[] | null>([])
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await API.pedalBoard.getAllPedals()
-
-      if (error) return
-
-      setPedalList(data)
-    })()
-  }, [])
+  const { isLoading, isSuccess, isError, pedalList } = useGetAllPedals()
 
   const addNewPedal = usePedalStore((state) => state.addNewPedals)
 
@@ -36,29 +24,37 @@ const Menu = () => {
   }, [pedalList, addNewPedal])
 
   return (
-    <section
-      className="w-1/4">
-      <h4
-        className="font-black">Options</h4>
-      <menu role="menu"
-        className="mt-5">
-        <li>
-          <button>Boards v</button>
-        </li>
-        <li>
-          <button>Pedals v</button>
-          <ol>
-            {pedalList && pedalList.map((item) => (
-              <li key={`${item.name}:${item.id}`}>
-                <button
-                  data-pedal-id={`${item.id}`}
-                  onClick={savePedalDataById}>{item.name}</button>
-              </li>
-            ))}
-          </ol>
-        </li>
-      </menu >
-    </section >
+    <>
+      {isLoading && (<p>Loading...</p>)}
+
+      {isError && <p>{pedalList?.error}</p>}
+      {isSuccess && pedalList && pedalList.length === 0 && <p>No pedals found</p>}
+      {isSuccess && pedalList && pedalList.length > 0 && (
+        <section
+          className="w-1/4">
+          <h4
+            className="font-black">Options</h4 >
+          <menu role="menu"
+            className="mt-5">
+            <li>
+              <button>Boards v</button>
+            </li>
+            <li>
+              <button>Pedals v</button>
+              <ol>
+                {pedalList && pedalList.map((item) => (
+                  <li key={`${item.name}:${item.id}`}>
+                    <button
+                      data-pedal-id={`${item.id}`}
+                      onClick={savePedalDataById}>{item.name}</button>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          </menu >
+        </section >
+      )}
+    </>
   )
 }
 
