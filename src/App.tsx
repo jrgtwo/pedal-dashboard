@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router'
-import { API } from './api/api'
 import { Header } from './main-components/Header/Header'
 import { Navigation } from './main-components/Navigation/Navigation'
 import { Footer } from './main-components/Footer/Footer'

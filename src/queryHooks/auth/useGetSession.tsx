@@ -4,6 +4,7 @@ import { useLoginStore } from '../../store/login'
 
 function useGetSession() {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
+  
   const {
     isLoading, isSuccess, data, isError
   } = useQuery({
