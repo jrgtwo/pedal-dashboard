@@ -16,7 +16,6 @@ class Auth {
   }: {
     email: string, password: string
   }) => {
-    debugger
     const { data, error } = await this.db.auth.signInWithPassword({
       email,
       password
