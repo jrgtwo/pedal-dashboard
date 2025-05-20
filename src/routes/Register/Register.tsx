@@ -1,8 +1,11 @@
 import { useState, useCallback, type FormEvent, ChangeEvent } from 'react'
-import { API } from '../../api/api'
+import { useRegister } from '../../queryHooks/auth/useRegister'
+import { useNavigate } from 'react-router'
 
 const Register = () => {
 
+  const navigate = useNavigate()
+  const { mutation } = useRegister()
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
 
@@ -10,9 +13,8 @@ const Register = () => {
     event.preventDefault()
 
     if (!email || !password) return false
-    const tryRegister = await API.auth.register({ email, password });
-    // TODO: do something after registering
-  }, [email, password]);
+    mutation.mutate({ email, password })
+  }, [mutation, email, password]);
 
   const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -24,8 +26,15 @@ const Register = () => {
     setPassword(value)
   }, [])
 
+  if (mutation.isSuccess) {
+    navigate('/')
+  }
+
   return (
     <section>
+      {mutation.isError && (
+        <h2>There was an error</h2>
+      )}
       <form
         onSubmit={handleFormSubmit}
         className="w-120 p-10 m-auto text-gray-700 flex flex-col border-1 border-gray-300 rounded-md bg-gray-50">
