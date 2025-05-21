@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { API } from '../api/api'
-import type { Database } from '../../database.types'
+import { API } from '../../api/api'
+import type { Database } from '../../../database.types'
 
 type USER_BOARD = Database['public']['Tables']['user_boards']['Row']
 

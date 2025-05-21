@@ -1,6 +1,6 @@
 import { useCallback, type MouseEvent } from 'react'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
-import { useGetAllPedals } from '../../../../queryHooks/useGetAllPedals'
+import { useGetAllPedals } from '../../../../queryHooks/pedalBoard/useGetAllPedals'
 const Menu = () => {
 
   const { isLoading, isSuccess, isError, pedalList } = useGetAllPedals()

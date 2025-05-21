@@ -1,34 +1,24 @@
 import { useEffect, useCallback } from 'react'
 import { useParams } from 'react-router'
 import type { DraggablePedalShape } from '../Pedal/Pedal.types'
-import { API } from '../../../../../../api/api'
 import { usePedalStore } from './store/pedal'
 import { Pedal } from '../Pedal/Pedal'
 import { useDraggable } from './hooks/useDraggable'
 import testboard from '../../../../../../assets/test-board.png'
+import { useGetBoardById } from '../../../../../../queryHooks/pedalBoard/useGetBoardById'
 
 const Sandbox = () => {
   const pedals = usePedalStore((state) => state.pedals)
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
   const { boardId } = useParams()
-
+  const { status, data, isSuccess } = useGetBoardById(Number(boardId))
   const updateFromFetch = usePedalStore((state) => state.updateFromFetch)
 
-  useEffect(() => {
-    if (!boardId) return
-
-    (async () => {
-      const { data, error } = await API.pedalBoard.getBoardById(parseInt(boardId, 10))
-
-      if (error || !data) {
-        console.log(error)
-        return
-      }
-
-      updateFromFetch({ id: data[0].id, pedals: data[0].board, name: data[0].name })
-    })()
-  }, [boardId, updateFromFetch])
+  if (isSuccess) {
+    console.log(status)
+    updateFromFetch({ id: data?.data?.[0].id, pedals: data?.data?.[0].board, name: data?.data?.[0].name })
+  }
 
   const {
     setter,

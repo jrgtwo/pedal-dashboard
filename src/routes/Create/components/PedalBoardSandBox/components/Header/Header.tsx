@@ -1,8 +1,8 @@
-import { useCallback } from 'react'
-import { API } from "../../../../../../api/api"
+import { useCallback, useEffect } from 'react'
 import { usePedalStore } from "../Sandbox/store/pedal"
 import { useLoginStore } from '../../../../../../store/login'
 import type { UpdateBoardShape } from '../Pedal/Pedal.types'
+import { useSaveBoard } from '../../../../../../queryHooks/pedalBoard/useSaveBoard'
 
 const Header = () => {
   const user = useLoginStore((state) => state.user)
@@ -12,6 +12,7 @@ const Header = () => {
   const clear = usePedalStore((state) => state.clear)
   const boardName = usePedalStore((state) => state.name)
   const boardId = usePedalStore((state) => state.boardId)
+  const { mutation } = useSaveBoard()
 
   const saveBoard = useCallback(async () => {
     if (!user || !pedals) return
@@ -27,16 +28,14 @@ const Header = () => {
       toSave.id = boardId
     }
 
-    const { data, error } = await API.pedalBoard.saveBoard(toSave)
+    mutation.mutate(toSave)
+  }, [pedals, user, boardName, boardId, mutation])
 
-    if (error) {
-      console.log(error)
-      return
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      console.log('===yay')
     }
-
-    // Do something after saving
-    console.log(data)
-  }, [pedals, user, boardName, boardId])
+  }, [mutation.isSuccess])
 
   return (
     <header

@@ -49,9 +49,7 @@ function App() {
             } />
           <Route
             path={ROUTES.ABOUT} element={
-              <ProtectedRoute>
-                <About />
-              </ProtectedRoute>
+              <About />
             } />
 
           <Route

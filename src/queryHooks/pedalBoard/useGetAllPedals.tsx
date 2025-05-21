@@ -1,4 +1,4 @@
-import { API } from "../api/api"
+import { API } from "../../api/api"
 import { useQuery } from "@tanstack/react-query"
 
 const useGetAllPedals = () => {
@@ -6,7 +6,7 @@ const useGetAllPedals = () => {
   const {
     isLoading, isSuccess, data, isError
   } = useQuery({
-    queryKey: ['allPedals'],
+    queryKey: ['pedals'],
     queryFn: API.pedalBoard.getAllPedals
   })
 

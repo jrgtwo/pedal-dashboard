@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router'
-import { useGetBoards } from '../../queryHooks/useGetBoards'
+import { useGetBoards } from '../../queryHooks/pedalBoard/useGetBoards'
 
 const MyBoards = () => {
   const { isError, isLoading, boards, error } = useGetBoards()
