@@ -14,7 +14,7 @@ const Header = () => {
   const boardId = usePedalStore((state) => state.boardId)
   const { mutation } = useSaveBoard()
 
-  const saveBoard = useCallback(async () => {
+  const saveBoard = useCallback(() => {
     if (!user || !pedals) return
 
     const toSave: UpdateBoardShape = {
@@ -27,7 +27,7 @@ const Header = () => {
     if (boardId) {
       toSave.id = boardId
     }
-
+    debugger
     mutation.mutate(toSave)
   }, [pedals, user, boardName, boardId, mutation])
 

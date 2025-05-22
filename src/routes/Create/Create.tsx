@@ -5,10 +5,8 @@ import { usePedalStore } from './components/PedalBoardSandBox/components/Sandbox
 
 const Create = () => {
   const clear = usePedalStore((state) => state.clear)
-  useEffect(() => {
-    console.log('create!')
-    clear()
-  }, [clear])
+  clear()
+
   return (
     <section>
       <h2>Create Your New Pedalboard</h2>

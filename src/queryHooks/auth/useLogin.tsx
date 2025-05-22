@@ -14,6 +14,7 @@ function useLogin() {
     return
   }
   if (mutation.isSuccess && mutation.data && mutation.data.data?.session?.user) {
+
     setLoginStatus(mutation.data.data.session.user)
   }
 

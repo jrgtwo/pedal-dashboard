@@ -14,6 +14,7 @@ const Login = () => {
 
     if (!email || !password) return false
     mutation.mutate({ email, password })
+
   }, [mutation, email, password]);
 
   if (mutation.isSuccess && mutation.data && mutation.data.data?.session?.user) {

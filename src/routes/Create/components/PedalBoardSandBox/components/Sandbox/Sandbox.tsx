@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router'
 import type { DraggablePedalShape } from '../Pedal/Pedal.types'
 import { usePedalStore } from './store/pedal'
@@ -8,16 +8,18 @@ import testboard from '../../../../../../assets/test-board.png'
 import { useGetBoardById } from '../../../../../../queryHooks/pedalBoard/useGetBoardById'
 
 const Sandbox = () => {
+  const [hasSetInitial, setHasSetInitial] = useState(false)
   const pedals = usePedalStore((state) => state.pedals)
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
   const { boardId } = useParams()
-  const { status, data, isSuccess } = useGetBoardById(Number(boardId))
+  const query = useGetBoardById(Number(boardId))
   const updateFromFetch = usePedalStore((state) => state.updateFromFetch)
 
-  if (isSuccess) {
-    console.log(status)
-    updateFromFetch({ id: data?.data?.[0].id, pedals: data?.data?.[0].board, name: data?.data?.[0].name })
+  if (query.isSuccess && !hasSetInitial) {
+
+    setHasSetInitial(true)
+    updateFromFetch({ id: query.data?.data?.[0].id, pedals: query.data?.data?.[0].board, name: query.data?.data?.[0].name })
   }
 
   const {

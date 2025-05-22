@@ -34,6 +34,7 @@ class PedalBoard {
   }
 
   saveBoard = async (toSave: UpdateBoardShape) => {
+    debugger
     if (!toSave.board) return { error: 'no board found', data: null }
 
     const { data, error } = await this.db
