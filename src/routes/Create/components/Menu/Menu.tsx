@@ -3,6 +3,18 @@ import type { PedalShape } from '../PedalBoardSandBox/components/Pedal/Pedal.typ
 import { API } from '../../../../api/api'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
 
+
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+
 const Menu = () => {
 
   const [pedalList, setPedalList] = useState<PedalShape[] | null>([])
@@ -40,24 +52,27 @@ const Menu = () => {
       className="w-1/4">
       <h4
         className="font-black">Options</h4>
-      <menu role="menu"
-        className="mt-5">
-        <li>
-          <button>Boards v</button>
-        </li>
-        <li>
-          <button>Pedals v</button>
-          <ol>
-            {pedalList && pedalList.map((item) => (
-              <li key={`${item.name}:${item.id}`}>
-                <button
-                  data-pedal-id={`${item.id}`}
-                  onClick={savePedalDataById}>{item.name}</button>
-              </li>
-            ))}
-          </ol>
-        </li>
-      </menu >
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Pedals</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="flex">
+                <div>
+                  {pedalList && pedalList.map((item) => (
+                    <button
+                      className="block"
+                      // className="w-[500px]"
+                      data-pedal-id={`${item.id}`}
+                      key={`${item.name}:${item.id}`}
+                      onClick={savePedalDataById}>{item.name}</button>
+                  ))}
+                </div>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </section >
   )
 }

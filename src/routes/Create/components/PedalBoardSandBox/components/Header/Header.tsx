@@ -27,7 +27,7 @@ const Header = () => {
     if (boardId) {
       toSave.id = boardId
     }
-    debugger
+
     mutation.mutate(toSave)
   }, [pedals, user, boardName, boardId, mutation])
 

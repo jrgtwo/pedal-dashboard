@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { API } from '../../api/api'
-import { useLoginStore } from '../../store/login'
+import { LOGIN_STATES, useLoginStore } from '../../store/login'
 
-function useGetSession() {
+const useGetSession = () => {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
+  const user_status = useLoginStore((state) => state.user_status)
 
   const {
     isLoading, isSuccess, data, isError
@@ -11,16 +13,17 @@ function useGetSession() {
     queryKey: ['session'], queryFn: API.auth.getSession
   })
 
-  if (isError) {
-    console.error(data?.error)
-    return
-  }
+  useEffect(() => {
+    if (user_status === LOGIN_STATES.NOT_CHECKED) {
+      if (isSuccess && data && data.data?.session?.user) {
+        setLoginStatus(data.data.session.user)
+      } else if (!isLoading && isSuccess) {
+        setLoginStatus(null)
+      }
+    }
+  }, [isSuccess, data, isLoading, setLoginStatus, user_status])
 
-  if (isSuccess && data && data.data?.session?.user) {
-    setLoginStatus(data.data.session.user)
-  } else if (!isLoading && isSuccess) {
-    setLoginStatus(null)
-  }
+
 }
 
 export { useGetSession }
