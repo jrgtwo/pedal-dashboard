@@ -1,37 +1,26 @@
-import { useState, useCallback, useEffect, type MouseEvent } from 'react'
-import type { PedalShape } from '../PedalBoardSandBox/components/Pedal/Pedal.types'
-import { API } from '../../../../api/api'
+import { useCallback, useMemo, type MouseEvent } from 'react'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
 
+// import { ScrollArea } from "@/components/ui/scroll-area"
+// import { Button } from '@/components/ui/button'
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from "@/components/ui/dialog"
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
+import { PedalSelector } from './PedalSelector'
+import { useGetAllPedals } from '@/queryHooks/pedalBoard/useGetAllPedals'
 
 const Menu = () => {
-
-  const [pedalList, setPedalList] = useState<PedalShape[] | null>([])
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await API.pedalBoard.getAllPedals()
-
-      if (error) return
-
-      setPedalList(data)
-    })()
-  }, [])
+  const { isSuccess, isLoading, pedalList } = useGetAllPedals()
 
   const addNewPedal = usePedalStore((state) => state.addNewPedals)
 
-  const savePedalDataById = useCallback((event: MouseEvent) => {
+  const savePedalDataById = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const elem = event.target as HTMLElement
     const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
@@ -44,7 +33,6 @@ const Menu = () => {
     if (!pedalById) return
 
     return addNewPedal({ ...pedalById, dragId: Date.now() })
-
   }, [pedalList, addNewPedal])
 
   return (
@@ -52,27 +40,16 @@ const Menu = () => {
       className="w-1/4">
       <h4
         className="font-black">Options</h4>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Pedals</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="flex">
-                <div>
-                  {pedalList && pedalList.map((item) => (
-                    <button
-                      className="block"
-                      // className="w-[500px]"
-                      data-pedal-id={`${item.id}`}
-                      key={`${item.name}:${item.id}`}
-                      onClick={savePedalDataById}>{item.name}</button>
-                  ))}
-                </div>
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+
+      {isLoading && <h2>...loading Pedals</h2>}
+      {isSuccess && (
+        <PedalSelector
+          isSuccess={isSuccess}
+          pedalList={pedalList}
+          savePedalDataById={savePedalDataById}
+        />
+      )}
+
     </section >
   )
 }

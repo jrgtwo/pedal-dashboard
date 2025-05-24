@@ -11,26 +11,15 @@ import { Logout } from './routes/Logout/Logout'
 import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 
+import { Toaster } from "@/components/ui/sonner"
+
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
-// import { LOGIN_STATES, useLoginStore } from './store/login'
+
 
 function App() {
-  // const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
-  // const user_status = useLoginStore((state) => state.user_status)
   useGetSession()
-
-  // useEffect(() => {
-  //   if (user_status === LOGIN_STATES.NOT_CHECKED) {
-  //     if (isSuccess && data && data.data?.session?.user) {
-  //       setLoginStatus(data.data.session.user)
-  //     } else if (!isLoading && isSuccess) {
-  //       setLoginStatus(null)
-  //     }
-  //   }
-  // }, [isSuccess, data, isLoading, setLoginStatus, user_status])
-
 
   return (
     <section role="app"
@@ -84,6 +73,7 @@ function App() {
             } />
         </Routes>
         <Footer />
+        <Toaster />
       </BrowserRouter>
     </section>
   )

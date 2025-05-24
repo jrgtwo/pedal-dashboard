@@ -3,6 +3,7 @@ import { usePedalStore } from "../Sandbox/store/pedal"
 import { useLoginStore } from '../../../../../../store/login'
 import type { UpdateBoardShape } from '../Pedal/Pedal.types'
 import { useSaveBoard } from '../../../../../../queryHooks/pedalBoard/useSaveBoard'
+import { toast } from "sonner"
 
 const Header = () => {
   const user = useLoginStore((state) => state.user)
@@ -33,7 +34,7 @@ const Header = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      console.log('===yay')
+      toast('Board saved successfully!')
     }
   }, [mutation.isSuccess])
 
