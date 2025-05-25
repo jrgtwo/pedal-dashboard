@@ -25,10 +25,18 @@ class Gear {
     return { data: resData, error: resError }
   }
 
+  getMyPedals = async () => {
+    const { data, error } = await this.db
+      .from('user_pedals')
+      .select("*");
+
+    return { data, error }
+  }
+
   saveUserPedal = async ({ pedal_id }) => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .upsert({ pedal_id, notes: {} })
+      .upsert({ pedal_id, notes: {} }, { onConflict: 'pedal_id, user_id' })
       .select()
 
     return { data, error }

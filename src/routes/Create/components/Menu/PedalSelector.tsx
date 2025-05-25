@@ -19,11 +19,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Checkbox } from "@radix-ui/react-checkbox"
 
 type PedalSelectorProps = {
   pedalList: Tables<'pedals'>[],
   savePedalDataById: MouseEventHandler<HTMLButtonElement>,
-  isSuccess: boolean
+  isSuccess: boolean,
+  myPedalIdList?: number[]
 }
 
 enum SORT_DIRECTION {
@@ -36,11 +38,11 @@ enum FILTER_TYPE {
   TYPE = 'type'
 }
 
-const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelectorProps) => {
+const PedalSelector = ({ pedalList, savePedalDataById, isSuccess, myPedalIdList }: PedalSelectorProps) => {
   const [sortDirection, setSortDirection] = useState<SORT_DIRECTION>(SORT_DIRECTION.ASC)
   const [filterType, setFilterType] = useState<FILTER_TYPE>(FILTER_TYPE.ALL)
   const [filterSecondary, setFilterSecondary] = useState<string>()
-
+  console.log('pedalList', myPedalIdList)
   const filterList = useMemo(() => {
     const filterSet = new Set()
     pedalList.forEach((item) => {
@@ -117,17 +119,20 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelecto
               <SidebarTrigger />
               <h2>Select a Pedal</h2>
               <ScrollArea className="flex flex-col h-140">
-                {filteredPedalList && filteredPedalList.map((item) => (
-                  <Button
-                    variant="link"
-                    className=" w-full h-auto flex flex-row justify-start"
-                    data-pedal-id={`${item.id}`}
-                    key={`${item.name}:${item.id}`}
-                    onClick={savePedalDataById}>
-                    <img
-                      className="w-20"
-                      src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
-                ))}
+                {filteredPedalList && filteredPedalList.map((item) => {
+                  return (
+                    <Button
+                      variant={`${myPedalIdList?.includes(`${item.id}`) ? 'secondary' : 'default'}`}
+                      className=" w-full h-auto flex flex-row justify-start"
+                      data-pedal-id={`${item.id}`}
+                      key={`${item.name}:${item.id}`}
+                      onClick={savePedalDataById}>
+
+                      <img
+                        className="w-20"
+                        src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
+                  )
+                })}
               </ScrollArea>
             </main>
           </SidebarProvider>

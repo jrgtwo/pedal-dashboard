@@ -1,12 +1,18 @@
-import { useGetMyGear } from "@/queryHooks/myGear/useGetMyGear"
+import { useMemo } from "react"
+import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useSaveUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 
 const MyGear = () => {
-  const { isLoading, isSuccess, isError, data } = useGetMyGear()
+  const { isLoading, isSuccess, isError, data } = useGetMyPedals()
   const { isSuccess: allPedalsSuccess, isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
   const mutation = useSaveUserPedal()
+
+  const myPedalIdList = useMemo(() => {
+    if (!data || !data.data) return []
+    return data.data.map(pedal => pedal.pedal_id)
+  }, [data])
 
   const handleSavepedalDataById = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -26,6 +32,7 @@ const MyGear = () => {
     <>
       <h2>My Gear</h2>
       <PedalSelector
+        myPedalIdList={myPedalIdList}
         isSuccess={isSuccess}
         pedalList={pedalList}
         savePedalDataById={handleSavepedalDataById}
