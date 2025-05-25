@@ -41,7 +41,6 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelecto
   const [filterType, setFilterType] = useState<FILTER_TYPE>(FILTER_TYPE.ALL)
   const [filterSecondary, setFilterSecondary] = useState<string>()
 
-
   const filterList = useMemo(() => {
     const filterSet = new Set()
     pedalList.forEach((item) => {

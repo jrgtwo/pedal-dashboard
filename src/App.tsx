@@ -9,7 +9,7 @@ import { Login } from './routes/Login/Login'
 import { Logout } from './routes/Logout/Logout'
 import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
-
+import { MyGear } from './routes/MyGear/MyGear'
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from './components/ui/separator'
 
@@ -39,6 +39,12 @@ function App() {
             path={ROUTES.MY_BOARDS} element={
               <ProtectedRoute>
                 <MyBoards />
+              </ProtectedRoute>
+            } />
+          <Route
+            path={ROUTES.MY_GEAR} element={
+              <ProtectedRoute>
+                <MyGear />
               </ProtectedRoute>
             } />
           <Route
