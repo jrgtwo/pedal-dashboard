@@ -1,16 +1,5 @@
-import { useCallback, useMemo, type MouseEvent } from 'react'
+import { useCallback } from 'react'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
-
-// import { ScrollArea } from "@/components/ui/scroll-area"
-// import { Button } from '@/components/ui/button'
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog"
 
 import { PedalSelector } from './PedalSelector'
 import { useGetAllPedals } from '@/queryHooks/pedalBoard/useGetAllPedals'
