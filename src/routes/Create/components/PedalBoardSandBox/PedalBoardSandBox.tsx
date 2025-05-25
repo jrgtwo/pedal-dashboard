@@ -16,14 +16,16 @@ const PedalBoardSandBox = () => {
   return (
     <section role="section"
       className="w-full">
-      <input
-        type="text"
-        value={name || ''}
-        placeholder="Untitled Pedal Board"
-        name="board-name"
-        onChange={handleChange}
-        className="text-2xl font-[Bebas_Neue]" />
-      <Header />
+      <section className="mb-4 flex margin-auto justify-between align-center">
+        <input
+          type="text"
+          value={name || ''}
+          placeholder="Untitled Pedal Board"
+          name="board-name"
+          onChange={handleChange}
+          className="border-2 text-2xl font-[Bebas_Neue] w-full" />
+        <Header />
+      </section>
       <Sandbox />
     </section >
   )

@@ -4,6 +4,7 @@ import { useLoginStore } from '../../../../../../store/login'
 import type { UpdateBoardShape } from '../Pedal/Pedal.types'
 import { useSaveBoard } from '../../../../../../queryHooks/pedalBoard/useSaveBoard'
 import { toast } from "sonner"
+import { Button } from '@/components/ui/button'
 
 const Header = () => {
   const user = useLoginStore((state) => state.user)
@@ -43,24 +44,24 @@ const Header = () => {
       className="bg-zinc-300">
       <menu
         role="menu"
-        className="flex flex-row justify-end mb-5">
+        className="flex flex-row justify-end align-center mb-5">
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
-          <button
-            onClick={() => saveBoard()}>Save</button>
+          <Button
+            onClick={() => saveBoard()}>Save</Button>
         </li>
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
-          <button
-            onClick={() => undoHistory()}>Undo {history.length}</button>
+          <Button
+            onClick={() => undoHistory()}>Undo {history.length}</Button>
         </li>
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
-          <button
+          <Button
             onClick={(event) => {
               event.preventDefault();
               clear()
-            }}>Clear</button></li>
+            }}>Clear</Button></li>
       </menu>
     </header>
   )
