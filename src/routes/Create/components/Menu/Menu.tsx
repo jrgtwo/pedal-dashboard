@@ -27,6 +27,7 @@ const Menu = () => {
   return (
     <section
       className="w-1/4">
+      <h2>Create Your New Pedalboard</h2>
       <h4>Options</h4>
 
       {isLoading && <h2>...loading Pedals</h2>}
