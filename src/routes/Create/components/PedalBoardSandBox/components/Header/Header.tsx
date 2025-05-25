@@ -44,7 +44,7 @@ const Header = () => {
       className="bg-zinc-300">
       <menu
         role="menu"
-        className="flex flex-row justify-end align-center mb-5">
+        className="flex m-auto my-2 flex-row justify-end align-center">
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <Button
@@ -53,11 +53,13 @@ const Header = () => {
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <Button
+            variant="secondary"
             onClick={() => undoHistory()}>Undo {history.length}</Button>
         </li>
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <Button
+            variant='destructive'
             onClick={(event) => {
               event.preventDefault();
               clear()

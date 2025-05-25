@@ -85,7 +85,9 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelecto
   return (
 
     <Dialog>
-      <DialogTrigger>Pedals</DialogTrigger>
+      <DialogTrigger>
+        <Button className="my-6">Pedal Selector</Button>
+      </DialogTrigger>
       <DialogContent className=" max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
         <section className="flex">
           <SidebarProvider>
@@ -115,14 +117,17 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelecto
             <main>
               <SidebarTrigger />
               <h2>Select a Pedal</h2>
-              <ScrollArea >
+              <ScrollArea className="flex flex-col h-140">
                 {filteredPedalList && filteredPedalList.map((item) => (
                   <Button
                     variant="link"
-                    className="block"
+                    className=" w-full h-auto flex flex-row justify-start"
                     data-pedal-id={`${item.id}`}
                     key={`${item.name}:${item.id}`}
-                    onClick={savePedalDataById}>{item.name}</Button>
+                    onClick={savePedalDataById}>
+                    <img
+                      className="w-20"
+                      src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
                 ))}
               </ScrollArea>
             </main>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Menu } from './components/Menu/Menu'
 import { PedalBoardSandBox } from './components/PedalBoardSandBox/PedalBoardSandBox'
 import { usePedalStore } from './components/PedalBoardSandBox/components/Sandbox/store/pedal'
