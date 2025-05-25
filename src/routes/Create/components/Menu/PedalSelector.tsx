@@ -84,8 +84,8 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess }: PedalSelecto
   return (
 
     <Dialog>
-      <DialogTrigger>
-        <Button className="my-6">Pedal Selector</Button>
+      <DialogTrigger className="my-6">
+        Pedal Selector
       </DialogTrigger>
       <DialogContent className=" max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
         <section className="flex">

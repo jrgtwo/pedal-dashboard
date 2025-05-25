@@ -21,11 +21,18 @@ class Gear {
       resError = err
       console.log(err)
     }
-    debugger
 
     return { data: resData, error: resError }
   }
 
+  saveUserPedal = async ({ pedal_id }) => {
+    const { data, error } = await this.db
+      .from('user_pedals')
+      .upsert({ pedal_id, notes: {} })
+      .select()
+
+    return { data, error }
+  }
 }
 
 export { Gear }
