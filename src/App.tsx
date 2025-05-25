@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { Header } from './main-components/Header/Header'
 import { Navigation } from './main-components/Navigation/Navigation'
@@ -12,6 +11,7 @@ import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 
 import { Toaster } from "@/components/ui/sonner"
+import { Separator } from './components/ui/separator'
 
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
@@ -26,6 +26,7 @@ function App() {
       className="flex flex-col min-h-screen max-w-6xl m-auto">
       <BrowserRouter>
         <Header />
+        <Separator />
         <Navigation />
         <Routes>
           <Route

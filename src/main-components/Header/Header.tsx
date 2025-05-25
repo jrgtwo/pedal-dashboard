@@ -8,8 +8,8 @@ const Header = () => {
     <header role="header"
       className="mt-20 flex flex-row justify-between">
       <Link to="/">
-        <h1 className="text-4xl font-extrabold">Pedal Dashboard</h1>
-        <p>Layout and save your dream pedalboard</p>
+        <h1 className="text-4xl font-[Exile]">Pedal Dashboard</h1>
+        <p className="text-2-xl font-[Bebas_Neue]">Layout and save your dream pedalboard</p>
       </Link>
       {
         user_status === LOGIN_STATES.LOGGED_IN

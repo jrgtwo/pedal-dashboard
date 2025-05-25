@@ -45,17 +45,17 @@ const Header = () => {
         role="menu"
         className="flex flex-row justify-end mb-5">
         <li
-          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900">
+          className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <button
             onClick={() => saveBoard()}>Save</button>
         </li>
         <li
-          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900">
+          className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <button
             onClick={() => undoHistory()}>Undo {history.length}</button>
         </li>
         <li
-          className="text-zinc-600 font-black px-2 py-1 hover:text-zinc-900">
+          className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <button
             onClick={(event) => {
               event.preventDefault();

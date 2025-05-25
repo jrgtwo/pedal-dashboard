@@ -27,17 +27,18 @@ const Menu = () => {
   return (
     <section
       className="w-1/4">
-      <h4
-        className="font-black">Options</h4>
+      <h4>Options</h4>
 
       {isLoading && <h2>...loading Pedals</h2>}
-      {isSuccess && (
-        <PedalSelector
-          isSuccess={isSuccess}
-          pedalList={pedalList}
-          savePedalDataById={savePedalDataById}
-        />
-      )}
+      {
+        isSuccess && (
+          <PedalSelector
+            isSuccess={isSuccess}
+            pedalList={pedalList}
+            savePedalDataById={savePedalDataById}
+          />
+        )
+      }
 
     </section >
   )
