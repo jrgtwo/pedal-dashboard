@@ -17,9 +17,9 @@ const MyBoards = () => {
   const { isError, isLoading, boards, error } = useGetBoards()
 
   return (
-    <section>
+    <section className="w-11/12 mx-auto mt-8">
       <h2 className="text-3xl font-[Bebas_Neue]">My Boards</h2>
-      <Table className="w-11/12 m-auto">
+      <Table className="">
         <TableHeader>
           <TableRow>
             <TableHead></TableHead>

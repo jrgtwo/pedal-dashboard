@@ -28,6 +28,7 @@ function App() {
         <Header />
         <Separator />
         <Navigation />
+        <Separator />
         <Routes>
           <Route
             index
