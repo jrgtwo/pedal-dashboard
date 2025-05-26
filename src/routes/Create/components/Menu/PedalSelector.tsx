@@ -114,7 +114,9 @@ const PedalSelector = ({
                   {
                     filterList?.map((item) => {
                       return (
-                        <Button onClick={handleFilterClick(FILTER_TYPE.TYPE, item)}>{item}</Button>
+                        <Button
+                          key={item}
+                          onClick={handleFilterClick(FILTER_TYPE.TYPE, item)}>{item}</Button>
                       )
                     })
                   }
@@ -128,7 +130,7 @@ const PedalSelector = ({
               <ScrollArea className="flex flex-col h-140">
                 {filteredPedalList && filteredPedalList.map((item) => {
                   return (
-                    <>
+                    <div key={`${item.name}:${item.id}`}>
                       <Button
                         variant="destructive"
                         data-pedal-id={`${item.id}`}
@@ -144,7 +146,7 @@ const PedalSelector = ({
                         <img
                           className="w-20"
                           src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
-                    </>
+                    </div>
                   )
                 })}
               </ScrollArea>
