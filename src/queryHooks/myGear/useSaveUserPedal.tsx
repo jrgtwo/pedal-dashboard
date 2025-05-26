@@ -3,10 +3,19 @@ import { API } from "@/api/api"
 
 const useSaveUserPedal = () => {
   const mutation = useMutation({
+    mutationKey: ['myPedals'],
     mutationFn: API.gear.saveUserPedal
   })
 
   return mutation
 }
 
-export { useSaveUserPedal }
+const useDeleteUserPedal = () => {
+  const mutation = useMutation({
+    mutationFn: API.gear.deleteUserPedal
+  })
+
+  return mutation
+}
+
+export { useSaveUserPedal, useDeleteUserPedal }

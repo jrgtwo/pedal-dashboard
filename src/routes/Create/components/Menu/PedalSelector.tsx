@@ -24,6 +24,7 @@ import { Checkbox } from "@radix-ui/react-checkbox"
 type PedalSelectorProps = {
   pedalList: Tables<'pedals'>[],
   savePedalDataById: MouseEventHandler<HTMLButtonElement>,
+  deletePedalDataById: MouseEventHandler<HTMLButtonElement>,
   isSuccess: boolean,
   myPedalIdList?: number[]
 }
@@ -38,18 +39,24 @@ enum FILTER_TYPE {
   TYPE = 'type'
 }
 
-const PedalSelector = ({ pedalList, savePedalDataById, isSuccess, myPedalIdList }: PedalSelectorProps) => {
+const PedalSelector = ({
+  pedalList,
+  savePedalDataById,
+  deletePedalDataById,
+  isSuccess,
+  myPedalIdList
+}: PedalSelectorProps) => {
   const [sortDirection, setSortDirection] = useState<SORT_DIRECTION>(SORT_DIRECTION.ASC)
   const [filterType, setFilterType] = useState<FILTER_TYPE>(FILTER_TYPE.ALL)
   const [filterSecondary, setFilterSecondary] = useState<string>()
-  console.log('pedalList', myPedalIdList)
+
   const filterList = useMemo(() => {
     const filterSet = new Set()
+
     pedalList.forEach((item) => {
       [...(item?.type) || []].forEach((type) => {
         filterSet.add(type)
       })
-
     })
     return [...filterSet].sort()
   }, [pedalList])
@@ -121,16 +128,23 @@ const PedalSelector = ({ pedalList, savePedalDataById, isSuccess, myPedalIdList 
               <ScrollArea className="flex flex-col h-140">
                 {filteredPedalList && filteredPedalList.map((item) => {
                   return (
-                    <Button
-                      variant={`${myPedalIdList?.includes(`${item.id}`) ? 'secondary' : 'default'}`}
-                      className=" w-full h-auto flex flex-row justify-start"
-                      data-pedal-id={`${item.id}`}
-                      key={`${item.name}:${item.id}`}
-                      onClick={savePedalDataById}>
+                    <>
+                      <Button
+                        variant="destructive"
+                        data-pedal-id={`${item.id}`}
+                        onClick={deletePedalDataById}
+                      >Delete </Button>
+                      <Button
+                        variant={`${myPedalIdList?.includes(`${item.id}`) ? 'secondary' : 'default'}`}
+                        className=" w-full h-auto flex flex-row justify-start"
+                        data-pedal-id={`${item.id}`}
+                        key={`${item.name}:${item.id}`}
+                        onClick={savePedalDataById}>
 
-                      <img
-                        className="w-20"
-                        src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
+                        <img
+                          className="w-20"
+                          src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
+                    </>
                   )
                 })}
               </ScrollArea>

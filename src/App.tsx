@@ -12,7 +12,7 @@ import { MyBoards } from './routes/MyBoards/MyBoards'
 import { MyGear } from './routes/MyGear/MyGear'
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from './components/ui/separator'
-
+import { MyPedal } from './routes/MyGear/Pedals/MyPedal'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
@@ -45,6 +45,12 @@ function App() {
             path={ROUTES.MY_GEAR} element={
               <ProtectedRoute>
                 <MyGear />
+              </ProtectedRoute>
+            } />
+          <Route
+            path={ROUTES.MY_GEAR_PEDALS} element={
+              <ProtectedRoute>
+                <MyPedal />
               </ProtectedRoute>
             } />
           <Route

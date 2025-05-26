@@ -41,6 +41,16 @@ class Gear {
 
     return { data, error }
   }
+
+  deleteUserPedal = async ({ pedal_id }) => {
+    const deleteRes = await this.db
+      .from('user_pedals')
+      .delete()
+      .eq('pedal_id', pedal_id)
+      .select()
+
+    return deleteRes
+  }
 }
 
 export { Gear }
