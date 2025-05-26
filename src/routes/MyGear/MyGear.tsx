@@ -8,13 +8,15 @@ import { useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 import { useMyGearStore } from "./state/useMyGearStore"
 
 const MyGear = () => {
-  const { isLoading, isSuccess, isError, data, status, refetch } = useGetMyPedals()
+  const { isLoading, isSuccess, isError, data } = useGetMyPedals()
   const { isSuccess: allPedalsSuccess, isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
   const mutation = useSaveUserPedal()
   const deleteMutation = useDeleteUserPedal()
 
-  const pedalList2 = useMyGearStore((state) => state.pedalList)
+  const myPedalList = useMyGearStore((state) => state.pedalList)
   const setPedalList2 = useMyGearStore((state) => state.setPedalList)
+  const addPedalToList = useMyGearStore((state) => state.addPedalToList)
+  const removePedalFromList = useMyGearStore((state) => state.removePedalFromList)
 
   const myPedalIdList = useMemo(() => {
     if (!data || !data.data) return []
@@ -27,7 +29,6 @@ const MyGear = () => {
     const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
     mutation.mutate({ pedal_id: pedalId, notes: {} })
-    refetch()
   }
 
   const handleDeletePedal = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,15 +37,26 @@ const MyGear = () => {
     const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
     deleteMutation.mutate({ pedal_id: pedalId })
-    refetch()
+
   }
 
   useEffect(() => {
-    debugger
-    if (pedalList && pedalList?.length !== 0) {
-      setPedalList2(pedalList)
+    if (myPedalIdList && myPedalIdList?.length !== 0) {
+      setPedalList2(myPedalIdList)
     }
-  }, [pedalList, setPedalList2])
+  }, [myPedalIdList, setPedalList2])
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      addPedalToList(mutation?.data?.data?.[0]?.pedal_id)
+    }
+  }, [mutation.isSuccess, mutation.data, addPedalToList])
+
+  useEffect(() => {
+    if (deleteMutation.isSuccess) {
+      removePedalFromList(deleteMutation?.data?.data?.[0]?.pedal_id)
+    }
+  }, [deleteMutation.isSuccess, deleteMutation.data, removePedalFromList])
 
   if (isLoading || allPedalsLoading)
     return <h2>...Loading</h2>
@@ -52,14 +64,14 @@ const MyGear = () => {
   if (isError)
     return <h2>...Error!, {data?.error}</h2>
 
-  console.log('pedalList', pedalList, pedalList2)
+  console.log('pedalList', myPedalIdList, myPedalList)
 
   return (
     <>
       <h2>My Gear</h2>
       <div className="flex flex-row">
         <PedalSelector
-          myPedalIdList={myPedalIdList}
+          myPedalIdList={myPedalList}
           isSuccess={isSuccess}
           pedalList={pedalList}
           savePedalDataById={handleSavepedalDataById}

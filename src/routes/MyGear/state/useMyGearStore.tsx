@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 
+type Pedal = Record<string, string>
 type MyGearStore = {
-  pedalList: []
+  pedalList: Pedal[]
   // clearPedalList: () => void
-  setPedalList: (pedalList: []) => void
-  // addPedalToList: (pedal: { id: number, name: string }) => void
-  // removePedalFromList: (pedalId: number) => void
+  setPedalList: (pedalList: Pedal[]) => void
+  addPedalToList: (pedal: Pedal) => void
+  removePedalFromList: (pedalId: number) => void
 }
 
 const useMyGearStore = create<MyGearStore>((set) => ({
@@ -16,12 +17,18 @@ const useMyGearStore = create<MyGearStore>((set) => ({
   // clearPedalList: () => set(() => ({
   //   pedalList: [],
   // })),
-  // addPedalToList: (pedal) => set((state) => ({
-  //   pedalList: [...state.pedalList, pedal],
-  // })),
-  // removePedalFromList: (pedalId) => set((state) => ({
-  //   pedalList: state.pedalList.filter((pedal) => pedal.id !== pedalId),
-  // }))
+  addPedalToList: (pedal) => set((state) => ({
+    pedalList: [...state.pedalList, pedal],
+  })),
+  removePedalFromList: (pedalId) => set((state) => {
+    debugger
+    return ({
+      pedalList: state.pedalList.filter((pedal) => {
+        debugger
+        return pedal !== pedalId
+      }),
+    })
+  })
 }))
 
 export { useMyGearStore }
