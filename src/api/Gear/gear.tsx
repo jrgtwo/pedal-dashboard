@@ -42,6 +42,15 @@ class Gear {
     return { data, error }
   }
 
+  updateUserPedal = async ({ id, notes }: { id: number, notes: string }) => {
+    const { data, error } = await this.db
+      .from('user_pedals')
+      .update({ notes: { plain: notes } })
+      .eq('id', id)
+      .select()
+    return { data, error }
+  }
+
   deleteUserPedal = async ({ pedal_id }) => {
     const deleteRes = await this.db
       .from('user_pedals')

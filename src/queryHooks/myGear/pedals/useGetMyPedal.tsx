@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { API } from '../../../api/api';
 
 const useGetMyPedal = (userPedalId: number) => {
-  debugger
+
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
     queryKey: ['myPedal', userPedalId],
     queryFn: () => API.gear.getMyPedalById({ userPedalId })
@@ -12,4 +12,12 @@ const useGetMyPedal = (userPedalId: number) => {
 
 }
 
-export { useGetMyPedal }
+const useSaveMyPedal = () => {
+  const mutation = useMutation({
+    mutationFn: API.gear.updateUserPedal
+  })
+
+  return mutation
+}
+
+export { useGetMyPedal, useSaveMyPedal }
