@@ -1,11 +1,13 @@
 import { useMemo, useEffect } from "react"
 import { Link } from "react-router"
+import { buttonVariants } from "@/components/ui/button"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useSaveUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 import { useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 import { useMyGearStore } from "./state/useMyGearStore"
+import { Separator } from "@/components/ui/separator"
 
 const MyGear = () => {
   const { isLoading, isSuccess, isError, data } = useGetMyPedals()
@@ -68,31 +70,40 @@ const MyGear = () => {
 
   return (
     <>
-      <h2>My Gear</h2>
-      <div className="flex flex-row">
-        <PedalSelector
-          myPedalIdList={myPedalList}
-          isSuccess={isSuccess}
-          pedalList={pedalList}
-          savePedalDataById={handleSavepedalDataById}
-          deletePedalDataById={handleDeletePedal}
-        />
-      </div>
-      <section className="flex flex-col">
-        {data?.data && data?.data.map((userPedalId) => {
-          const linkedPedal = pedalList.find((pedal) => {
-            return parseInt(userPedalId.pedal_id, 10) === pedal.id
-          })
+      <h2 className="text-4xl font-[bebas_neue]">My Gear</h2>
+      <Separator />
+      <div className="flex flex-col w-9/12 mx-auto justify-items-center">
 
-          return (
-            <Link
-              key={userPedalId.pedal_id}
-              to={`/my-gear/pedals/${userPedalId.pedal_id}/${encodeURIComponent(linkedPedal.name.replace(/ /g, '-'))}`}>
-              {linkedPedal.name}
-            </Link>
-          )
-        })}
-      </section>
+        <Separator />
+
+        <section className="flex flex-col">
+          <h3 className="text-2xl font-[bebas_neue]">My Pedals</h3>
+          <PedalSelector
+            className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
+            myPedalIdList={myPedalList}
+            isSuccess={isSuccess}
+            pedalList={pedalList}
+            savePedalDataById={handleSavepedalDataById}
+            deletePedalDataById={handleDeletePedal}
+          />
+          {data?.data && data?.data.map((userPedalId) => {
+            const linkedPedal = pedalList.find((pedal) => {
+              return parseInt(userPedalId.pedal_id, 10) === pedal.id
+            })
+
+            return (
+              <>
+                <Link
+                  key={userPedalId.pedal_id}
+                  to={`/my-gear/pedals/${userPedalId.id}/${linkedPedal.id}/${encodeURIComponent(linkedPedal.name.replace(/ /g, '-'))}`}>
+                  <img width="50" src={`/src/assets/${linkedPedal.img}`} /><span>{linkedPedal.name}</span>
+                </Link>
+                <Separator />
+              </>
+            )
+          })}
+        </section>
+      </div>
     </>
   )
 }

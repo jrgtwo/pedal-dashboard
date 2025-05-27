@@ -51,6 +51,15 @@ class Gear {
 
     return deleteRes
   }
+
+  getMyPedalById = async ({ userPedalId }: { userPedalId: number }) => {
+    const { data, error } = await this.db
+      .from('user_pedals')
+      .select(`id, notes, pedal_id, pedals(id, name, img, type, mfg, description)`)
+      .eq('id', userPedalId)
+
+    return { data, error }
+  }
 }
 
 export { Gear }
