@@ -33,7 +33,7 @@ class Gear {
     return { data, error }
   }
 
-  saveUserPedal = async ({ pedal_id }) => {
+  saveUserPedal = async ({ pedal_id }: { pedal_id: number }) => {
     const { data, error } = await this.db
       .from('user_pedals')
       .upsert({ pedal_id, notes: {} }, { onConflict: 'pedal_id, user_id' })
@@ -51,7 +51,7 @@ class Gear {
     return { data, error }
   }
 
-  deleteUserPedal = async ({ pedal_id }) => {
+  deleteUserPedal = async ({ pedal_id }: { pedal_id: number }) => {
     const deleteRes = await this.db
       .from('user_pedals')
       .delete()

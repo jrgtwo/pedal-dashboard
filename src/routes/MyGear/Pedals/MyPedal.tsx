@@ -2,11 +2,11 @@ import { useParams } from "react-router"
 import { useGetMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { useSaveMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { Textarea } from "@/components/ui/textarea"
+import { PedalShape } from "@/routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
 
 const MyPedal = () => {
-  const { userPedalId, pedalId } = useParams<{
-    userPedalId: string,
-    pedalId: string
+  const { userPedalId } = useParams<{
+    userPedalId: string
   }>()
   const mutation = useSaveMyPedal()
 
@@ -14,13 +14,12 @@ const MyPedal = () => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const notes = formData.get('notes') as string
-    debugger
+
     mutation.mutate({ id: Number(userPedalId), notes })
   }
 
-  const { isLoading, isSuccess, isError, data, status, refetch } = useGetMyPedal(Number(userPedalId))
-  const pedalData = data?.data?.[0]?.pedals
-  debugger
+  const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
+  const pedalData = data?.data?.[0]?.pedals as PedalShape | undefined
 
   return (
     <div>
@@ -29,18 +28,25 @@ const MyPedal = () => {
       {isError && <p>Error loading pedal data.</p>}
       {isSuccess && data && (
         <div>
-          <h3>{pedalData?.name}</h3>
-          <p>Notes:</p>
-          <form onSubmit={onSubmitSaveNotes} className="mb-4">
-            <Textarea
-              name="notes"
-              className="w-full"
-              defaultValue={data?.data?.[0]?.notes?.plain || ''}
-              placeholder="Add notes about how your use this pedal, and any settings you like." />
-            <button type="submit" className="btn btn-primary">Save Notes</button>
-          </form>
-
-          <img src={`/src/assets/${pedalData.img}`} alt={pedalData?.name} />
+          <div className="flex flex-row gap-4">
+            <img
+              src={`/src/assets/${pedalData?.img}`}
+              alt={pedalData?.name}
+              width={250} />
+            <form onSubmit={onSubmitSaveNotes} className="mb-4">
+              <h3>Name: {pedalData?.name}</h3>
+              <h3>Brand: {pedalData?.mfg}</h3>
+              <h3>Type: {pedalData?.type}</h3>
+              <h3>Description: {pedalData?.description}</h3>
+              <p>Notes:</p>
+              <Textarea
+                name="notes"
+                className="w-full"
+                defaultValue={data?.data?.[0]?.notes?.plain || ''}
+                placeholder="Add notes about how your use this pedal, and any settings you like." />
+              <button type="submit" className="btn btn-primary">Save Notes</button>
+            </form>
+          </div>
           {/* Add more pedal details as needed */}
         </div>
       )}

@@ -1,12 +1,4 @@
-[?25l
-    Select a project:                                                                                                  
-                                                                                                                       
-  >  1. nvqrxmwjwwludwohgocs [name: jrgtwo_blog, org: nmzjhverbrbxhveooqme, region: us-west-1]                         
-    2. vzqtsaqizleoysnzfscf [name: jonathanraygarcia@gmail.com's Project, org: nmzjhverbrbxhveooqme, region: us-east-1]
-                                                                                                                       
-                                                                                                                       
-    ↑/k up • ↓/j down • / filter • q quit • ? more                                                                     
-                                                                                                                       [0D[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[0D[2K [0D[2K[?25h[?1002l[?1003l[?1006lexport type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -17,47 +9,115 @@
 export type Database = {
   public: {
     Tables: {
-      Blog: {
+      pedals: {
         Row: {
           created_at: string
-          featured: boolean
+          description: string | null
           id: number
-          image: string | null
-          image_description: string | null
-          post: string
-          published: boolean
-          short_blurb: string | null
-          tags: string[]
-          thumbnail: string | null
-          title: string
+          img: string
+          location: Json
+          mfg: string
+          name: string
+          type: string[]
         }
         Insert: {
           created_at?: string
-          featured?: boolean
+          description?: string | null
           id?: number
-          image?: string | null
-          image_description?: string | null
-          post: string
-          published?: boolean
-          short_blurb?: string | null
-          tags: string[]
-          thumbnail?: string | null
-          title: string
+          img: string
+          location: Json
+          mfg: string
+          name: string
+          type: string[]
         }
         Update: {
           created_at?: string
-          featured?: boolean
+          description?: string | null
           id?: number
-          image?: string | null
-          image_description?: string | null
-          post?: string
-          published?: boolean
-          short_blurb?: string | null
-          tags?: string[]
-          thumbnail?: string | null
-          title?: string
+          img?: string
+          location?: Json
+          mfg?: string
+          name?: string
+          type?: string[]
         }
         Relationships: []
+      }
+      user_boards: {
+        Row: {
+          board: Json
+          created_at: string
+          id: number
+          name: string | null
+          user_id: string
+        }
+        Insert: {
+          board: Json
+          created_at?: string
+          id?: number
+          name?: string | null
+          user_id?: string
+        }
+        Update: {
+          board?: Json
+          created_at?: string
+          id?: number
+          name?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_gear: {
+        Row: {
+          created_at: string
+          gear: Json
+          id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          gear: Json
+          id?: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          gear?: Json
+          id?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_pedals: {
+        Row: {
+          created_at: string
+          id: number
+          notes: Json | null
+          pedal_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          notes?: Json | null
+          pedal_id: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          notes?: Json | null
+          pedal_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_pedals_pedal_id_fkey"
+            columns: ["pedal_id"]
+            isOneToOne: false
+            referencedRelation: "pedals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
