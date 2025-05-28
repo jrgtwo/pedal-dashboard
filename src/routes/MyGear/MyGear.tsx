@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react"
+import { useMemo, useEffect, Fragment } from "react"
 import { Link } from "react-router"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
@@ -92,14 +92,13 @@ const MyGear = () => {
             })
 
             return (
-              <>
+              <Fragment key={userPedalId.id}>
                 <Link
-                  key={userPedalId.pedal_id}
                   to={`/my-gear/pedals/${userPedalId.id}/${linkedPedal.id}/${encodeURIComponent(linkedPedal.name.replace(/ /g, '-'))}`}>
                   <img width="50" src={`/src/assets/${linkedPedal.img}`} /><span>{linkedPedal.name}</span>
                 </Link>
                 <Separator />
-              </>
+              </Fragment>
             )
           })}
         </section>

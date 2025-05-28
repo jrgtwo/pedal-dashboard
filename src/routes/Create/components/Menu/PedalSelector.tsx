@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog"
 
 type PedalSelectorProps = {
-  pedalList: Tables<'pedals'>[],
+  pedalList: Tables<'pedals'>[] | undefined,
   savePedalDataById: MouseEventHandler<HTMLButtonElement>,
   deletePedalDataById: MouseEventHandler<HTMLButtonElement>,
   isSuccess: boolean,
@@ -49,12 +49,12 @@ const PedalSelector = ({
 }: PedalSelectorProps) => {
   const [sortDirection, setSortDirection] = useState<SORT_DIRECTION>(SORT_DIRECTION.ASC)
   const [filterType, setFilterType] = useState<FILTER_TYPE>(FILTER_TYPE.ALL)
-  const [filterSecondary, setFilterSecondary] = useState<string>()
+  const [filterSecondary, setFilterSecondary] = useState<string>('')
 
   const filterList = useMemo(() => {
-    const filterSet = new Set()
+    const filterSet = new Set<string>()
 
-    pedalList.forEach((item) => {
+    pedalList?.forEach((item) => {
       [...(item?.type) || []].forEach((type) => {
         filterSet.add(type)
       })
@@ -138,7 +138,7 @@ const PedalSelector = ({
                         onClick={deletePedalDataById}
                       >Delete </Button>
                       <Button
-                        variant={`${myPedalIdList?.includes(`${item.id}`) ? 'secondary' : 'default'}`}
+                        variant={`${myPedalIdList?.includes(item.id) ? 'secondary' : 'default'}`}
                         className=" w-full h-auto flex flex-row justify-start"
                         data-pedal-id={`${item.id}`}
                         key={`${item.name}:${item.id}`}
@@ -146,7 +146,7 @@ const PedalSelector = ({
 
                         <img
                           className="w-20"
-                          src={`http://localhost:5173/src/assets/${item.img}`} />{item.name}</Button>
+                          src={`src/assets/${item.img}`} />{item.name}</Button>
                     </div>
                   )
                 })}
