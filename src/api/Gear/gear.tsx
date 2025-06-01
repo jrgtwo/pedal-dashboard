@@ -33,10 +33,10 @@ class Gear {
     return { data, error }
   }
 
-  saveUserPedal = async ({ pedal_id }: { pedal_id: number }) => {
+  saveUserPedal = async ({ pedal_id, notes = {} }: { pedal_id: number, notes: Record<string, string> }) => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .upsert({ pedal_id, notes: {} }, { onConflict: 'pedal_id, user_id' })
+      .upsert({ pedal_id, notes }, { onConflict: 'pedal_id, user_id' })
       .select()
 
     return { data, error }

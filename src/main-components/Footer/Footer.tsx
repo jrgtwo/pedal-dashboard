@@ -4,7 +4,6 @@ import { Separator } from '@/components/ui/separator';
 const Footer = () => {
 
   return (
-
     <footer role="footer"
       className="mt-30 mb-10">
       <Separator className="mb-20" />

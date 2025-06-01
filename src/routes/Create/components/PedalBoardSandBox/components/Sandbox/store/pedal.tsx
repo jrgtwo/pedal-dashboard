@@ -19,7 +19,9 @@ interface PedalStore {
   updateFromFetch: ({
     id, pedals, name
   }: {
-    id: number, pedals: DraggablePedalShape[], name: string | null
+    id: number | undefined,
+    pedals: DraggablePedalShape[] | undefined,
+    name: string | null | undefined
   }) => void;
 }
 

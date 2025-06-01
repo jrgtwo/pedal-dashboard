@@ -8,11 +8,14 @@ const useGetSession = () => {
   const user_status = useLoginStore((state) => state.user_status)
 
   const {
-    isLoading, isSuccess, data, isError
+    isLoading, isSuccess, data, error
   } = useQuery({
     queryKey: ['session'], queryFn: API.auth.getSession
   })
-
+  if (error) {
+    // TODO: handle error more gracefully
+    console.error('Error fetching session:', error)
+  }
   useEffect(() => {
     if (user_status === LOGIN_STATES.NOT_CHECKED) {
       if (isSuccess && data && data.data?.session?.user) {

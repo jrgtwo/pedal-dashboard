@@ -21,9 +21,9 @@ import {
 } from "@/components/ui/dialog"
 
 type PedalSelectorProps = {
-  pedalList: Tables<'pedals'>[] | undefined,
+  pedalList: Tables<'pedals'>[] | null | undefined,
   savePedalDataById: MouseEventHandler<HTMLButtonElement>,
-  deletePedalDataById: MouseEventHandler<HTMLButtonElement>,
+  deletePedalDataById?: MouseEventHandler<HTMLButtonElement>,
   isSuccess: boolean,
   myPedalIdList?: number[],
   className?: string
@@ -146,7 +146,7 @@ const PedalSelector = ({
 
                         <img
                           className="w-20"
-                          src={`src/assets/${item.img}`} />{item.name}</Button>
+                          src={`/src/assets/${item.img}`} />{item.name}</Button>
                     </div>
                   )
                 })}

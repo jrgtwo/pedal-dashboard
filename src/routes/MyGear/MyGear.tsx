@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator"
 
 const MyGear = () => {
   const { isLoading, isSuccess, isError, data } = useGetMyPedals()
-  const { isSuccess: allPedalsSuccess, isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
+  const { isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
   const mutation = useSaveUserPedal()
   const deleteMutation = useDeleteUserPedal()
 
@@ -64,7 +64,7 @@ const MyGear = () => {
     return <h2>...Loading</h2>
 
   if (isError)
-    return <h2>...Error!, {data?.error}</h2>
+    return <h2>...Error!, {JSON.stringify(data?.error || {})}</h2>
 
   console.log('pedalList', myPedalIdList, myPedalList)
 
@@ -87,10 +87,10 @@ const MyGear = () => {
             deletePedalDataById={handleDeletePedal}
           />
           {data?.data && data?.data.map((userPedalId) => {
-            const linkedPedal = pedalList.find((pedal) => {
+            const linkedPedal = pedalList?.find((pedal) => {
               return parseInt(userPedalId.pedal_id, 10) === pedal.id
             })
-
+            if (!linkedPedal) return null
             return (
               <Fragment key={userPedalId.id}>
                 <Link

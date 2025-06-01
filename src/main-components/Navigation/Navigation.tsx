@@ -31,13 +31,6 @@ const Navigation = () => {
         }
         <li>
           <NavLink
-            to="/"
-            className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/create"
             className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
             Create

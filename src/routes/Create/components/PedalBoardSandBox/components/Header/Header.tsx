@@ -20,7 +20,7 @@ const Header = () => {
     if (!user || !pedals) return
 
     const toSave: UpdateBoardShape = {
-      board: pedals,
+      board: JSON.stringify(pedals || {}),
     };
     if (boardName) {
       toSave.name = boardName

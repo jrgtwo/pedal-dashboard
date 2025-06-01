@@ -3,6 +3,7 @@ import { useGetMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { useSaveMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { Textarea } from "@/components/ui/textarea"
 import { PedalShape } from "@/routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
+import { Button } from "@/components/ui/button"
 
 const MyPedal = () => {
   const { userPedalId } = useParams<{
@@ -44,7 +45,7 @@ const MyPedal = () => {
                 className="w-full"
                 defaultValue={data?.data?.[0]?.notes?.plain || ''}
                 placeholder="Add notes about how your use this pedal, and any settings you like." />
-              <button type="submit" className="btn btn-primary">Save Notes</button>
+              <Button type="submit" className="btn btn-outline">Save Notes</Button>
             </form>
           </div>
           {/* Add more pedal details as needed */}

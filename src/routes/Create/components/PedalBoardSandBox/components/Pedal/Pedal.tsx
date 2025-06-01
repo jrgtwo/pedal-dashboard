@@ -19,7 +19,7 @@ const Pedal = ({
       <button
         onClick={(event) => {
           event.preventDefault()
-          handleRemove('dragId', pedalId)
+          handleRemove?.('dragId', pedalId)
         }}
         className="group-hover:opacity-100 opacity-0 remove text-red-700 absolute top-2 right-2 z-10 bg-amber-50">X</button>
       {

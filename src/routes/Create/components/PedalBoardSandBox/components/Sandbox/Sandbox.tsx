@@ -20,7 +20,11 @@ const Sandbox = () => {
     if (query.isSuccess && !hasSetInitial) {
 
       setHasSetInitial(true)
-      updateFromFetch({ id: query.data?.data?.[0].id, pedals: query.data?.data?.[0].board, name: query.data?.data?.[0].name })
+      updateFromFetch({
+        id: query.data?.data?.[0].id,
+        pedals: query.data?.data?.[0].board,
+        name: query.data?.data?.[0].name
+      })
     }
   }, [hasSetInitial, query.isSuccess, query.data, updateFromFetch])
 

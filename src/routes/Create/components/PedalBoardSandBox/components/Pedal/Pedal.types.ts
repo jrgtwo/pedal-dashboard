@@ -17,5 +17,5 @@ export type PedalProps = {
   pedalId: string,
   img?: string | null,
   name?: string,
-  handleRemove: (key: keyof DraggablePedalShape, value: string) => void
+  handleRemove?: (key: keyof DraggablePedalShape, value: string) => void
 }
