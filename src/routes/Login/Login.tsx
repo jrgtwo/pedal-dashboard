@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
-import { useLogin } from '../../queryHooks/auth/useLogin';
+import { useAuthLogin } from '../../queryHooks/auth/useLogin';
 
 const Login = () => {
   const navigate = useNavigate()
-  const { mutation, setLoginStatus } = useLogin()
+  const { mutation, setLoginStatus } = useAuthLogin()
 
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
@@ -13,11 +13,11 @@ const Login = () => {
     event.preventDefault()
 
     if (!email || !password) return false
-    mutation.mutate({ email, password })
+    mutation?.mutate({ email, password })
 
   }, [mutation, email, password]);
 
-  if (mutation.isSuccess && mutation.data && mutation.data.data?.session?.user) {
+  if (mutation?.isSuccess && mutation?.data?.data?.session?.user) {
     setLoginStatus(mutation.data.data.user)
     navigate('/')
   }

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { API } from '../../api/api'
 import { useLoginStore } from '../../store/login'
 
-function useLogin() {
+const useAuthLogin = () => {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
 
   const mutation = useMutation({
@@ -11,7 +11,7 @@ function useLogin() {
 
   if (mutation.isError) {
     console.error(mutation.error)
-    return
+    return { mutation: null, setLoginStatus: null }
   }
   if (mutation.isSuccess && mutation.data && mutation.data.data?.session?.user) {
 
@@ -21,4 +21,4 @@ function useLogin() {
   return { mutation, setLoginStatus }
 }
 
-export { useLogin }
+export { useAuthLogin }
