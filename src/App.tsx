@@ -10,6 +10,7 @@ import { Logout } from './routes/Logout/Logout'
 import { Register } from './routes/Register/Register'
 import { MyBoards } from './routes/MyBoards/MyBoards'
 import { MyGear } from './routes/MyGear/MyGear'
+import { AddGear } from './routes/MyGear/AddGear'
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from './components/ui/separator'
 import { MyPedal } from './routes/MyGear/Pedals/MyPedal'
@@ -51,6 +52,12 @@ function App() {
             path={ROUTES.MY_GEAR_PEDALS} element={
               <ProtectedRoute>
                 <MyPedal />
+              </ProtectedRoute>
+            } />
+          <Route
+            path={ROUTES.ADD_GEAR} element={
+              <ProtectedRoute>
+                <AddGear />
               </ProtectedRoute>
             } />
           <Route

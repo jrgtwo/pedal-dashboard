@@ -138,7 +138,7 @@ const PedalSelector = ({
                         onClick={deletePedalDataById}
                       >Delete </Button>
                       <Button
-                        variant={`${myPedalIdList?.includes(item.id) ? 'secondary' : 'default'}`}
+                        variant={`${myPedalIdList?.includes(item.id) ? 'highlight' : 'outline'}`}
                         className=" w-full h-auto flex flex-row justify-start"
                         data-pedal-id={`${item.id}`}
                         key={`${item.name}:${item.id}`}

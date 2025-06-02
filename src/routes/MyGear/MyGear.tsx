@@ -20,53 +20,53 @@ const MyGear = () => {
   const addPedalToList = useMyGearStore((state) => state.addPedalToList)
   const removePedalFromList = useMyGearStore((state) => state.removePedalFromList)
 
-  const myPedalIdList = useMemo(() => {
-    if (!data || !data.data) return []
-    return data.data.map(pedal => pedal.pedal_id)
-  }, [data])
+  // const myPedalIdList = useMemo(() => {
+  //   if (!data || !data.data) return []
+  //   return data.data.map(pedal => pedal.pedal_id)
+  // }, [data])
 
-  const handleSavepedalDataById = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    const elem = event.currentTarget as HTMLElement
-    const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
+  // const handleSavepedalDataById = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault()
+  //   const elem = event.currentTarget as HTMLElement
+  //   const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
-    mutation.mutate({ pedal_id: pedalId, notes: {} })
-  }
+  //   mutation.mutate({ pedal_id: pedalId, notes: {} })
+  // }
 
-  const handleDeletePedal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    const elem = event.currentTarget as HTMLElement
-    const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
+  // const handleDeletePedal = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault()
+  //   const elem = event.currentTarget as HTMLElement
+  //   const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
-    deleteMutation.mutate({ pedal_id: pedalId })
+  //   deleteMutation.mutate({ pedal_id: pedalId })
 
-  }
+  // }
 
-  useEffect(() => {
-    if (myPedalIdList && myPedalIdList?.length !== 0) {
-      setPedalList2(myPedalIdList)
-    }
-  }, [myPedalIdList, setPedalList2])
+  // useEffect(() => {
+  //   if (myPedalIdList && myPedalIdList?.length !== 0) {
+  //     setPedalList2(myPedalIdList)
+  //   }
+  // }, [myPedalIdList, setPedalList2])
 
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      addPedalToList(mutation?.data?.data?.[0]?.pedal_id)
-    }
-  }, [mutation.isSuccess, mutation.data, addPedalToList])
+  // useEffect(() => {
+  //   if (mutation.isSuccess) {
+  //     addPedalToList(mutation?.data?.data?.[0]?.pedal_id)
+  //   }
+  // }, [mutation.isSuccess, mutation.data, addPedalToList])
 
-  useEffect(() => {
-    if (deleteMutation.isSuccess) {
-      removePedalFromList(deleteMutation?.data?.data?.[0]?.pedal_id)
-    }
-  }, [deleteMutation.isSuccess, deleteMutation.data, removePedalFromList])
+  // useEffect(() => {
+  //   if (deleteMutation.isSuccess) {
+  //     removePedalFromList(deleteMutation?.data?.data?.[0]?.pedal_id)
+  //   }
+  // }, [deleteMutation.isSuccess, deleteMutation.data, removePedalFromList])
 
-  if (isLoading || allPedalsLoading)
-    return <h2>...Loading</h2>
+  // if (isLoading || allPedalsLoading)
+  //   return <h2>...Loading</h2>
 
-  if (isError)
-    return <h2>...Error!, {JSON.stringify(data?.error || {})}</h2>
+  // if (isError)
+  //   return <h2>...Error!, {JSON.stringify(data?.error || {})}</h2>
 
-  console.log('pedalList', myPedalIdList, myPedalList)
+  // console.log('pedalList', myPedalIdList, myPedalList)
 
   return (
     <>
@@ -78,14 +78,14 @@ const MyGear = () => {
 
         <section className="flex flex-col">
           <h3 className="text-2xl font-[bebas_neue]">My Pedals</h3>
-          <PedalSelector
+          {/* <PedalSelector
             className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
             myPedalIdList={myPedalList}
             isSuccess={isSuccess}
             pedalList={pedalList}
             savePedalDataById={handleSavepedalDataById}
             deletePedalDataById={handleDeletePedal}
-          />
+          /> */}
           {data?.data && data?.data.map((userPedalId) => {
             const linkedPedal = pedalList?.find((pedal) => {
               return parseInt(userPedalId.pedal_id, 10) === pedal.id
