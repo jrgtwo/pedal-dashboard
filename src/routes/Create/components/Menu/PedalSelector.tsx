@@ -1,14 +1,19 @@
 import { type MouseEventHandler, useMemo, useState } from "react"
 import { Tables } from "database.types"
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
   SidebarHeader,
+  SidebarInset
 } from "@/components/ui/sidebar"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -97,65 +102,86 @@ const PedalSelector = ({
       <DialogTrigger className={`my-6 ${className}`}>
         Pedal Selector
       </DialogTrigger>
-      <DialogContent className=" max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
-        <section className="flex">
-          <SidebarProvider>
-            <DialogTitle>Pedal Selector</DialogTitle>
-            <Sidebar variant="sidebar">
-              <SidebarHeader />
-              <SidebarContent>
-                <SidebarGroup>
-                  <SidebarGroupLabel>Sort</SidebarGroupLabel>
-                  <Button onClick={handleSortClick(SORT_DIRECTION.ASC)}>A-Z</Button>
-                  <Button onClick={handleSortClick(SORT_DIRECTION.DESC)}>Z-A</Button>
-                </SidebarGroup>
-                <SidebarGroup>
-                  <SidebarGroupLabel>Filter</SidebarGroupLabel>
-                  <Button onClick={handleFilterClick(FILTER_TYPE.ALL, FILTER_TYPE.ALL)}>All</Button>
-                  {
-                    filterList?.map((item) => {
-                      return (
-                        <Button
-                          key={item}
-                          onClick={handleFilterClick(FILTER_TYPE.TYPE, item)}>{item}</Button>
-                      )
-                    })
-                  }
-                </SidebarGroup>
-              </SidebarContent>
-              <SidebarFooter />
-            </Sidebar>
-            <main>
-              <SidebarTrigger />
-              <h2>Select a Pedal</h2>
-              <ScrollArea className="flex flex-col h-140">
-                {filteredPedalList && filteredPedalList.map((item) => {
-                  return (
-                    <div key={`${item.name}:${item.id}`}>
-                      <Button
-                        variant="destructive"
-                        data-pedal-id={`${item.id}`}
-                        onClick={deletePedalDataById}
-                      >Delete </Button>
-                      <Button
-                        variant={`${myPedalIdList?.includes(item.id) ? 'highlight' : 'outline'}`}
-                        className=" w-full h-auto flex flex-row justify-start"
-                        data-pedal-id={`${item.id}`}
-                        key={`${item.name}:${item.id}`}
-                        onClick={savePedalDataById}>
+      <DialogContent className="flex h-9/12 max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
+        <SidebarProvider>
+          {/* <DialogTitle>Pedal Selector</DialogTitle> */}
+          <Sidebar variant="floating">
+            <SidebarContent>
+              <SidebarGroup>
+                <SidebarGroupLabel>Sort</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        variant='outline'
+                        onClick={handleSortClick(SORT_DIRECTION.ASC)}>A-Z</SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        variant='outline'
+                        onClick={handleSortClick(SORT_DIRECTION.DESC)}>Z-A</SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </SidebarMenu>
+                </SidebarGroupContent>
 
-                        <img
-                          className="w-20"
-                          src={`/src/assets/${item.img}`} />{item.name}</Button>
-                    </div>
-                  )
-                })}
-              </ScrollArea>
-            </main>
-          </SidebarProvider>
-        </section>
+              </SidebarGroup>
+              <SidebarGroup>
+                <SidebarGroupLabel>Filter</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        variant='outline'
+                        onClick={handleFilterClick(FILTER_TYPE.ALL, FILTER_TYPE.ALL)}>All</SidebarMenuButton>
+                    </SidebarMenuItem>
+                    {
+                      filterList?.map((item) => {
+                        return (
+                          <SidebarMenuItem>
+                            <SidebarMenuButton
+                              key={item}
+                              variant='outline'
+                              onClick={handleFilterClick(FILTER_TYPE.TYPE, item)}>{item}</SidebarMenuButton>
+                          </SidebarMenuItem>
+                        )
+                      })
+                    }
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+            <SidebarFooter />
+          </Sidebar>
+          <main className="overflow-scroll">
+            <h2>Select a Pedal</h2>
+            {filteredPedalList && filteredPedalList.map((item) => {
+              return (
+                <div
+                  className=" w-full h-auto flex flex-col justify-start p-4 border-2"
+                  key={`${item.name}:${item.id}`}>
+                  <img
+                    className="w-20"
+                    src={`/src/assets/${item.img}`} />
+                  <p>{item.name}</p>
+                  <Button
+                    variant={`${myPedalIdList?.includes(item.id) ? 'highlight' : 'outline'}`}
+                    data-pedal-id={`${item.id}`}
+                    key={`${item.name}:${item.id}`}
+                    onClick={savePedalDataById}>Add</Button>
+
+                  <Button
+                    variant="destructive"
+                    data-pedal-id={`${item.id}`}
+                    onClick={deletePedalDataById}
+                  >Delete </Button>
+                </div>
+              )
+            })}
+          </main>
+        </SidebarProvider>
+
       </DialogContent>
-    </Dialog>
+    </Dialog >
   )
 }
 
