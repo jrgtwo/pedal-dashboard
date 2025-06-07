@@ -28,7 +28,8 @@ class Gear {
   getMyPedals = async () => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .select("*");
+      //.select("*");
+      .select(`id, notes, pedal_id, pedals(id, name, img, type, mfg, description)`);
 
     return { data, error }
   }
