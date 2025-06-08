@@ -2,6 +2,7 @@ import { API } from "../../api/api"
 import { useQuery } from "@tanstack/react-query"
 
 const useGetMyPedals = () => {
+  
   const query = useQuery({
     queryKey: ['myPedals'],
     queryFn: API.gear.getMyPedals
