@@ -12,7 +12,6 @@ class Gear {
       myPedals: [],
       setMyGear: (gear) => set({ myGear: gear }),
       setMyPedals: (pedals) => set({ myPedals: pedals }),
-      addToMyPedals: (pedal) => set((state) => ({ myPedals: [...state.myPedals, pedal] })),
     }))
   }
 
@@ -30,7 +29,7 @@ class Gear {
       resError = err
       console.log(err)
     }
-    debugger
+
     this.store.getState().setMyGear(resData || [])
     return { data: resData, error: resError }
   }
@@ -39,20 +38,18 @@ class Gear {
     const { data, error } = await this.db
       .from('user_pedals')
       .select(`id, notes, pedal_id, pedals(id, name, img, type, mfg, description)`);
-    debugger
+
     this.store.getState().setMyPedals(data || [])
     return { data, error }
   }
 
   saveUserPedal = async ({ pedal_id, notes = {} }: { pedal_id: number, notes: Record<string, string> }) => {
-    debugger
+
     const { data, error } = await this.db
       .from('user_pedals')
       .upsert({ pedal_id, notes }, { onConflict: 'pedal_id, user_id' })
       .select()
 
-    debugger
-    this.store.getState().addToMyPedals(data?.[0] || null)
     return { data, error }
   }
 
@@ -71,8 +68,7 @@ class Gear {
       .delete()
       .eq('pedal_id', pedal_id)
       .select()
-    debugger
-    this.store.getState().setMyPedals(data || [])
+
     return deleteRes
   }
 

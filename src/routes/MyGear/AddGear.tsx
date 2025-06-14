@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { useMyGearStore } from "./state/useMyGearStore"
 import { buttonVariants } from "@/components/ui/button"
@@ -7,6 +8,9 @@ import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 
 import { useSaveUserPedal, useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 const AddGear = () => {
+
+  const queryClient = useQueryClient()
+
   const { isLoading, isSuccess, isError, data } = useGetMyPedals()
 
   const myPedalList = useMyGearStore((state) => state.pedalList)
@@ -14,10 +18,6 @@ const AddGear = () => {
 
   const mutation = useSaveUserPedal()
   const deleteMutation = useDeleteUserPedal()
-
-  const setPedalList2 = useMyGearStore((state) => state.setPedalList)
-  const addPedalToList = useMyGearStore((state) => state.addPedalToList)
-  const removePedalFromList = useMyGearStore((state) => state.removePedalFromList)
 
   const myPedalIdList = useMemo(() => {
     if (!data || !data.data) return []
@@ -38,26 +38,19 @@ const AddGear = () => {
     const pedalId = elem && parseInt(elem.getAttribute('data-pedal-id') || '', 10)
 
     deleteMutation.mutate({ pedal_id: pedalId })
-
   }
 
   useEffect(() => {
-    if (myPedalIdList && myPedalIdList?.length !== 0) {
-      setPedalList2(myPedalIdList)
-    }
-  }, [myPedalIdList, setPedalList2])
-
-  useEffect(() => {
     if (mutation.isSuccess) {
-      addPedalToList(mutation?.data?.data?.[0]?.pedal_id)
+      queryClient.invalidateQueries({ queryKey: ['myPedals'] })
     }
-  }, [mutation.isSuccess, mutation.data, addPedalToList])
+  }, [mutation.isSuccess, mutation.data, queryClient])
 
   useEffect(() => {
     if (deleteMutation.isSuccess) {
-      removePedalFromList(deleteMutation?.data?.data?.[0]?.pedal_id)
+      queryClient.invalidateQueries({ queryKey: ['myPedals'] })
     }
-  }, [deleteMutation.isSuccess, deleteMutation.data, removePedalFromList])
+  }, [deleteMutation.isSuccess, deleteMutation.data, queryClient])
 
   if (isLoading || allPedalsLoading)
     return <h2>...Loading</h2>
