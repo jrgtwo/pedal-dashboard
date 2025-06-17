@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PedalSelector } from "../Create/components/Menu/PedalSelector"
-import { useMyGearStore } from "./state/useMyGearStore"
+// import { useMyGearStore } from "./state/useMyGearStore"
+import { API } from "@/api/api"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
@@ -13,7 +14,9 @@ const AddGear = () => {
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedals()
 
-  const myPedalList = useMyGearStore((state) => state.pedalList)
+  const myPedalList = API.gear.store((state) => state.myPedals)?.map((item) => {
+    return item?.pedals?.id || {}
+  })
   const { isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
 
   const mutation = useSaveUserPedal()
