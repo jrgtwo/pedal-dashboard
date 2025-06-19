@@ -15,13 +15,13 @@ const MyPedal = () => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const notes = formData.get('notes') as string
-
-    mutation.mutate({ id: Number(userPedalId), notes })
+    const title = formData.get('title') as string
+    mutation.mutate({ id: Number(userPedalId), notes, title })
   }
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
   const pedalData = data?.data?.[0]?.pedals as PedalShape | undefined
-  debugger
+
   return (
     <div>
       <h2 className="text-2xl font-[bebas_neue]">My Pedal</h2>
@@ -39,12 +39,19 @@ const MyPedal = () => {
               <h3>Brand: {pedalData?.mfg}</h3>
               <h3>Type: {pedalData?.type}</h3>
               <h3>Description: {pedalData?.description}</h3>
+              <p>Title:</p>
+              <input
+                type="text"
+                name="title"
+                className="w-full mb-2 border-2 border-gray-300 p-2 rounded"
+                defaultValue={data?.data?.[0]?.title || ''}
+                placeholder="Give this pedal a title, like 'My Favorite Overdrive'" />
               <p>Notes:</p>
               <Textarea
                 name="notes"
                 className="w-full"
                 defaultValue={data?.data?.[0]?.notes?.plain || ''}
-                placeholder="Add notes about how your use this pedal, and any settings you like." />
+                placeholder="Add notes about how you use this pedal, and any settings you like." />
               <Button type="submit" className="btn btn-outline">Save Notes</Button>
             </form>
           </div>

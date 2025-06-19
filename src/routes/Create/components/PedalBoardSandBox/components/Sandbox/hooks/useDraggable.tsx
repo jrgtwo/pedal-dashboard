@@ -29,6 +29,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
+  debugger
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -155,6 +156,9 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
   }, [draggableMap])
 
   const setter = useCallback((updatedData: T[]) => {
+    if (typeof updatedData === 'string') {
+      updatedData = JSON.parse(updatedData) as T[]
+    }
     setDraggableMap(dataToMap(updatedData))
   }, [])
 

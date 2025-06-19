@@ -37,7 +37,7 @@ class Gear {
   getMyPedals = async () => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .select(`id, notes, pedal_id, pedals(id, name, img, type, mfg, description)`);
+      .select(`id, notes, title, pedal_id, pedals(id, name, img, type, mfg, description)`);
 
     this.store.getState().setMyPedals(data || [])
     return { data, error }
@@ -53,10 +53,10 @@ class Gear {
     return { data, error }
   }
 
-  updateUserPedal = async ({ id, notes }: { id: number, notes: string }) => {
+  updateUserPedal = async ({ id, notes, title }: { id: number, notes: string, title: string }) => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .update({ notes: { plain: notes } })
+      .update({ title, notes: { plain: notes } })
       .eq('id', id)
       .select()
     return { data, error }
@@ -75,7 +75,7 @@ class Gear {
   getMyPedalById = async ({ userPedalId }: { userPedalId: number }) => {
     const { data, error } = await this.db
       .from('user_pedals')
-      .select(`id, notes, pedal_id, pedals(id, name, img, type, mfg, description)`)
+      .select(`id, notes, title, pedal_id, pedals(id, name, img, type, mfg, description)`)
       .eq('id', userPedalId)
 
     return { data, error }

@@ -93,21 +93,27 @@ export type Database = {
           id: number
           notes: Json | null
           pedal_id: number
+          title: string | null
           user_id: string
+          user_title: string | null
         }
         Insert: {
           created_at?: string
           id?: number
           notes?: Json | null
           pedal_id: number
+          title?: string | null
           user_id?: string
+          user_title?: string | null
         }
         Update: {
           created_at?: string
           id?: number
           notes?: Json | null
           pedal_id?: number
+          title?: string | null
           user_id?: string
+          user_title?: string | null
         }
         Relationships: [
           {

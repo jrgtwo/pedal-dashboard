@@ -12,7 +12,7 @@ const PedalBoardSandBox = () => {
     const val = event.currentTarget.value
     updateBoardName(val)
   }, [updateBoardName])
-
+  debugger
   return (
     <section role="section" className="w-full">
       <section className="mb-4 flex margin-auto justify-between align-center">
