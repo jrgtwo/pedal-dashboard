@@ -3,14 +3,12 @@ import { Link } from "react-router"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 import { Separator } from "@/components/ui/separator"
 import { AddGear } from "./AddGear"
-import { API } from "@/api/api"
 
 const MyGear = () => {
-  useGetMyPedals()
-  const data = API.gear.store((state) => state.myPedals)
+  const { isLoading, isSuccess, data } = useGetMyPedals()
 
-  console.log('My Gear', data)
-
+  if (isLoading) return <h2>...Loading</h2>
+  if (!isSuccess || !data || data.length === 0) return <h2>No Pedals Found</h2>
   return (
     <>
       <h2 className="text-4xl font-[bebas_neue]">My Gear</h2>

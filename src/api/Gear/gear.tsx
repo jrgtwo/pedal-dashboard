@@ -30,7 +30,7 @@ class Gear {
       console.log(err)
     }
 
-    this.store.getState().setMyGear(resData || [])
+    // this.store.getState().setMyGear(resData || [])
     return { data: resData, error: resError }
   }
 
