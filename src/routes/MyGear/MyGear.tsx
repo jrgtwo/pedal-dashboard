@@ -11,6 +11,7 @@ const MyGear = () => {
   const stuff = API.gear.store((state) => state.myPedals)
 
   console.log('My Gear', stuff)
+
   return (
     <>
       <h2 className="text-4xl font-[bebas_neue]">My Gear</h2>
@@ -29,7 +30,7 @@ const MyGear = () => {
             return (
               <Fragment key={pedal?.pedals?.id || pedal?.pedal_id}>
                 <Link
-                  to={`/my-gear/pedals/${pedal?.pedals?.id}/${pedal?.pedals?.id}/${encodeURIComponent(pedal?.pedals?.name.replace(/ /g, '-'))}`}>
+                  to={`/my-gear/pedals/${pedal?.id}/${pedal?.pedals?.id}/${encodeURIComponent(pedal?.pedals?.name.replace(/ /g, '-'))}`}>
                   <img width="50" src={`/src/assets/${pedal?.pedals?.img}`} /><span>{pedal?.pedals?.name}</span>
                 </Link>
                 <Separator />

@@ -21,7 +21,7 @@ const MyPedal = () => {
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
   const pedalData = data?.data?.[0]?.pedals as PedalShape | undefined
-
+  debugger
   return (
     <div>
       <h2 className="text-2xl font-[bebas_neue]">My Pedal</h2>
