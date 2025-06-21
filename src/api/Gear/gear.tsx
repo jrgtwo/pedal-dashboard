@@ -1,18 +1,26 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 import { create } from "zustand"
 
+const myGearStore = create((set) => ({
+  myGear: [],
+  myPedals: [],
+  setMyGear: (gear) => set({ myGear: gear }),
+  setMyPedals: (pedals) => set({ myPedals: pedals }),
+}))
+
+const useMyGearStore = myGearStore
+
 class Gear {
   db
-  store
+  #store
+
+  get store() {
+    return this.#store.getState()
+  }
 
   constructor({ db }: { db: SupabaseClient }) {
     this.db = db
-    this.store = create((set) => ({
-      myGear: [],
-      myPedals: [],
-      setMyGear: (gear) => set({ myGear: gear }),
-      setMyPedals: (pedals) => set({ myPedals: pedals }),
-    }))
+    this.#store = myGearStore
   }
 
   getMyGear = async () => {
@@ -30,7 +38,6 @@ class Gear {
       console.log(err)
     }
 
-    // this.store.getState().setMyGear(resData || [])
     return { data: resData, error: resError }
   }
 
@@ -39,7 +46,6 @@ class Gear {
       .from('user_pedals')
       .select(`id, notes, title, pedal_id, pedals(id, name, img, type, mfg, description)`);
 
-    this.store.getState().setMyPedals(data || [])
     return { data, error }
   }
 
@@ -82,4 +88,4 @@ class Gear {
   }
 }
 
-export { Gear }
+export { Gear, useMyGearStore }
