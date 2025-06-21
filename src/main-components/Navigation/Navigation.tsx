@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router'
 import { useLoginStore, LOGIN_STATES } from '../../store/login'
-
+import { Separator } from '@radix-ui/react-separator'
+import { Button } from '@/components/ui/button'
 const Navigation = () => {
 
   const user_status = useLoginStore((store) => store.user_status)
@@ -15,29 +16,40 @@ const Navigation = () => {
           <>
             <li>
               <NavLink
-                to="/my-gear"
-                className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
-                My Gear
+                to="/my-gear">
+                {({ isActive }) => (
+                  <Button variant={isActive ? 'default' : 'outline'}>
+                    My Gear
+                  </Button>
+                )}
               </NavLink>
+
             </li>
+
             <li>
               <NavLink
-                to="/my-boards"
-                className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
-                My Boards
+                to="/my-boards">
+                {({ isActive }) => (
+                  <Button variant={isActive ? 'default' : 'outline'}>
+                    My Boards
+                  </Button>
+                )}
               </NavLink>
             </li>
           </>
         }
         <li>
           <NavLink
-            to="/create"
-            className={({ isActive }) => isActive ? "font-black hover:underline" : ""}>
-            Create
+            to="/create">
+            {({ isActive }) => (
+              <Button variant={isActive ? 'default' : 'outline'}>
+                Create
+              </Button>
+            )}
           </NavLink>
         </li>
       </ol>
-    </nav>
+    </nav >
   )
 }
 

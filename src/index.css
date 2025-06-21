@@ -3,6 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.rubik-400 {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .noto-sans-display-400 {
   font-family: "Noto Sans Display", sans-serif;
   font-optical-sizing: auto;
@@ -43,7 +50,7 @@
 
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Rubik", Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
