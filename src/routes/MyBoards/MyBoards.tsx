@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useGetBoards } from '../../queryHooks/pedalBoard/useGetBoards'
 
 
@@ -14,6 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 
 const MyBoards = () => {
+  const navigate = useNavigate()
   const { isError, isLoading, boards, error } = useGetBoards()
 
   return (
@@ -47,11 +48,11 @@ const MyBoards = () => {
               : boards && boards.length > 0
                 ? boards.map((board) => {
                   return (
-                    <TableRow>
+                    <TableRow onClick={(() => navigate(`/create/${board.id}`))} key={board.id} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
                       <TableCell><Checkbox /></TableCell>
                       <TableCell
                         key={board.id}
-                        className="p-6 rounded-2xl ">
+                        className="p-6\">
                         <Link
                           to={`/create/${board.id}`}
                           className="hover:underline">

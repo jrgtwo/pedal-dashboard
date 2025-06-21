@@ -4,7 +4,7 @@ import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
-import { useMyGearStore } from "@/api/Gear/gear"
+import { useMyGearStore } from './state/useMyGearStore'
 
 import { useSaveUserPedal, useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 const AddGear = () => {

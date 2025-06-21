@@ -142,9 +142,8 @@ const PedalSelector = ({
                     {
                       filterList?.map((item) => {
                         return (
-                          <SidebarMenuItem>
+                          <SidebarMenuItem key={item}>
                             <SidebarMenuButton
-                              key={item}
                               variant='outline'
                               onClick={handleFilterClick(FILTER_TYPE.TYPE, item)}>{item}</SidebarMenuButton>
                           </SidebarMenuItem>

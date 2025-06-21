@@ -4,6 +4,9 @@ import { useSaveMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { Textarea } from "@/components/ui/textarea"
 import { PedalShape } from "@/routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
+import { useEffect } from "react"
 
 const MyPedal = () => {
   const { userPedalId } = useParams<{
@@ -19,16 +22,24 @@ const MyPedal = () => {
     mutation.mutate({ id: Number(userPedalId), notes, title })
   }
 
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      toast.success('Pedal updates saved successfully!')
+    }
+  }, [mutation.isSuccess])
+
   const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
   const pedalData = data?.data?.[0]?.pedals as PedalShape | undefined
 
   return (
     <div>
-      <h2 className="text-2xl font-[bebas_neue]">My Pedal</h2>
+      <h2 className="text-4xl font-[bebas_neue]">My Pedal</h2>
+      <Separator />
+
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading pedal data.</p>}
       {isSuccess && data && (
-        <div>
+        <div className="mt-8">
           <div className="flex flex-row gap-4">
             <img
               src={`/src/assets/${pedalData?.img}`}
