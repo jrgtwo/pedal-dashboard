@@ -1,14 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
-import { create } from "zustand"
-
-const myGearStore = create((set) => ({
-  myGear: [],
-  myPedals: [],
-  setMyGear: (gear) => set({ myGear: gear }),
-  setMyPedals: (pedals) => set({ myPedals: pedals }),
-}))
-
-const useMyGearStore = myGearStore
+import { useMyGearStore as myGearStore } from "@/routes/MyGear/state/useMyGearStore"
 
 class Gear {
   db
@@ -88,4 +79,4 @@ class Gear {
   }
 }
 
-export { Gear, useMyGearStore }
+export { Gear }

@@ -1,15 +1,10 @@
 import { create } from 'zustand'
 
-type MyGearStore = {
-  pedalList: number[]
-  setPedalList: (pedalList: number[]) => void
-}
-
-const useMyGearStore = create<MyGearStore>((set) => ({
-  pedalList: [],
-  setPedalList: (pedalList) => set(() => ({
-    pedalList: pedalList,
-  })),
+const useMyGearStore = create((set) => ({
+  myGear: [],
+  myPedals: [],
+  setMyGear: (gear) => set({ myGear: gear }),
+  setMyPedals: (pedals) => set({ myPedals: pedals }),
 }))
 
 export { useMyGearStore }
