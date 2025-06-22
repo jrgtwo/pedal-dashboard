@@ -1,9 +1,10 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
+import { toast } from "sonner"
 
 import { useSaveUserPedal, useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 const AddGear = () => {
@@ -43,12 +44,14 @@ const AddGear = () => {
   useEffect(() => {
     if (mutation.isSuccess) {
       queryClient.invalidateQueries({ queryKey: ['myPedals'] })
+      toast.success('Pedal saved successfully!')
     }
   }, [mutation.isSuccess, mutation.data, queryClient])
 
   useEffect(() => {
     if (deleteMutation.isSuccess) {
       queryClient.invalidateQueries({ queryKey: ['myPedals'] })
+      toast.success('Pedal deleted successfully!')
     }
   }, [deleteMutation.isSuccess, deleteMutation.data, queryClient])
 
