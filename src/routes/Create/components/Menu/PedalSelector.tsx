@@ -12,11 +12,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarHeader,
-  SidebarInset
 } from "@/components/ui/sidebar"
 
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

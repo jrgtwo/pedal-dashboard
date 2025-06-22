@@ -4,7 +4,6 @@ import { PedalSelector } from "../Create/components/Menu/PedalSelector"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
-import { useMyGearStore } from './state/useMyGearStore'
 
 import { useSaveUserPedal, useDeleteUserPedal } from "@/queryHooks/myGear/useSaveUserPedal"
 const AddGear = () => {
@@ -13,9 +12,8 @@ const AddGear = () => {
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedals()
 
-  const myPedalList = useMyGearStore((state) => state.myPedals)?.map((item) => {
-    return item?.pedals?.id || {}
-  })
+  const myPedalList = data?.map((item) => item?.pedals?.id || {})
+
   const { isLoading: allPedalsLoading, pedalList } = useGetAllPedals()
 
   const mutation = useSaveUserPedal()

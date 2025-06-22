@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router'
 import { useLoginStore, LOGIN_STATES } from '../../store/login'
-import { Separator } from '@radix-ui/react-separator'
 import { Button } from '@/components/ui/button'
 const Navigation = () => {
 

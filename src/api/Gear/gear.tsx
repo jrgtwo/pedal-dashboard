@@ -1,17 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
-import { useMyGearStore as myGearStore } from "@/routes/MyGear/state/useMyGearStore"
 
 class Gear {
   db
-  #store
-
-  get store() {
-    return this.#store.getState()
-  }
 
   constructor({ db }: { db: SupabaseClient }) {
     this.db = db
-    this.#store = myGearStore
   }
 
   getMyGear = async () => {
