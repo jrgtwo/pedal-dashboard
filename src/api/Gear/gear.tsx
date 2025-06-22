@@ -43,10 +43,14 @@ class Gear {
     return { data, error }
   }
 
-  updateUserPedal = async ({ id, notes, title }: { id: number, notes: string, title: string }) => {
+  updateUserPedal = async ({ id, notes, title }: { id: number, notes?: string, title?: string }) => {
+    const toUpdate = {}
+    if (notes) toUpdate.notes = { plain: notes }
+    if (title) toUpdate.title = title
+
     const { data, error } = await this.db
       .from('user_pedals')
-      .update({ title, notes: { plain: notes } })
+      .update(toUpdate)
       .eq('id', id)
       .select()
     return { data, error }
