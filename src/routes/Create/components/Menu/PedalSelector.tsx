@@ -97,7 +97,7 @@ const PedalSelector = ({
   return (
 
     <Dialog>
-      <DialogTrigger className={`my-6 ${className}`}>
+      <DialogTrigger className={`${className}`}>
         Pedal Selector
       </DialogTrigger>
       <DialogContent className="flex h-9/12 max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">

@@ -61,7 +61,7 @@ const Sandbox = () => {
   return (
     <section
       role="sandbox"
-      className="relative pedal-dashboard-grid w-full h-[50vh]"
+      className="relative pedal-dashboard-grid w-full min-h-[50vh]"
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>

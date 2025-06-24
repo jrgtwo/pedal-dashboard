@@ -12,14 +12,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Separator } from '@/components/ui/separator'
 
 const MyBoards = () => {
   const navigate = useNavigate()
   const { isError, isLoading, boards, error } = useGetBoards()
 
   return (
-    <section className="w-11/12 mx-auto mt-8">
-      <h2 className="text-3xl font-[Bebas_Neue]">My Boards</h2>
+    <section className="w-full mx-auto">
+      <h2 className="my-4 text-4xl font-[Bebas_Neue]">My Boards</h2>
+      <Separator className="mb-8" />
       <Table className="">
         <TableHeader>
           <TableRow>

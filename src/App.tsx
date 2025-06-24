@@ -22,76 +22,79 @@ function App() {
   useGetSession()
 
   return (
-    <section role="app"
-      className="flex flex-col min-h-screen max-w-6xl m-auto">
+    <section role="app">
       <BrowserRouter>
-        <Header />
-        <Separator />
-        <Navigation />
-        <Separator />
-        <Routes>
-          <Route
-            index
-            element={
-              <Home />
-            } />
-          <Route
-            path={ROUTES.MY_BOARDS} element={
-              <ProtectedRoute>
-                <MyBoards />
-              </ProtectedRoute>
-            } />
-          <Route
-            path={ROUTES.MY_GEAR} element={
-              <ProtectedRoute>
-                <MyGear />
-              </ProtectedRoute>
-            } />
-          <Route
-            path={ROUTES.MY_GEAR_PEDALS} element={
-              <ProtectedRoute>
-                <MyPedal />
-              </ProtectedRoute>
-            } />
-          <Route
-            path={ROUTES.ADD_GEAR} element={
-              <ProtectedRoute>
-                <AddGear />
-              </ProtectedRoute>
-            } />
-          <Route
-            path={ROUTES.CREATE}
-            element={
-              <Create />
-            } />
-          <Route
-            path={ROUTES.CREATE_BY_BOARD_ID}
-            element={
-              <ProtectedRoute>
-                <Create />
-              </ProtectedRoute>
-            } />
-          <Route
-            path={ROUTES.ABOUT} element={
-              <About />
-            } />
+        <section>
+          <Header />
+          <Separator />
 
-          <Route
-            path={ROUTES.LOGIN}
-            element={
-              <Login />
-            } />
-          <Route
-            path={ROUTES.LOGOUT}
-            element={
-              <Logout />
-            } />
-          <Route
-            path={ROUTES.REGISTER}
-            element={
-              <Register />
-            } />
-        </Routes>
+        </section>
+
+        <section className="flex flex-col min-h-screen max-w-6xl m-auto mt-[120px] px-8">
+          <Routes >
+            <Route
+              index
+              element={
+                <Home />
+              } />
+            <Route
+              path={ROUTES.MY_BOARDS} element={
+                <ProtectedRoute>
+                  <MyBoards />
+                </ProtectedRoute>
+              } />
+            <Route
+              path={ROUTES.MY_GEAR} element={
+                <ProtectedRoute>
+                  <MyGear />
+                </ProtectedRoute>
+              } />
+            <Route
+              path={ROUTES.MY_GEAR_PEDALS} element={
+                <ProtectedRoute>
+                  <MyPedal />
+                </ProtectedRoute>
+              } />
+            <Route
+              path={ROUTES.ADD_GEAR} element={
+                <ProtectedRoute>
+                  <AddGear />
+                </ProtectedRoute>
+              } />
+            <Route
+              path={ROUTES.CREATE}
+              element={
+                <Create />
+              } />
+            <Route
+              path={ROUTES.CREATE_BY_BOARD_ID}
+              element={
+                <ProtectedRoute>
+                  <Create />
+                </ProtectedRoute>
+              } />
+            <Route
+              path={ROUTES.ABOUT} element={
+                <About />
+              } />
+
+            <Route
+              path={ROUTES.LOGIN}
+              element={
+                <Login />
+              } />
+            <Route
+              path={ROUTES.LOGOUT}
+              element={
+                <Logout />
+              } />
+            <Route
+              path={ROUTES.REGISTER}
+              element={
+                <Register />
+              } />
+          </Routes>
+        </section>
         <Footer />
         <Toaster />
       </BrowserRouter>

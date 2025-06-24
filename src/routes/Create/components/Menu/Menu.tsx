@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import { usePedalStore } from '../PedalBoardSandBox/components/Sandbox/store/pedal'
-
-import { Separator } from '@/components/ui/separator'
+import { buttonVariants } from "@/components/ui/button"
 import { PedalSelector } from './PedalSelector'
 import { useGetAllPedals } from '@/queryHooks/pedalBoard/useGetAllPedals'
 
@@ -26,15 +25,12 @@ const Menu = () => {
   }, [pedalList, addNewPedal])
 
   return (
-    <section
-      className="w-1/4">
-      <h2>Create Your New Pedalboard</h2>
-      <Separator />
-
+    <section>
       {isLoading && <h2>...loading Pedals</h2>}
       {
         isSuccess && (
           <PedalSelector
+            className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
             isSuccess={isSuccess}
             pedalList={pedalList}
             savePedalDataById={savePedalDataById}

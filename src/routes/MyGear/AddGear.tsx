@@ -65,7 +65,7 @@ const AddGear = () => {
 
   return (
     <PedalSelector
-      className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
+      className={`w-fit ${buttonVariants({ variant: "outline" })}`}
       myPedalIdList={myPedalList}
       isSuccess={isSuccess}
       pedalList={pedalList}

@@ -12,7 +12,7 @@ const MyGear = () => {
   return (
     <>
       <div className="flex items-center gap-8">
-        <h2 className="text-4xl font-[bebas_neue]">My Gear</h2>
+        <h2 className="my-4 text-4xl font-[bebas_neue]">My Gear</h2>
         <AddGear />
       </div>
       <Separator />

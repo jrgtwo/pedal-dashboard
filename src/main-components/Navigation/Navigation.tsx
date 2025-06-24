@@ -22,9 +22,7 @@ const Navigation = () => {
                   </Button>
                 )}
               </NavLink>
-
             </li>
-
             <li>
               <NavLink
                 to="/my-boards">
@@ -47,6 +45,25 @@ const Navigation = () => {
             )}
           </NavLink>
         </li>
+        {
+          user_status === LOGIN_STATES.LOGGED_IN
+            ? (
+              <li>
+                <NavLink to="/logout"><Button variant='outline'>Logout</Button></NavLink>
+              </li>
+            )
+            : (
+              <>
+                <li>
+                  <NavLink to="/login"><Button variant='outline'>Login</Button></NavLink>
+                </li>
+                <li>
+                  <NavLink to="/register"><Button variant='outline'>Register</Button></NavLink>
+                </li>
+              </>
+            )
+        }
+
       </ol>
     </nav >
   )
