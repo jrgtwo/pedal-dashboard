@@ -18,7 +18,6 @@ import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
 
-
 function App() {
   useGetSession()
 

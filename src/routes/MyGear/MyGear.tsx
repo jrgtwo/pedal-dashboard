@@ -29,7 +29,6 @@ const MyGear = () => {
                   to={`/my-gear/pedals/${pedal?.id}/${pedal?.pedals?.id}/${encodeURIComponent(pedal?.pedals?.name.replace(/ /g, '-'))}`}>
                   <img width="50" src={`/src/assets/${pedal?.pedals?.img}`} />
                   <div>
-                    <p className={`text-2xl font-[bebas_neue] ${!pedal.title && 'text-gray-400'}`}>{pedal.title || 'Untitled'}</p>
                     <span>{pedal?.pedals?.name}</span>
                   </div>
 

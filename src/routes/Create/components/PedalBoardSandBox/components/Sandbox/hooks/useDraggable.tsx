@@ -29,7 +29,6 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
 
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
-  debugger
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -114,8 +113,6 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
       const yPos = (keepInBounds(
         event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
       ))
-
-
 
       const isColliding = [...draggableMap].find(([id, { location }]) => {
         if (id === currDraggable.dragId) return
