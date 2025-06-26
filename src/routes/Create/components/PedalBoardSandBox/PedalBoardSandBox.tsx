@@ -22,7 +22,7 @@ const PedalBoardSandBox = () => {
           placeholder="Untitled Pedal Board"
           name="board-name"
           onChange={handleChange}
-          className="border-2 text-2xl font-[Bebas_Neue] w-full" />
+          className="border-2 text-2xl font-heading w-full" />
         <Header />
       </section>
       <Sandbox />

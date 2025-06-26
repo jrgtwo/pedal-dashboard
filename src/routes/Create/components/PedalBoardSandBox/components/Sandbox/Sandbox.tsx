@@ -61,28 +61,32 @@ const Sandbox = () => {
   return (
     <section
       role="sandbox"
-      className="relative pedal-dashboard-grid w-full min-h-[50vh]"
+      className="relative  w-full"
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
-      <img
-        src={testboard}
-        alt="testboard"
-        width={24 * 30}
-        height={14.5 * 30}
-        className="max-w-none" />
-      {draggableArray.map((pedal) => (
-        <Pedal
-          handleRemove={handleRemove}
-          pedalId={`${pedal.dragId}`}
-          name={pedal.name}
-          key={pedal.dragId}
-          img={pedal.img}
-          w={pedal.location.w}
-          h={pedal.location.h}
-          x={pedal.location.x}
-          y={pedal.location.y} />
-      ))}
+      <div
+        className="pedal-dashboard-grid"
+      >
+        <img
+          src={testboard}
+          alt="testboard"
+          width={24 * 30}
+          height={14.5 * 30}
+          className="max-w-none" />
+        {draggableArray.map((pedal) => (
+          <Pedal
+            handleRemove={handleRemove}
+            pedalId={`${pedal.dragId}`}
+            name={pedal.name}
+            key={pedal.dragId}
+            img={pedal.img}
+            w={pedal.location.w}
+            h={pedal.location.h}
+            x={pedal.location.x}
+            y={pedal.location.y} />
+        ))}
+      </div>
     </section >
   )
 }

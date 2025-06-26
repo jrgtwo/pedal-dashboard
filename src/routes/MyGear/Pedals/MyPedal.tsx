@@ -33,7 +33,7 @@ const MyPedal = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-[bebas_neue] py-4">My Pedal</h2>
+      <h2 className="text-4xl font-heading py-4">My Pedal</h2>
       <Separator />
 
       {isLoading && <p>Loading...</p>}
@@ -47,7 +47,7 @@ const MyPedal = () => {
               alt={pedalData?.name}
               width={250} />
             <section>
-              <h3 className="text-2xl font-[bebas_neue]">{pedalData?.name}</h3>
+              <h3 className="text-2xl font-heading">{pedalData?.name}</h3>
               <h3>{pedalData?.mfg}</h3>
               {pedalData?.type.map((type, index) => {
                 return <Badge key={type}>{type}</Badge>

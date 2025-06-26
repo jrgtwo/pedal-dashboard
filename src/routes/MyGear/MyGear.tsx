@@ -12,14 +12,14 @@ const MyGear = () => {
   return (
     <>
       <div className="flex items-center gap-8">
-        <h2 className="my-4 text-4xl font-[bebas_neue]">My Gear</h2>
+        <h2 className="my-4 text-4xl font-heading">My Gear</h2>
         <AddGear />
       </div>
       <Separator />
       <div className="flex flex-col w-9/12 mx-auto justify-items-center">
 
         <section className="flex flex-col">
-          <h3 className="mt-8 text-4xl font-[bebas_neue]">My Pedals</h3>
+          <h3 className="mt-8 text-4xl font-heading">My Pedals</h3>
           <Separator className="mt-4 mb-8" />
           {data && data?.map((pedal) => {
             return (

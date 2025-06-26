@@ -10,7 +10,7 @@ const Create = () => {
   return (
     <section>
       <section className="flex flex-row items-center gap-8">
-        <h2 className="my-4 text-4xl font-[Bebas_Neue]">Pedalboard Creator</h2>
+        <h2 className="my-4 text-4xl font-heading">Pedalboard Creator</h2>
         <Menu />
       </section>
       <Separator className="mb-8" />

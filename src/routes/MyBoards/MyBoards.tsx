@@ -20,7 +20,7 @@ const MyBoards = () => {
 
   return (
     <section className="w-full mx-auto">
-      <h2 className="my-4 text-4xl font-[Bebas_Neue]">My Boards</h2>
+      <h2 className="my-4 text-4xl font-heading">My Boards</h2>
       <Separator className="mb-8" />
       <Table className="">
         <TableHeader>

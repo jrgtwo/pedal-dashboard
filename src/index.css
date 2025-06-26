@@ -1,53 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Londrina+Solid:wght@400;900&family=Rubik:ital,wght@0,600;1,600&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-.rubik-400 {
-  font-family: "Rubik", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.noto-sans-display-400 {
-  font-family: "Noto Sans Display", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-}
-.exile-regular {
-  font-family: "Exile", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.bebas-neue-regular {
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.josefin-sans-400{
-  font-family: "Josefin Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.lilita-one-regular {
-  font-family: "Lilita One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.bruno-ace-regular {
-  font-family: "Bruno Ace", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
 
 :root {
   font-family: "Rubik", Avenir, Helvetica, Arial, sans-serif;
@@ -110,6 +66,10 @@ nav a {
 }
 
 @theme inline {
+
+  --font-main_header: "Londrina solid", "sans-serif"; 
+  --font-heading: "Bebas Neue", "sans-serif";
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
