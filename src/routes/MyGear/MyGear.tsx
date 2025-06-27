@@ -30,17 +30,14 @@ const MyGear = () => {
                   to={`/my-gear/pedals/${pedal?.id}/${pedal?.pedals?.id}/${encodeURIComponent(pedal?.pedals?.name.replace(/ /g, '-'))}`}>
                   <img width="50" src={`/src/assets/${pedal?.pedals?.img}`} />
                   <div>
-                    <p>{pedal?.pedals?.name}</p>
+                    <h4 className="text-xl font-heading">{pedal?.pedals?.name}</h4>
                     <div className="flex gap-2">
                       {pedal?.pedals?.type.map((type, index) => {
                         return <Badge key={type}>{type}</Badge>
                       })}
                     </div>
-
                   </div>
-
                 </Link>
-
               </Fragment>
             )
           })}
