@@ -22,7 +22,7 @@ const MyBoards = () => {
     <section className="w-full mx-auto">
       <h2 className="my-4 text-4xl font-heading">My Boards</h2>
       <Separator className="mb-8" />
-      <Table className="">
+      <Table className="text-xl">
         <TableHeader>
           <TableRow>
             <TableHead></TableHead>
