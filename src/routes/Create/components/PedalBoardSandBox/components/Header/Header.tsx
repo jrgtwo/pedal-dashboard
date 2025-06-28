@@ -5,6 +5,7 @@ import type { UpdateBoardShape } from '../Pedal/Pedal.types'
 import { useSaveBoard } from '../../../../../../queryHooks/pedalBoard/useSaveBoard'
 import { toast } from "sonner"
 import { Button } from '@/components/ui/button'
+import html2canvas from 'html2canvas-pro';
 
 const Header = () => {
   const user = useLoginStore((state) => state.user)
@@ -16,7 +17,7 @@ const Header = () => {
   const boardId = usePedalStore((state) => state.boardId)
   const { mutation } = useSaveBoard()
 
-  const saveBoard = useCallback(() => {
+  const saveBoard = useCallback(async () => {
     if (!user || !pedals) return
 
     const toSave: UpdateBoardShape = {
@@ -30,6 +31,20 @@ const Header = () => {
       toSave.id = boardId
     }
 
+    toSave.snapshot = null;
+
+    try {
+      const canvas = await html2canvas(document.getElementById('pedal-dashboard-sandbox') as HTMLElement)
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 1))
+      const blobImg = URL.createObjectURL(blob as Blob)
+
+      toSave.snapshot = blobImg || null
+
+    } catch (error) {
+      console.error('Error capturing canvas:', error);
+      toast.error('Failed to capture board image.')
+    }
+
     mutation.mutate(toSave)
   }, [pedals, user, boardName, boardId, mutation])
 
@@ -38,6 +53,8 @@ const Header = () => {
       toast('Board saved successfully!')
     }
   }, [mutation.isSuccess])
+
+
 
   return (
     <header

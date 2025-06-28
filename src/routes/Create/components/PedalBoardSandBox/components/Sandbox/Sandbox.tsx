@@ -59,6 +59,7 @@ const Sandbox = () => {
   return (
     <section
       role="sandbox"
+      id="pedal-dashboard-sandbox"
       className="relative  w-full"
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}

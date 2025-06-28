@@ -27,6 +27,7 @@ const MyBoards = () => {
           <TableRow>
             <TableHead></TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>Snapshot</TableHead>
             <TableHead>Created on:</TableHead>
           </TableRow>
         </TableHeader>
@@ -37,6 +38,7 @@ const MyBoards = () => {
                 <TableCell><Checkbox /></TableCell>
                 <TableCell>...Loading</TableCell>
                 <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             )
             : isError
@@ -44,6 +46,7 @@ const MyBoards = () => {
                 <TableRow>
                   <TableCell><Checkbox /></TableCell>
                   <TableCell>...Error:{error?.message} </TableCell>
+                  <TableCell></TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               )
@@ -58,8 +61,16 @@ const MyBoards = () => {
                         <Link
                           to={`/create/${board.id}`}
                           className="hover:underline">
-                          Board: {board.id} - {board.name}
+                          {board.name}
                         </Link>
+                      </TableCell>
+                      <TableCell>
+                        {board.snapshot
+                          ? <img
+                            className="max-h-[100px] w-auto object-contain"
+                            src={board.snapshot}
+                            alt={board.name || ""} />
+                          : <p>No Snapshot</p>}
                       </TableCell>
                       <TableCell>{new Date(board.created_at).toLocaleDateString()}</TableCell>
                     </TableRow>
