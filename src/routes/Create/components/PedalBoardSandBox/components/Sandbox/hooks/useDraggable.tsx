@@ -14,7 +14,7 @@ const keepInBounds = (value: number, max: number) => {
   return Math.min(Math.max(value, 0), max)
 }
 
-const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data.reduce((acc, item) => {
+const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data?.reduce((acc, item) => {
   acc.set(item.dragId, { ...item })
   return acc
 }, new Map())
@@ -25,7 +25,7 @@ const triggerOnComplete = <T,>(data: T[], target: HTMLElement | null, listeners:
   })
 }
 
-const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
+const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
@@ -156,6 +156,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[]) => {
     if (typeof updatedData === 'string') {
       updatedData = JSON.parse(updatedData) as T[]
     }
+
     setDraggableMap(dataToMap(updatedData))
   }, [])
 
