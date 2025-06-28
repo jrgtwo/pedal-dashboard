@@ -31,15 +31,13 @@ const Header = () => {
       toSave.id = boardId
     }
 
-    toSave.snapshot = null;
+    toSave.snapshot = null
 
     try {
       const canvas = await html2canvas(document.getElementById('pedal-dashboard-sandbox') as HTMLElement)
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 1))
-      const blobImg = URL.createObjectURL(blob as Blob)
+      const canvasToImg = canvas.toDataURL('image/jpeg', 1)
 
-      toSave.snapshot = blobImg || null
-
+      toSave.snapshot = canvasToImg || null
     } catch (error) {
       console.error('Error capturing canvas:', error);
       toast.error('Failed to capture board image.')

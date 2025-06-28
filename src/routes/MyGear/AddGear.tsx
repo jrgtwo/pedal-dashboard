@@ -61,8 +61,6 @@ const AddGear = () => {
   if (isError)
     return <h2>...Error!, {JSON.stringify(data?.error || {})}</h2>
 
-  console.log('pedalList', myPedalIdList, myPedalList)
-
   return (
     <PedalSelector
       className={`w-fit ${buttonVariants({ variant: "outline" })}`}
