@@ -19,9 +19,7 @@ const MyGear = () => {
       <Separator />
       <div className="flex flex-col w-9/12 mx-auto justify-items-center">
 
-        <section className="flex flex-col">
-          {/* <h3 className="mt-8 text-4xl font-heading">My Pedals</h3> */}
-          {/* <Separator className="mt-4 mb-8" /> */}
+        <section className="flex flex-col mt-4 gap-1">
           {data && data?.map((pedal) => {
             return (
               <Fragment key={pedal?.pedals?.id || pedal?.pedal_id}>
