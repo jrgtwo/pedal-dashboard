@@ -10,6 +10,9 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  server: {
+    allowedHosts: ['.pedal-dashboard.com', 'localhost'],  
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

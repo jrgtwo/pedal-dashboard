@@ -1,21 +1,6 @@
-import { Tables } from "database.types"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { SidebarWrapper } from "./PedalSelector/SidebarWrapper"
-
+import type { Tables } from "database.types"
 import { SORT_DIRECTION, FILTER_TYPE } from "./PedalSelector"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from "@/components/ui/sidebar"
 
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -23,7 +8,6 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { PedalList } from "./PedalSelector/PedalList"
 
 type PedalSelectorComponentProps = {
   pedalList: Tables<'pedals'>[] | null | undefined,
@@ -33,22 +17,16 @@ type PedalSelectorComponentProps = {
   filterList: string[],
   handleSortClick: (direction: SORT_DIRECTION) => (event: React.MouseEvent<HTMLButtonElement>) => void,
   handleFilterClick: (type: FILTER_TYPE, secondary: string) => (event: React.MouseEvent<HTMLButtonElement>) => void,
-  className?: string
+  className?: string,
+  children?: React.ReactNode
 }
 
 const PedalSelectorComponent = ({
-  pedalList,
-  savePedalDataById,
-  deletePedalDataById,
-  myPedalIdList,
-  filterList,
-  handleSortClick,
-  handleFilterClick,
-  className = ''
+  className = '',
+  children
 }: PedalSelectorComponentProps) => {
 
   return (
-
     <Dialog>
       <DialogTrigger className={`${className}`}>
         Pedal Selector
@@ -58,20 +36,7 @@ const PedalSelectorComponent = ({
         <DialogDescription className="hidden">
           Select a pedal to add to your gear.
         </DialogDescription>
-
-        <SidebarWrapper
-          handleSortClick={handleSortClick}
-          handleFilterClick={handleFilterClick}
-          filterList={filterList}
-        >
-          <PedalList
-            pedalList={pedalList}
-            savePedalDataById={savePedalDataById}
-            deletePedalDataById={deletePedalDataById}
-            myPedalIdList={myPedalIdList}
-          />
-
-        </SidebarWrapper>
+        {children}
       </DialogContent>
     </Dialog >
   )
