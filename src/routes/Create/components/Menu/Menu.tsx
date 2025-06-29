@@ -27,18 +27,11 @@ const Menu = () => {
   return (
     <section>
       {isLoading && <h2>...loading Pedals</h2>}
-      {
-        isSuccess && (
-          <PedalSelector
-            className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
-            isSuccess={isSuccess}
-            pedalList={pedalList}
-            savePedalDataById={savePedalDataById}
-          />
-        )
-      }
-
-    </section >
+      <PedalSelector
+        className={`m-0 w-fit ${buttonVariants({ variant: "outline" })}`}
+        savePedalDataById={savePedalDataById}
+      />
+    </section>
   )
 }
 
