@@ -3,12 +3,10 @@ import { useState, useCallback, useEffect, type MouseEvent } from 'react'
 type RequiredDataValues = {
   id: number,
   dragId: number,
-  location: {
-    w: number,
-    h: number,
-    x: number,
-    y: number
-  }
+  w: number,
+  h: number,
+  x: number,
+  y: number,
 }
 const keepInBounds = (value: number, max: number) => {
   return Math.min(Math.max(value, 0), max)
@@ -29,7 +27,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
-  const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data]))
+  const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data || []]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
@@ -114,16 +112,16 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
         event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
       ))
 
-      const isColliding = [...draggableMap].find(([id, { location }]) => {
+      const isColliding = [...draggableMap].find(([id, { w, h, x, y }]) => {
         if (id === currDraggable.dragId) return
-        const pedalW = location.w * 30
-        const pedalH = location.h * 30
+        const pedalW = w * 30
+        const pedalH = h * 30
 
         return (
-          (location.x < (xPos + currDraggableWidth)) &&
-          ((location.x + pedalW) > xPos) &&
-          (location.y < (yPos + currDraggableHeight)) &&
-          ((location.y + pedalH) > yPos)
+          (x < (xPos + currDraggableWidth)) &&
+          ((x + pedalW) > xPos) &&
+          (y < (yPos + currDraggableHeight)) &&
+          ((y + pedalH) > yPos)
         )
       })
 
@@ -131,9 +129,8 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
       const newCurrDraggable = { ...currDraggable };
 
-      newCurrDraggable.location = { ...newCurrDraggable.location }
-      newCurrDraggable.location.x = xPos
-      newCurrDraggable.location.y = yPos
+      newCurrDraggable.x = xPos
+      newCurrDraggable.y = yPos
 
       setDraggableMap((prevDraggableMap) => {
         return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))

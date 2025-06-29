@@ -9,9 +9,11 @@ import { useGetBoardById } from '../../../../../../queryHooks/pedalBoard/useGetB
 
 const Sandbox = () => {
   const [hasSetInitial, setHasSetInitial] = useState(false)
-  const pedals = usePedalStore((state) => state.pedals)
+  // const pedals = usePedalStore((state) => state.pedals)
+  const pedals2 = usePedalStore((state) => state.pedals2)
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
+
   const { boardId } = useParams()
   const query = useGetBoardById(Number(boardId))
   const updateFromFetch = usePedalStore((state) => state.updateFromFetch)
@@ -34,11 +36,11 @@ const Sandbox = () => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
-  } = useDraggable<DraggablePedalShape>(pedals)
+  } = useDraggable<DraggablePedalShape>(pedals2)
 
   useEffect(() => {
-    setter(pedals)
-  }, [pedals, setter])
+    setter(pedals2)
+  }, [pedals2, setter])
 
 
   useEffect(() => {
@@ -80,10 +82,10 @@ const Sandbox = () => {
             name={pedal.name}
             key={pedal.dragId}
             img={pedal.img}
-            w={pedal.location.w}
-            h={pedal.location.h}
-            x={pedal.location.x}
-            y={pedal.location.y} />
+            w={pedal.w}
+            h={pedal.h}
+            x={pedal.x}
+            y={pedal.y} />
         ))}
       </div>
     </section >

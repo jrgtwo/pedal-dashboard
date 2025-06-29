@@ -13,32 +13,35 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          h: number | null
           id: number
           img: string
-          location: Json
           mfg: string
           name: string
           type: string[]
+          w: number | null
         }
         Insert: {
           created_at?: string
           description?: string | null
+          h?: number | null
           id?: number
           img: string
-          location: Json
           mfg: string
           name: string
           type: string[]
+          w?: number | null
         }
         Update: {
           created_at?: string
           description?: string | null
+          h?: number | null
           id?: number
           img?: string
-          location?: Json
           mfg?: string
           name?: string
           type?: string[]
+          w?: number | null
         }
         Relationships: []
       }

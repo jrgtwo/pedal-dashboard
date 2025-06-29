@@ -1,11 +1,10 @@
 import { create } from 'zustand'
 import type { DraggablePedalShape } from '../../Pedal/Pedal.types'
 
-
 interface PedalStore {
-  pedals: DraggablePedalShape[];
-  history: DraggablePedalShape[][];
-  redoLastHistory: DraggablePedalShape[] | null;
+  pedals2: DraggablePedalShape[];
+  history2: DraggablePedalShape[][];
+  redoLastHistory2: DraggablePedalShape[] | null;
   name: string | null,
   boardId: number | null,
 
@@ -26,57 +25,66 @@ interface PedalStore {
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
-  pedals: [],
-  history: [],
-  redoLastHistory: null,
+  pedals2: [],
+  history2: [],
+  redoLastHistory2: null,
   name: null,
   boardId: null,
 
   addNewPedals: (newPedal) => set((state) => {
-    const updatedState = [...state.pedals, newPedal]
+    const newPedal2 = {
+      ...newPedal,
+      x: 0,
+      y: 0
+    }
+
+    const updatedState2 = [...state.pedals2, newPedal2]
 
     return ({
-      pedals: updatedState,
-      history: [...state.history, updatedState]
+      pedals2: updatedState2,
+      history2: [...state.history2, updatedState2]
     })
   }),
 
   updateHistory: (newPedals) => set((state) => {
+    const newPedals2 = newPedals
+
     return ({
-      pedals: structuredClone(newPedals),
-      history: [...state.history, structuredClone(newPedals)]
+      pedals2: newPedals2,
+      history2: [...state.history2, newPedals2]
     })
   }),
 
   undoHistory: () => set((state) => {
-    if (state.history.length < 1) return state
-    const updatedState = [...state.history]
-    const lastState = updatedState.pop()
+    if (state.history2.length < 1) return state
+    const updatedState2 = [...state.history2]
+    const lastState2 = updatedState2.pop()
 
     return ({
-      pedals: updatedState[updatedState.length - 1] || [],
-      history: updatedState,
-      redoLastHistory: lastState
+      pedals2: updatedState2[updatedState2.length - 1] || [],
+      history2: updatedState2,
+      redoLastHistory2: lastState2
     })
   }),
 
   removeBy: (key, value) => set((state) => {
-    const prevPedals = state.pedals
-    const updatedPedals = prevPedals.filter((item) => {
+    const prevPedals2 = state.pedals2
+
+    const updatedPedals2 = prevPedals2.filter((item) => {
       return `${item[key]}` !== `${value}`
     })
 
     return {
-      pedals: updatedPedals,
-      history: [...state.history, structuredClone(updatedPedals)]
+      pedals2: updatedPedals2,
+      history2: [...state.history2, updatedPedals2],
     }
   }),
 
   clear: () => set(() => {
     return {
-      pedals: [],
-      history: [],
-      redoLastHistory: null,
+      pedals2: [],
+      history2: [],
+      redoLastHistory2: null,
       name: null,
       boardId: null
     }
@@ -95,12 +103,13 @@ const usePedalStore = create<PedalStore>((set) => ({
   }),
 
   updateFromFetch: ({ id, pedals, name }) => set(() => {
+
     return {
       boardId: id,
-      pedals,
+      pedals2: pedals,
       ...(name && { name }),
-      history: [structuredClone(pedals)],
-      redoLastHistory: null
+      history2: [pedals],
+      redoLastHistory2: null
     }
   })
 }))

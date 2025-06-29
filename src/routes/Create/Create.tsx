@@ -14,9 +14,7 @@ const Create = () => {
         <Menu />
       </section>
       <Separator className="mb-8" />
-      <section
-        className="flex flex-row mt-5">
-
+      <section className="flex flex-row mt-5">
         <PedalBoardSandBox />
       </section>
     </section >
