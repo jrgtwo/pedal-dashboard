@@ -10,13 +10,6 @@ import {
 } from "@/components/ui/dialog"
 
 type PedalSelectorComponentProps = {
-  pedalList: Tables<'pedals'>[] | null | undefined,
-  savePedalDataById: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  deletePedalDataById?: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  myPedalIdList?: number[],
-  filterList: string[],
-  handleSortClick: (direction: SORT_DIRECTION) => (event: React.MouseEvent<HTMLButtonElement>) => void,
-  handleFilterClick: (type: FILTER_TYPE, secondary: string) => (event: React.MouseEvent<HTMLButtonElement>) => void,
   className?: string,
   children?: React.ReactNode
 }
