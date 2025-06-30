@@ -2,9 +2,9 @@ import { create } from 'zustand'
 import type { DraggablePedalShape } from '../../Pedal/Pedal.types'
 
 interface PedalStore {
-  pedals2: DraggablePedalShape[];
-  history2: DraggablePedalShape[][];
-  redoLastHistory2: DraggablePedalShape[] | null;
+  pedals: DraggablePedalShape[];
+  history: DraggablePedalShape[][];
+  redoLastHistory: DraggablePedalShape[] | null;
   name: string | null,
   boardId: number | null,
 
@@ -25,66 +25,65 @@ interface PedalStore {
 }
 
 const usePedalStore = create<PedalStore>((set) => ({
-  pedals2: [],
-  history2: [],
-  redoLastHistory2: null,
+  pedals: [],
+  history: [],
+  redoLastHistory: null,
   name: null,
   boardId: null,
 
   addNewPedals: (newPedal) => set((state) => {
-    const newPedal2 = {
+    const updatedPedal = {
       ...newPedal,
       x: 0,
       y: 0
     }
 
-    const updatedState2 = [...state.pedals2, newPedal2]
+    const updatedState = [...state.pedals, updatedPedal]
 
     return ({
-      pedals2: updatedState2,
-      history2: [...state.history2, updatedState2]
+      pedals: updatedState,
+      history: [...state.history, updatedState]
     })
   }),
 
   updateHistory: (newPedals) => set((state) => {
-    const newPedals2 = newPedals
 
     return ({
-      pedals2: newPedals2,
-      history2: [...state.history2, newPedals2]
+      pedals: newPedals,
+      history: [...state.history, newPedals]
     })
   }),
 
   undoHistory: () => set((state) => {
-    if (state.history2.length < 1) return state
-    const updatedState2 = [...state.history2]
-    const lastState2 = updatedState2.pop()
+    if (state.history.length < 1) return state
+    const updatedState = [...state.history]
+    const lastState = updatedState.pop()
 
     return ({
-      pedals2: updatedState2[updatedState2.length - 1] || [],
-      history2: updatedState2,
-      redoLastHistory2: lastState2
+      pedals: updatedState[updatedState.length - 1] || [],
+      history: updatedState,
+      redoLastHistory: lastState
     })
   }),
 
   removeBy: (key, value) => set((state) => {
-    const prevPedals2 = state.pedals2
+    const prevPedals = state.pedals
 
-    const updatedPedals2 = prevPedals2.filter((item) => {
+    const updatedPedals = prevPedals.filter((item) => {
       return `${item[key]}` !== `${value}`
     })
 
     return {
-      pedals2: updatedPedals2,
-      history2: [...state.history2, updatedPedals2],
+      pedals: updatedPedals,
+      history: [...state.history, updatedPedals],
     }
   }),
 
   clear: () => set(() => {
     return {
-      pedals2: [],
-      history2: [],
-      redoLastHistory2: null,
+      pedals: [],
+      history: [],
+      redoLastHistory: null,
       name: null,
       boardId: null
     }
@@ -106,10 +105,10 @@ const usePedalStore = create<PedalStore>((set) => ({
 
     return {
       boardId: id,
-      pedals2: pedals,
+      pedals: pedals,
       ...(name && { name }),
-      history2: [pedals],
-      redoLastHistory2: null
+      history: [pedals],
+      redoLastHistory: null
     }
   })
 }))

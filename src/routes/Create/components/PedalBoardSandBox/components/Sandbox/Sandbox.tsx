@@ -9,8 +9,8 @@ import { useGetBoardById } from '../../../../../../queryHooks/pedalBoard/useGetB
 
 const Sandbox = () => {
   const [hasSetInitial, setHasSetInitial] = useState(false)
-  // const pedals = usePedalStore((state) => state.pedals)
-  const pedals2 = usePedalStore((state) => state.pedals2)
+
+  const pedals = usePedalStore((state) => state.pedals)
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
 
@@ -36,11 +36,11 @@ const Sandbox = () => {
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
-  } = useDraggable<DraggablePedalShape>(pedals2)
+  } = useDraggable<DraggablePedalShape>(pedals)
 
   useEffect(() => {
-    setter(pedals2)
-  }, [pedals2, setter])
+    setter(pedals)
+  }, [pedals, setter])
 
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const Sandbox = () => {
       onMouseDown={(event) => handleMouseDown(event)}
       onMouseUp={(event) => handleMouseUp(event)}
       onMouseMove={(event) => handleMouseMove(event)}>
-      <div
+    <div
         className="pedal-dashboard-grid"
       >
         <img

@@ -9,8 +9,8 @@ import html2canvas from 'html2canvas-pro';
 
 const Header = () => {
   const user = useLoginStore((state) => state.user)
-  const pedals2 = usePedalStore((state) => state.pedals2)
-  const history2 = usePedalStore((state) => state.history2)
+  const pedals = usePedalStore((state) => state.pedals)
+  const history = usePedalStore((state) => state.history)
   const undoHistory = usePedalStore((state) => state.undoHistory)
   const clear = usePedalStore((state) => state.clear)
   const boardName = usePedalStore((state) => state.name)
@@ -18,10 +18,10 @@ const Header = () => {
   const { mutation } = useSaveBoard()
 
   const saveBoard = useCallback(async () => {
-    if (!user || !pedals2) return
+    if (!user || !pedals) return
 
     const toSave: UpdateBoardShape = {
-      board: JSON.stringify(pedals2 || {}),
+      board: JSON.stringify(pedals || {}),
     };
     if (boardName) {
       toSave.name = boardName
@@ -44,7 +44,7 @@ const Header = () => {
     }
 
     mutation.mutate(toSave)
-  }, [pedals2, user, boardName, boardId, mutation])
+  }, [pedals, user, boardName, boardId, mutation])
 
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -69,7 +69,7 @@ const Header = () => {
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
           <Button
             variant="secondary"
-            onClick={() => undoHistory()}>Undo {history2.length}</Button>
+            onClick={() => undoHistory()}>Undo {history.length}</Button>
         </li>
         <li
           className="text-zinc-600  px-2 py-1 hover:text-zinc-900">
