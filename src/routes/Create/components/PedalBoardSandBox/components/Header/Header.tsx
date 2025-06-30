@@ -6,8 +6,10 @@ import { useSaveBoard } from '../../../../../../queryHooks/pedalBoard/useSaveBoa
 import { toast } from "sonner"
 import { Button } from '@/components/ui/button'
 import html2canvas from 'html2canvas-pro';
+import { useQueryClient } from '@tanstack/react-query'
 
 const Header = () => {
+  const queryClient = useQueryClient()
   const user = useLoginStore((state) => state.user)
   const pedals = usePedalStore((state) => state.pedals)
   const history = usePedalStore((state) => state.history)
@@ -49,10 +51,9 @@ const Header = () => {
   useEffect(() => {
     if (mutation.isSuccess) {
       toast('Board saved successfully!')
+      queryClient.invalidateQueries({ queryKey: ['myBoards', boardId] })
     }
-  }, [mutation.isSuccess])
-
-
+  }, [mutation.isSuccess, boardId, queryClient])
 
   return (
     <header

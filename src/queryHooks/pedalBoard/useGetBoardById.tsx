@@ -5,7 +5,10 @@ const useGetBoardById = (boardId: number) => {
   const query = useQuery({
     queryKey: ['myBoards', boardId],
     queryFn: () => API.pedalBoard.getBoardById(boardId),
-    enabled: !!boardId
+    enabled: !!boardId,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 1,
   })
 
   return query
