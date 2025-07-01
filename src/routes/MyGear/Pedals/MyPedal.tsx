@@ -45,30 +45,42 @@ const MyPedal = () => {
             <img
               src={`/src/assets/${pedalData?.img}`}
               alt={pedalData?.name}
-              width={250} />
-            <section>
-              <h3 className="text-2xl font-heading">{pedalData?.name}</h3>
-              <h3>{pedalData?.mfg}</h3>
-              {pedalData?.type.map((type, index) => {
-                return <Badge key={type}>{type}</Badge>
-              })}
+              width={250}
 
-              <h3>Description: {pedalData?.description}</h3>
+              className="min-w-[250px] h-max"
+            />
+            <section>
+              <div className="flex flex-row justify-start items-baseline gap-2">
+                <h3 className="text-2xl font-heading">{pedalData?.name}</h3>
+                <h3>{pedalData?.mfg}</h3>
+              </div>
+              <div className="flex flex-row gap-2 flex-wrap">
+                {pedalData?.type.map((type, index) => {
+                  return <Badge key={type}>{type}</Badge>
+                })}
+              </div>
+              {pedalData?.description && (
+                <>
+                  <Separator className="my-4" />
+                  <p className="mt-4">{pedalData?.description}</p>
+                  <Separator className="my-4" />
+                </>
+              )}
               <form
                 onSubmit={onSubmitSaveNotes}
               >
-                <p>My Notes:</p>
+                <h3 className="mt-4 mb-2 font-heading">My Notes:</h3>
                 <Textarea
                   name="notes"
                   className="w-full"
                   defaultValue={data?.data?.[0]?.notes?.plain || ''}
                   placeholder="Add notes about how you use this pedal, and any settings you like." />
-                <Button type="submit" className="btn btn-outline">Save Notes</Button>
+                <Button type="submit" className="mt-2 btn btn-outline">Save Notes</Button>
               </form>
             </section>
           </div>
 
-        </div>
+        </div >
       )}
     </div >
   )
