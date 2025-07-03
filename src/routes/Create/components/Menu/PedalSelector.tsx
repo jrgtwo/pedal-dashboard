@@ -82,7 +82,6 @@ const PedalSelector = ({
           deletePedalDataById={deletePedalDataById}
           myPedalIdList={myPedalIdList}
         />
-
       </SidebarWrapper>
     </PedalSelectorComponent>
   )

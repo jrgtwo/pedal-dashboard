@@ -30,7 +30,7 @@ function App() {
 
         </section>
 
-        <section className="flex flex-col min-h-screen max-w-6xl m-auto mt-[120px] px-8">
+        <section className="flex flex-col  max-w-6xl m-auto mt-[120px] px-8">
           <Routes >
             <Route
               index
