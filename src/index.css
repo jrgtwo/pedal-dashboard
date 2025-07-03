@@ -114,6 +114,14 @@ nav a {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-pedal-selector:
+    0 -1px 0px hsl(0deg 0% 0% / 0.035),
+    0 0px 0px hsl(0deg 0% 0% / 0.075),
+    0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075);
+  
+    --pedal-bg: 135deg, white 0%, rgb(231, 231, 231) 100%;
 }
 
 /* .dark {
