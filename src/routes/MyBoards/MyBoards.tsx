@@ -1,8 +1,6 @@
 
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { useGetBoards } from '../../queryHooks/pedalBoard/useGetBoards'
-
-
 import {
   Table,
   TableBody,
@@ -13,14 +11,30 @@ import {
 } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+import { useManageBoards } from './hooks/useManageBoards'
 
 const MyBoards = () => {
-  const navigate = useNavigate()
   const { isError, isLoading, boards, error } = useGetBoards()
 
+  const {
+    selectedBoards,
+    handleDelete,
+    handleClick
+  } = useManageBoards();
+
   return (
-    <section className="w-full mx-auto">
-      <h2 className="my-4 text-4xl font-heading">My Boards</h2>
+    <section className={`w-full mx-auto `}>
+      <div className="flex items-center justify-between">
+        <h2 className="my-4 text-4xl font-heading">My Boards</h2>
+        {selectedBoards.size > 0 && (
+          <div className="mb-4">
+            <Button
+              onClick={handleDelete}
+              variant="destructive">Delete</Button>
+          </div>
+        )}
+      </div>
       <Separator className="mb-8" />
       <Table className="text-xl">
         <TableHeader>
@@ -35,7 +49,7 @@ const MyBoards = () => {
           {isLoading
             ? (
               <TableRow>
-                <TableCell><Checkbox /></TableCell>
+                <TableCell></TableCell>
                 <TableCell>...Loading</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
@@ -44,7 +58,7 @@ const MyBoards = () => {
             : isError
               ? (
                 <TableRow>
-                  <TableCell><Checkbox /></TableCell>
+                  <TableCell></TableCell>
                   <TableCell>...Error:{error?.message} </TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
@@ -53,13 +67,18 @@ const MyBoards = () => {
               : boards && boards.length > 0
                 ? boards.map((board) => {
                   return (
-                    <TableRow onClick={(() => navigate(`/create/${board.id}`))} key={board.id} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-                      <TableCell><Checkbox /></TableCell>
+                    <TableRow
+                      onClick={(event) => handleClick(event, board.id)}
+                      key={board.id}
+                      className={`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${selectedBoards.has(board.id) ? 'bg-gray-200 dark:bg-gray-700' : ''}`}>
+                      <TableCell>
+                        <Checkbox />
+                      </TableCell>
                       <TableCell
                         key={board.id}
-                        className="p-6\">
+                        className="p-6">
                         <Link
-                          to={`/create/${board.id}`}
+                          to={`/ create / ${board.id}`}
                           className="hover:underline">
                           {board.name}
                         </Link>

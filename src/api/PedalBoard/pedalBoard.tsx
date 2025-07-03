@@ -43,6 +43,20 @@ class PedalBoard {
 
     return { data, error }
   }
+
+  deleteBoard = async (ids: number | number[]) => {
+    if (!ids) return { error: 'no ids provided', data: null }
+    
+    const idsArray = Array.isArray(ids) ? ids : [ids]
+
+    const { data, error } = await this.db
+      .from('user_boards')
+      .delete()
+      .in('id', idsArray)
+      .select()
+
+    return { data, error }
+  }
 }
 
 export { PedalBoard }
