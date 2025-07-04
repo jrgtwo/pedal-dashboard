@@ -22,7 +22,7 @@ function App() {
   useGetSession()
 
   return (
-    <section role="app">
+    <section role="app" className="bg-radial to-[#eeecec] from-[#ffffff]">
       <BrowserRouter>
         <section>
           <Header />
