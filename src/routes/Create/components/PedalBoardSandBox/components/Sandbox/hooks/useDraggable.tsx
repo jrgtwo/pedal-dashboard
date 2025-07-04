@@ -7,6 +7,7 @@ type RequiredDataValues = {
   h: number,
   x: number,
   y: number,
+  rotation: number,
 }
 const keepInBounds = (value: number, max: number) => {
   return Math.min(Math.max(value, 0), max)
@@ -44,6 +45,11 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   const [currDraggableYOffset, setCurrDraggableYOffset] = useState(0)
   const [currDraggableElement, setCurrDraggableElement] = useState<HTMLElement | null>(null)
 
+  const [isRotating, setIsRotating] = useState(false)
+  const [currRotateElement, setCurrRotateElement] = useState<HTMLElement | null>(null)
+  const [currRotatable, setCurrRotatable] = useState<T | null>(null)
+  const [currDraggableRotationXY, setCurrDraggableRotationXY] = useState<{ x: number, y: number } | null>(null)
+
   // Output data 
   const [draggableArray, setDraggableArray] = useState<T[]>([])
 
@@ -56,10 +62,29 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const target = event.target as HTMLElement
     const sandboxElem = event.currentTarget as HTMLElement
 
-    if (
+    if (target.classList.contains('rotate') || target.parentElement?.classList.contains('rotate')) {
+
+      const draggableParent = target.closest('.draggable')
+      const draggableId = draggableParent?.getAttribute('data-draggable-id')
+      const rotatable = draggableId === 'testboard'
+        ? draggableMap.get(draggableId)
+        : draggableMap.get(Number(draggableId))
+
+      if (!rotatable) return
+      setCurrRotateElement(draggableParent as HTMLElement)
+      setCurrRotatable(rotatable)
+      setCurrDraggableRotationXY({
+        x: event.clientX,
+        y: event.clientY
+      })
+      setIsRotating(true)
+
+
+    } else if (
       target.classList.contains('draggable')
       || target.parentElement?.classList.contains('draggable')
     ) {
+
       const draggableElement = target.classList.contains('draggable')
         ? target
         : target.parentElement
@@ -68,7 +93,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
       setCurrDraggableElement(target)
 
       const draggableId = draggableElement.getAttribute('data-draggable-id')
-      const draggable = typeof draggableId === 'string'
+      const draggable = draggableId === 'testboard'
         ? draggableMap.get(draggableId)
         : draggableMap.get(Number(draggableId))
 
@@ -83,6 +108,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
       setSandboxLeft(sandboxElem.offsetLeft)
       setSandboxWidth(sandboxElem.clientWidth)
       setSandboxHeight(sandboxElem.clientHeight)
+
       setCurrDraggableHeight(draggableElement.clientHeight)
       setCurrDraggableWidth(draggableElement.clientWidth)
       setCurrDraggableXOffset(event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft)
@@ -94,9 +120,12 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
+    console.log('===handleMouseUp')
     event.preventDefault()
     triggerOnComplete(draggableArray, currDraggableElement, onCompleteListeners)
     setIsDragging(false)
+    setIsRotating(false)
+    setCurrRotateElement(null)
     setCurrDraggableElement(null)
     setCurrDraggable(null)
     setLastDragTime(null)
@@ -105,6 +134,29 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
     const now = Date.now()
+
+    if (isRotating && !!currRotatable && currRotateElement) {
+
+      console.log(currDraggableRotationXY, { x: event.clientX, Y: event.clientY })
+      const xDiff = event.clientX - (currDraggableRotationXY?.x || 0)
+      const yDiff = event.clientY - (currDraggableRotationXY?.y || 0)
+      const pedalHeight = currRotatable.h * 30
+      const pedalWidth = currRotatable.w * 30
+
+      const degsX = (xDiff / pedalWidth) * 180
+      const degsY = (yDiff / pedalHeight) * 180
+
+      const newCurrRotatable = { ...currRotatable };
+      newCurrRotatable.rotation = degsX + degsY
+
+      setDraggableMap((prevDraggableMap) => {
+        return new Map(prevDraggableMap.set(currRotatable.dragId, newCurrRotatable))
+      })
+
+      setLastDragTime(Date.now())
+      return
+    }
+
     if (isDragging && !!currDraggable && lastDragTime && now - lastDragTime > 9) {
 
       const xPos = (keepInBounds(
@@ -143,7 +195,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     isDragging, currDraggable, draggableMap,
     sandboxTop, sandboxLeft, sandboxWidth, sandboxHeight,
     currDraggableWidth, currDraggableHeight, currDraggableXOffset, currDraggableYOffset,
-    setDraggableMap, lastDragTime
+    setDraggableMap, lastDragTime, currRotatable, currRotateElement, isRotating, currDraggableRotationXY
   ])
 
   useEffect(() => {

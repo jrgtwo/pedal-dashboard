@@ -27,7 +27,6 @@ const Sandbox = () => {
         role="sandbox"
         id="pedal-dashboard-sandbox"
         className={`relative  w-[1088px] h-[600px] overflow-scroll`}
-
         onMouseDown={(event) => handleMouseDown(event)}
         onMouseUp={(event) => handleMouseUp(event)}
         onMouseMove={(event) => handleMouseMove(event)}>
@@ -35,11 +34,11 @@ const Sandbox = () => {
           className="pedal-dashboard-grid"
           style={{ zoom: `${zoomLevel}` }}
         >
-
           {draggableArray.map((pedal) => {
             if (pedal.dragId === 'testboard') {
               return (
                 <img
+                  className="draggable max-w-none hover:cursor-grab active:cursor-grabbing active:outline-4 active:outline-red-500 drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]"
                   style={{ position: 'absolute', top: pedal.y, left: pedal.x }}
                   key="testboard"
                   src={testboard}
@@ -47,7 +46,7 @@ const Sandbox = () => {
                   width={24 * 30}
                   height={14.5 * 30}
                   data-draggable-id="testboard"
-                  className="draggable max-w-none" />
+                />
               )
             }
             return (
@@ -57,6 +56,7 @@ const Sandbox = () => {
                 name={pedal.name}
                 key={pedal.dragId}
                 img={pedal.img}
+                rotation={pedal.rotation}
                 w={pedal.w}
                 h={pedal.h}
                 x={pedal.x}

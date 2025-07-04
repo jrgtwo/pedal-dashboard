@@ -35,7 +35,8 @@ const usePedalStore = create<PedalStore>((set) => ({
     const updatedPedal = {
       ...newPedal,
       x: 0,
-      y: 0
+      y: 0,
+      rotation: 0
     }
 
     const updatedState = [...state.pedals, updatedPedal]

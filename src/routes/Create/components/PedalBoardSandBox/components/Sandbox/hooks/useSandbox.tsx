@@ -45,7 +45,8 @@ const useSandbox = () => {
         w: 24,
         h: 14.5,
         name: 'Test Board',
-        img: 'test-board.png'
+        img: 'test-board.png',
+        rotation: 0
       })
     }
     setter([...pedals])
