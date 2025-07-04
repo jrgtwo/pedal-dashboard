@@ -1,6 +1,7 @@
 import type { Database } from "../../../database.types"
 import type { SupabaseClient } from "@supabase/supabase-js"
 import type { UpdateBoardShape } from "../../routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
+import { debug } from "console"
 class PedalBoard {
   db
 
@@ -46,14 +47,13 @@ class PedalBoard {
 
   deleteBoard = async (ids: number | number[]) => {
     if (!ids) return { error: 'no ids provided', data: null }
-    
+
     const idsArray = Array.isArray(ids) ? ids : [ids]
 
     const { data, error } = await this.db
       .from('user_boards')
       .delete()
       .in('id', idsArray)
-      .select()
 
     return { data, error }
   }

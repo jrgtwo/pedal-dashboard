@@ -1,15 +1,20 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router'
+import { useDeleteBoard } from '@/queryHooks/pedalBoard/useDeleteBoard';
+import { useQueryClient } from '@tanstack/react-query'
 
 const useManageBoards = () => {
   const navigate = useNavigate()
+  const { mutation } = useDeleteBoard()
+  const queryClient = useQueryClient()
+
   const [selectedBoards, setSelectedBoards] = useState(new Set<number>())
 
   const handleDelete = () => {
     console.log([...selectedBoards])
     // Call delete API here
-    toast.success('Boards deleted successfully!')
+    mutation.mutate([...selectedBoards])
   }
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLTableRowElement | HTMLButtonElement>, id: number) => {
@@ -27,6 +32,13 @@ const useManageBoards = () => {
     navigate(`/create/${id}`)
   }, [navigate]);
 
+  useEffect(() => {
+    if (!mutation.isSuccess) return;
+    toast.success('Boards deleted successfully!')
+    setSelectedBoards(new Set<number>())
+    // Optionally, you can invalidate queries or refetch data here
+    queryClient.invalidateQueries({ queryKey: ['myBoards'] })
+  }, [mutation.isSuccess, queryClient])
   return {
     selectedBoards,
     handleDelete,
