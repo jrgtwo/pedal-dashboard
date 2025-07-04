@@ -35,19 +35,7 @@ const Sandbox = () => {
           className="pedal-dashboard-grid"
           style={{ zoom: `${zoomLevel}` }}
         >
-          {/* <img
-            src={testboard}
-            alt="testboard"
-            width={24 * 30}
-            height={14.5 * 30}
-            data-draggable-id="testboard"
-            className="draggable max-w-none" /> */}
-          {/* {
-            draggableArray.map((pedal) => {
-              debugger
-              return <div> hiello</div>
-            })
-          } */}
+
           {draggableArray.map((pedal) => {
             if (pedal.dragId === 'testboard') {
               return (
