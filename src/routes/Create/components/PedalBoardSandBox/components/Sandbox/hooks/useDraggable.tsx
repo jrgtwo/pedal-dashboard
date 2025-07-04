@@ -1,6 +1,10 @@
 import { useState, useCallback, useEffect, type MouseEvent } from 'react'
+import { mouseDownRotationHandler, mouseMoveRotationHandler } from './utils/rotationHandlers'
+import { mouseDownDragHandler, mouseMoveDragHandler } from './utils/dragHandlers'
+import { dataToMap } from './utils/data'
+import { triggerOnComplete } from './utils/listeners'
 
-type RequiredDataValues = {
+export type RequiredDataValues = {
   id: number,
   dragId: number,
   w: number,
@@ -8,20 +12,6 @@ type RequiredDataValues = {
   x: number,
   y: number,
   rotation: number,
-}
-const keepInBounds = (value: number, max: number) => {
-  return Math.min(Math.max(value, 0), max)
-}
-
-const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data?.reduce((acc, item) => {
-  acc.set(item.dragId, { ...item })
-  return acc
-}, new Map())
-
-const triggerOnComplete = <T,>(data: T[], target: HTMLElement | null, listeners: ((data: T[], target: HTMLElement | null) => void)[]) => {
-  listeners.forEach((listener) => {
-    listener(data, target)
-  })
 }
 
 const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
@@ -48,7 +38,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   const [isRotating, setIsRotating] = useState(false)
   const [currRotateElement, setCurrRotateElement] = useState<HTMLElement | null>(null)
   const [currRotatable, setCurrRotatable] = useState<T | null>(null)
-  const [currDraggableRotationXY, setCurrDraggableRotationXY] = useState<{ x: number, y: number } | null>(null)
+  const [currDraggableRotationXY, setCurrDraggableRotationXY] = useState<{ x: number, y: number, rotation: number } | null>(null)
 
   // Output data 
   const [draggableArray, setDraggableArray] = useState<T[]>([])
@@ -63,64 +53,43 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const sandboxElem = event.currentTarget as HTMLElement
 
     if (target.classList.contains('rotate') || target.parentElement?.classList.contains('rotate')) {
-
-      const draggableParent = target.closest('.draggable')
-      const draggableId = draggableParent?.getAttribute('data-draggable-id')
-      const rotatable = draggableId === 'testboard'
-        ? draggableMap.get(draggableId)
-        : draggableMap.get(Number(draggableId))
-
-      if (!rotatable) return
-      setCurrRotateElement(draggableParent as HTMLElement)
-      setCurrRotatable(rotatable)
-      setCurrDraggableRotationXY({
-        x: event.clientX,
-        y: event.clientY
+      return mouseDownRotationHandler({
+        event,
+        setIsRotating,
+        target,
+        draggableMap,
+        setCurrRotateElement,
+        setCurrRotatable,
+        setCurrDraggableRotationXY
       })
-      setIsRotating(true)
+    }
 
-
-    } else if (
+    if (
       target.classList.contains('draggable')
       || target.parentElement?.classList.contains('draggable')
     ) {
-
-      const draggableElement = target.classList.contains('draggable')
-        ? target
-        : target.parentElement
-
-      if (draggableElement === null) return
-      setCurrDraggableElement(target)
-
-      const draggableId = draggableElement.getAttribute('data-draggable-id')
-      const draggable = draggableId === 'testboard'
-        ? draggableMap.get(draggableId)
-        : draggableMap.get(Number(draggableId))
-
-      if (!draggable) {
-        setIsDragging(false)
-        setCurrDraggable(null)
-        return
-      }
-
-      setCurrDraggable(draggable)
-      setSandboxTop(sandboxElem.offsetTop)
-      setSandboxLeft(sandboxElem.offsetLeft)
-      setSandboxWidth(sandboxElem.clientWidth)
-      setSandboxHeight(sandboxElem.clientHeight)
-
-      setCurrDraggableHeight(draggableElement.clientHeight)
-      setCurrDraggableWidth(draggableElement.clientWidth)
-      setCurrDraggableXOffset(event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft)
-      setCurrDraggableYOffset(event.clientY - sandboxElem.offsetTop - draggableElement.offsetTop)
-
-      setIsDragging(true)
+      return mouseDownDragHandler({
+        event,
+        target,
+        sandboxElem,
+        draggableMap,
+        setCurrDraggableElement,
+        setCurrDraggable,
+        setSandboxTop,
+        setSandboxLeft,
+        setSandboxWidth,
+        setSandboxHeight,
+        setCurrDraggableHeight,
+        setCurrDraggableWidth,
+        setCurrDraggableXOffset,
+        setCurrDraggableYOffset,
+        setIsDragging
+      })
     }
   }, [draggableMap]);
 
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
-    console.log('===handleMouseUp')
     event.preventDefault()
     triggerOnComplete(draggableArray, currDraggableElement, onCompleteListeners)
     setIsDragging(false)
@@ -136,60 +105,27 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const now = Date.now()
 
     if (isRotating && !!currRotatable && currRotateElement) {
-
-      console.log(currDraggableRotationXY, { x: event.clientX, Y: event.clientY })
-      const xDiff = event.clientX - (currDraggableRotationXY?.x || 0)
-      const yDiff = event.clientY - (currDraggableRotationXY?.y || 0)
-      const pedalHeight = currRotatable.h * 30
-      const pedalWidth = currRotatable.w * 30
-
-      const degsX = (xDiff / pedalWidth) * 180
-      const degsY = (yDiff / pedalHeight) * 180
-
-      const newCurrRotatable = { ...currRotatable };
-      newCurrRotatable.rotation = degsX + degsY
-
-      setDraggableMap((prevDraggableMap) => {
-        return new Map(prevDraggableMap.set(currRotatable.dragId, newCurrRotatable))
+      return mouseMoveRotationHandler({
+        event, currDraggableRotationXY, currRotatable, setDraggableMap, setLastDragTime
       })
-
-      setLastDragTime(Date.now())
-      return
     }
 
     if (isDragging && !!currDraggable && lastDragTime && now - lastDragTime > 9) {
-
-      const xPos = (keepInBounds(
-        event.clientX - sandboxLeft - currDraggableXOffset, sandboxWidth - currDraggableWidth
-      ))
-      const yPos = (keepInBounds(
-        event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
-      ))
-
-      const isColliding = [...draggableMap].find(([id, { w, h, x, y }]) => {
-        if (id === currDraggable.dragId) return
-        const pedalW = w * 30
-        const pedalH = h * 30
-
-        return (
-          (x < (xPos + currDraggableWidth)) &&
-          ((x + pedalW) > xPos) &&
-          (y < (yPos + currDraggableHeight)) &&
-          ((y + pedalH) > yPos)
-        )
+      return mouseMoveDragHandler({
+        event,
+        currDraggable,
+        draggableMap,
+        setDraggableMap,
+        sandboxLeft,
+        sandboxTop,
+        sandboxWidth,
+        sandboxHeight,
+        currDraggableHeight,
+        currDraggableWidth,
+        currDraggableXOffset,
+        currDraggableYOffset,
+        setLastDragTime
       })
-
-      console.log(isColliding)
-
-      const newCurrDraggable = { ...currDraggable };
-
-      newCurrDraggable.x = xPos
-      newCurrDraggable.y = yPos
-      setDraggableMap((prevDraggableMap) => {
-        return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))
-      })
-
-      setLastDragTime(Date.now())
     }
   }, [
     isDragging, currDraggable, draggableMap,
