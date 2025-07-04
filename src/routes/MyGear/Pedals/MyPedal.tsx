@@ -47,7 +47,7 @@ const MyPedal = () => {
               alt={pedalData?.name}
               width={250}
 
-              className="min-w-[250px] h-max"
+              className="min-w-[250px] h-max drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)] "
             />
             <section>
               <div className="flex flex-row justify-start items-baseline gap-2">

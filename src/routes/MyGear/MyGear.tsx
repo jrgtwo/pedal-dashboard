@@ -24,10 +24,11 @@ const MyGear = () => {
             return (
               <Fragment key={pedal?.pedals?.id || pedal?.pedal_id}>
                 <Link
-                  className="flex p-8 hover:bg-gray-200 rounded-2xl gap-8 even:bg-gray-100 odd:bg-white"
+                  className="overflow-hidden relative group bg-linear-(--my-gear-item-bg) shadow-my-gear-item hover:shadow-my-gear-item-hover transition-all flex p-8 rounded-2xl gap-8"
                   to={`/my-gear/pedals/${pedal?.id}/${pedal?.pedals?.id}/${encodeURIComponent(pedal?.pedals?.name.replace(/ /g, '-'))}`}>
-                  <img width="50" src={`/src/assets/${pedal?.pedals?.img}`} />
-                  <div>
+                  <div className="z-10 transition-all absolute w-0 h-full top-0 right-0 bg-linear-(--my-gear-item-bg-hover) group-hover:w-full group-hover:opacity-100 shadow-my-gear-item-hover-highlight "></div>
+                  <img width="50" src={`/src/assets/${pedal?.pedals?.img}`} className="z-11" />
+                  <div className="z-11">
                     <h4 className="text-xl font-heading">{pedal?.pedals?.name}</h4>
                     <div className="flex gap-2">
                       {pedal?.pedals?.type.map((type, index) => {
