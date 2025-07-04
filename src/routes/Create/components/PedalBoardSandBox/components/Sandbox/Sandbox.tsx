@@ -18,7 +18,6 @@ const Sandbox = () => {
   return (
     <>
       <div className="flex flex-row items-center gap-2 mb-4">
-
         <Button onClick={onZoomIn}>+</Button>
         <Button onClick={onZoomOut}>-</Button>
         <Button onClick={onResetZoom}>Reset</Button>
@@ -36,24 +35,46 @@ const Sandbox = () => {
           className="pedal-dashboard-grid"
           style={{ zoom: `${zoomLevel}` }}
         >
-          <img
+          {/* <img
             src={testboard}
             alt="testboard"
             width={24 * 30}
             height={14.5 * 30}
-            className="max-w-none" />
-          {draggableArray.map((pedal) => (
-            <Pedal
-              handleRemove={handleRemove}
-              pedalId={`${pedal.dragId}`}
-              name={pedal.name}
-              key={pedal.dragId}
-              img={pedal.img}
-              w={pedal.w}
-              h={pedal.h}
-              x={pedal.x}
-              y={pedal.y} />
-          ))}
+            data-draggable-id="testboard"
+            className="draggable max-w-none" /> */}
+          {/* {
+            draggableArray.map((pedal) => {
+              debugger
+              return <div> hiello</div>
+            })
+          } */}
+          {draggableArray.map((pedal) => {
+            if (pedal.dragId === 'testboard') {
+              return (
+                <img
+                  style={{ position: 'absolute', top: pedal.y, left: pedal.x }}
+                  key="testboard"
+                  src={testboard}
+                  alt="testboard"
+                  width={24 * 30}
+                  height={14.5 * 30}
+                  data-draggable-id="testboard"
+                  className="draggable max-w-none" />
+              )
+            }
+            return (
+              <Pedal
+                handleRemove={handleRemove}
+                pedalId={`${pedal.dragId}`}
+                name={pedal.name}
+                key={pedal.dragId}
+                img={pedal.img}
+                w={pedal.w}
+                h={pedal.h}
+                x={pedal.x}
+                y={pedal.y} />
+            )
+          })}
         </div>
       </section >
     </>

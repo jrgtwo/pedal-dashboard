@@ -55,7 +55,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     setLastDragTime(Date.now())
     const target = event.target as HTMLElement
     const sandboxElem = event.currentTarget as HTMLElement
-
+    debugger
     if (
       target.classList.contains('draggable')
       || target.parentElement?.classList.contains('draggable')
@@ -68,7 +68,9 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
       setCurrDraggableElement(target)
 
       const draggableId = draggableElement.getAttribute('data-draggable-id')
-      const draggable = draggableMap.get(Number(draggableId))
+      const draggable = typeof draggableId === 'string'
+        ? draggableMap.get(draggableId)
+        : draggableMap.get(Number(draggableId))
 
       if (!draggable) {
         setIsDragging(false)
@@ -131,7 +133,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
       newCurrDraggable.x = xPos
       newCurrDraggable.y = yPos
-
+      debugger
       setDraggableMap((prevDraggableMap) => {
         return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))
       })

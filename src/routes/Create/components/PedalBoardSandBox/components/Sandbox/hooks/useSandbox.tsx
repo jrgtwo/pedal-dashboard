@@ -37,7 +37,8 @@ const useSandbox = () => {
   } = useDraggable<DraggablePedalShape>(pedals)
 
   useEffect(() => {
-    setter(pedals)
+    debugger
+    setter([...pedals, { dragId: 'testboard', id: 'testboard', w: 1, h: 1, x: 0, y: 0 }])
   }, [pedals, setter])
 
 
