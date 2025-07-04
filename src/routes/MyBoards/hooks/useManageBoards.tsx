@@ -36,7 +36,6 @@ const useManageBoards = () => {
     if (!mutation.isSuccess) return;
     toast.success('Boards deleted successfully!')
     setSelectedBoards(new Set<number>())
-    // Optionally, you can invalidate queries or refetch data here
     queryClient.invalidateQueries({ queryKey: ['myBoards'] })
   }, [mutation.isSuccess, queryClient])
   return {
