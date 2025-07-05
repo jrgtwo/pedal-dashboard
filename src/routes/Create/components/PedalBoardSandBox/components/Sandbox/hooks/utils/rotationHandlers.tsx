@@ -3,6 +3,9 @@ import { useRotationData } from "../../state/useRotationData"
 export const mouseDownRotationHandler = ({
   event, target, draggableMap, setCurrRotateElement, setCurrRotatable
 }) => {
+
+  if (!target?.classList?.contains('rotate') && !target?.parentElement?.classList.contains('rotate')) return
+
   const { setIsRotating, setCurrDraggableRotationXY } = useRotationData.getState()
   const draggableParent = target.closest('.draggable')
   const draggableId = draggableParent?.getAttribute('data-draggable-id')

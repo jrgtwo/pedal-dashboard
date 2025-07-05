@@ -3,7 +3,6 @@ import { mouseDownRotationHandler, mouseMoveRotationHandler, mouseUpRotationHand
 import { mouseDownDragHandler, mouseMoveDragHandler } from './utils/dragHandlers'
 import { dataToMap } from './utils/data'
 import { triggerOnComplete } from './utils/listeners'
-import { useRotationData } from '../state/useRotationData'
 
 export type RequiredDataValues = {
   id: number,
@@ -40,15 +39,13 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const target = event.target as HTMLElement
     const sandboxElem = event.currentTarget as HTMLElement
 
-    if (target.classList.contains('rotate') || target.parentElement?.classList.contains('rotate')) {
-      return mouseDownRotationHandler({
-        event,
-        target,
-        draggableMap,
-        setCurrRotateElement,
-        setCurrRotatable,
-      })
-    }
+    mouseDownRotationHandler({
+      event,
+      target,
+      draggableMap,
+      setCurrRotateElement,
+      setCurrRotatable,
+    })
 
     if (
       target.classList.contains('draggable')
