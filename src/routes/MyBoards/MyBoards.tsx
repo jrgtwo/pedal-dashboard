@@ -36,68 +36,53 @@ const MyBoards = () => {
         )}
       </div>
       <Separator className="mb-8" />
-      <Table className="text-xl">
-        <TableHeader>
-          <TableRow>
-            <TableHead></TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Snapshot</TableHead>
-            <TableHead>Created on:</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isLoading
+      <div className="flex felx-col gap-4">
+        {isLoading
+          ? (
+            <h2>Loading</h2>
+          )
+          : isError
             ? (
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>...Loading</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
+              <h2>Error</h2>
             )
-            : isError
-              ? (
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>...Error:{error?.message} </TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              )
-              : boards && boards.length > 0
-                ? boards.map((board) => {
-                  return (
-                    <TableRow
-                      onClick={(event) => handleClick(event, board.id)}
-                      key={board.id}
-                      className={`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 ${selectedBoards.has(board.id) ? 'bg-gray-200 dark:bg-gray-700' : ''}`}>
-                      <TableCell>
-                        <Checkbox />
-                      </TableCell>
-                      <TableCell
-                        key={board.id}
-                        className="p-6">
-                        <Link
-                          to={`/ create / ${board.id}`}
-                          className="hover:underline">
-                          {board.name}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        {board.snapshot
-                          ? <img
-                            className="max-h-[100px] w-auto object-contain"
-                            src={board.snapshot}
-                            alt={board.name || ""} />
-                          : <p>No Snapshot</p>}
-                      </TableCell>
-                      <TableCell>{new Date(board.created_at).toLocaleDateString()}</TableCell>
-                    </TableRow>
-                  )
-                }) : <p>No Boards found</p>
-          }
-        </TableBody>
-      </Table>
+            : boards && boards.length > 0
+              ? boards.map((board) => {
+                return (
+                  <div
+                    onClick={(event) => handleClick(event, board.id)}
+                    key={board.id}
+                    className={
+                      `flex overflow-hidden relative group bg-linear-(--my-gear-item-bg) shadow-my-gear-item hover:shadow-my-gear-item-hover transition-all p-8 rounded-2xl gap-8
+                      cursor-pointer `
+                    }>
+
+                    <Checkbox className="z-11 w-12 h-12 rounded-lg m-auto" />
+                    <div className="z-10 transition-all absolute w-0 h-full top-0 right-0 bg-linear-(--my-gear-item-bg-hover) group-hover:w-full group-hover:opacity-100 shadow-my-gear-item-hover-highlight "></div>
+                    <div className="flex flex-col gap-2">
+                      <Link
+                        className="font-heading text-2xl z-11"
+                        to={`/create/${board.id}`}>
+                        {board.name}
+                      </Link>
+                      <span className="text-sm z-11">{new Date(board.created_at).toLocaleDateString()}</span>
+                    </div>
+                    {
+                      board.snapshot
+                        ? <img
+                          className="max-h-[100px] w-auto object-contain rounded-2xl border-1 z-11"
+                          src={board.snapshot}
+                          alt={board.name || ""} />
+                        : <p>No Snapshot</p>
+                    }
+
+
+                  </div>
+                )
+              }) : <p>No Boards found</p>
+        }
+
+      </div>
+
     </section >
   )
 }

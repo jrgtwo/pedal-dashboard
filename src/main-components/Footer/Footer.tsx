@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <footer role="footer"
-      className="mt-30 mb-10">
+      className="mt-30 pb-10">
       <Separator className="mb-20" />
       <div className="flex flex-row justify-center items-stretch gap-16">
 

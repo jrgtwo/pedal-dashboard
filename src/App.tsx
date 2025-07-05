@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
 import { Header } from './main-components/Header/Header'
-import { Navigation } from './main-components/Navigation/Navigation'
 import { Footer } from './main-components/Footer/Footer'
 import { Home } from './routes/Home/Home'
 import { About } from './routes/About/About'
@@ -22,7 +21,7 @@ function App() {
   useGetSession()
 
   return (
-    <section role="app" className="bg-radial to-[#eeecec] from-[#ffffff]">
+    <section role="app" className="bg-radial to-[#eeecec] from-[#ffffff] min-h-[100vh]">
       <BrowserRouter>
         <section>
           <Header />

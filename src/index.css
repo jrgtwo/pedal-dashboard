@@ -130,15 +130,15 @@ nav a {
 
   --shadow-my-gear-item:
     0 -1px 0px hsl(0deg 0% 0% / 0.035),
-    0 0px 0px hsl(0deg 0% 0% / 0.075),
-    0 1px 1px hsl(0deg 0% 0% / 0.075),
-    0 2px 2px hsl(0deg 0% 0% / 0.075);
+    0 0px 0px hsl(0deg 0% 0% / 0.175),
+    0 1px 1px hsl(0deg 0% 0% / 0.175),
+    0 2px 2px hsl(0deg 0% 0% / 0.175);
 
   --shadow-my-gear-item-hover:
-    0 -1px 0px hsl(0deg 0% 0% / 0.035),
-    0 0px 0px hsl(0deg 0% 0% / 0.075),
-    0 2px 2px hsl(0deg 0% 0% / 0.075),
-    0 3px 3px hsl(0deg 0% 0% / 0.075);
+    0 -1px 0px hsl(0deg 0% 0% / 0.135),
+    0 0px 0px hsl(0deg 0% 0% / 0.175),
+    0 2px 2px hsl(0deg 0% 0% / 0.175),
+    0 3px 3px hsl(0deg 0% 0% / 0.175);
 
   --shadow-my-gear-item-hover-highlight: 0 -2px red inset
 }
