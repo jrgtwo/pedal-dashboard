@@ -1,6 +1,9 @@
+import { useRotationData } from "../../state/useRotationData"
+
 export const mouseDownRotationHandler = ({
-  event, setIsRotating, target, draggableMap, setCurrRotateElement, setCurrRotatable, setCurrDraggableRotationXY
+  event, target, draggableMap, setCurrRotateElement, setCurrRotatable
 }) => {
+  const { setIsRotating, setCurrDraggableRotationXY } = useRotationData.getState()
   const draggableParent = target.closest('.draggable')
   const draggableId = draggableParent?.getAttribute('data-draggable-id')
   const rotatable = draggableId === 'testboard'
@@ -13,9 +16,7 @@ export const mouseDownRotationHandler = ({
   if ((draggableParent as HTMLElement)?.style?.transform.includes('rotate')) {
     currRotation = Number((draggableParent as HTMLElement)?.style?.transform?.split('(')[1]?.split('deg')?.[0] || 0)
     rotatable.rotation = currRotation
-    debugger
   }
-
 
   setCurrRotateElement(draggableParent as HTMLElement)
   setCurrRotatable(rotatable)
@@ -28,8 +29,11 @@ export const mouseDownRotationHandler = ({
 }
 
 export const mouseMoveRotationHandler = ({
-  event, currDraggableRotationXY, currRotatable, setDraggableMap, setLastDragTime
+  event, currRotatable, currRotateElement, setDraggableMap
 }) => {
+  const { currDraggableRotationXY, isRotating } = useRotationData.getState()
+
+  if (!isRotating || !currRotatable || !currRotateElement) return
 
   const xDiff = event.clientX - (currDraggableRotationXY?.x || 0)
   const yDiff = event.clientY - (currDraggableRotationXY?.y || 0)
@@ -46,10 +50,10 @@ export const mouseMoveRotationHandler = ({
     return new Map(prevDraggableMap.set(currRotatable.dragId, newCurrRotatable))
   })
 
-  setLastDragTime(Date.now())
 }
 
 export const mouseUpRotationHandler = () => {
-
+  const { setIsRotating } = useRotationData.getState()
+  setIsRotating(false)
 }
 

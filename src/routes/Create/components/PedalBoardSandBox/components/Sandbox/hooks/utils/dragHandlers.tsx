@@ -1,5 +1,6 @@
 import { keepInBounds } from './data'
 import { useSandboxPosition } from '../../state/useSandboxPosition'
+import { useDraggableData } from '../../state/useDraggableData'
 
 export const mouseDownDragHandler = ({
   event,
@@ -8,14 +9,11 @@ export const mouseDownDragHandler = ({
   draggableMap,
   setCurrDraggableElement,
   setCurrDraggable,
-  setCurrDraggableHeight,
-  setCurrDraggableWidth,
-  setCurrDraggableXOffset,
-  setCurrDraggableYOffset,
   setIsDragging,
 
 }) => {
-  const { setSandboxPosition } = useSandboxPosition.getState((state) => state.setSandboxPosition)
+  const { setSandboxPosition } = useSandboxPosition.getState()
+  const { setCurrDraggableData } = useDraggableData.getState()
 
   const draggableElement = target.classList.contains('draggable')
     ? target
@@ -44,10 +42,12 @@ export const mouseDownDragHandler = ({
     height: sandboxElem.clientHeight
   })
 
-  setCurrDraggableHeight(draggableElement.clientHeight)
-  setCurrDraggableWidth(draggableElement.clientWidth)
-  setCurrDraggableXOffset(event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft)
-  setCurrDraggableYOffset(event.clientY - sandboxElem.offsetTop - draggableElement.offsetTop)
+  setCurrDraggableData({
+    width: draggableElement.clientWidth,
+    height: draggableElement.clientHeight,
+    xOffset: event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft,
+    yOffset: event.clientY - sandboxElem.offsetTop - draggableElement.offsetTop
+  })
 
   setIsDragging(true)
 }
@@ -56,13 +56,16 @@ export const mouseMoveDragHandler = ({
   currDraggable,
   draggableMap,
   setDraggableMap,
-  currDraggableHeight,
-  currDraggableWidth,
-  currDraggableXOffset,
-  currDraggableYOffset,
-  setLastDragTime,
 }) => {
-  const { sandboxPosition } = useSandboxPosition.getState((state) => state.sandboxPosition)
+  const {
+    sandboxPosition
+  } = useSandboxPosition.getState((state) => state)
+  const {
+    currDraggableWidth,
+    currDraggableHeight,
+    currDraggableXOffset,
+    currDraggableYOffset
+  } = useDraggableData.getState((state) => state)
 
   const xPos = (keepInBounds(
     event.clientX - sandboxPosition.left - currDraggableXOffset, sandboxPosition.width - currDraggableWidth
@@ -90,11 +93,11 @@ export const mouseMoveDragHandler = ({
 
   newCurrDraggable.x = xPos
   newCurrDraggable.y = yPos
+
   setDraggableMap((prevDraggableMap) => {
     return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))
   })
 
-  setLastDragTime(Date.now())
 }
 
 export const mouseUpDragHandler = () => {
