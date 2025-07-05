@@ -1,4 +1,4 @@
-import { RequiredDataValues } from "../useDraggable"
+import { RequiredDataValues } from '../../Sandbox.types'
 
 export const dataToMap = <T extends RequiredDataValues,>(_data: T[]) => _data?.reduce((acc, item) => {
   acc.set(item.dragId, { ...item })

@@ -1,4 +1,4 @@
-import { RequiredDataValues } from '../hooks/useDraggable'
+import { RequiredDataValues } from '../Sandbox.types'
 import { create } from 'zustand'
 
 export const useRotationData = create((set) => ({

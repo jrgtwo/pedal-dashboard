@@ -3,16 +3,7 @@ import { mouseDownRotationHandler, mouseMoveRotationHandler, mouseUpRotationHand
 import { mouseDownDragHandler, mouseMoveDragHandler } from './utils/dragHandlers'
 import { dataToMap } from './utils/data'
 import { triggerOnComplete } from './utils/listeners'
-
-export type RequiredDataValues = {
-  id: number,
-  dragId: number,
-  w: number,
-  h: number,
-  x: number,
-  y: number,
-  rotation: number,
-}
+import type { RequiredDataValues } from '../Sandbox.types'
 
 const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   // Draggable state
@@ -107,6 +98,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   }, [draggableMap])
 
   const setter = useCallback((updatedData: T[]) => {
+
     if (typeof updatedData === 'string') {
       updatedData = JSON.parse(updatedData) as T[]
     }
