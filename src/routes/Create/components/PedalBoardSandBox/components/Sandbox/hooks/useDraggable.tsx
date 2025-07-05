@@ -4,15 +4,16 @@ import { mouseDownDragHandler, mouseMoveDragHandler, mouseUpDragHandler } from '
 import { dataToMap } from './utils/data'
 import { triggerOnComplete } from './utils/listeners'
 import type { RequiredDataValues } from '../Sandbox.types'
+import { useDraggableData } from '../state/useDraggableData'
 
 const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data || []]))
   const [isDragging, setIsDragging] = useState(false)
+  const currDraggableElement = useDraggableData((state) => state.currDraggableElement)
+  const setCurrDraggableElement = useDraggableData((state) => state.setCurrDraggableElement)
 
-  // Position settings
-  const [currDraggableElement, setCurrDraggableElement] = useState<HTMLElement | null>(null)
 
   const [currRotateElement, setCurrRotateElement] = useState<HTMLElement | null>(null)
   const [currRotatable, setCurrRotatable] = useState<T | null>(null)
@@ -28,29 +29,32 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
     const target = event.target as HTMLElement
     const sandboxElem = event.currentTarget as HTMLElement
+    const currDraggableElement = target.closest('.draggable') || target.parentElement?.closest('.draggable')
+    setCurrDraggableElement(currDraggableElement as HTMLElement | null)
+    if (!currDraggableElement) {
+      setIsDragging(false)
+      return
+    }
+    setIsDragging(true);
+    if (target.closest('.rotate') || target?.classList.contains('rotate')) {
+      mouseDownRotationHandler({
+        event,
+        target,
+        draggableMap,
+        setCurrRotateElement,
+        setCurrRotatable,
+      })
+    } else {
 
-    mouseDownRotationHandler({
-      event,
-      target,
-      draggableMap,
-      setCurrRotateElement,
-      setCurrRotatable,
-    })
-
-    if (
-      target.classList.contains('draggable')
-      || target.parentElement?.classList.contains('draggable')
-    ) {
-      return mouseDownDragHandler({
+      mouseDownDragHandler({
         event,
         target,
         sandboxElem,
         draggableMap,
-        setCurrDraggableElement,
         setIsDragging,
       })
     }
-  }, [draggableMap, setCurrDraggableElement, setIsDragging, setCurrRotatable, setCurrRotateElement]);
+  }, [draggableMap, setIsDragging, setCurrRotatable, setCurrRotateElement, setCurrDraggableElement]);
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -60,11 +64,11 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
 
     mouseUpRotationHandler()
     mouseUpDragHandler()
-    
+
     setCurrRotateElement(null)
     setCurrDraggableElement(null)
     setLastDragTime(null)
-  }, [onCompleteListeners, draggableArray, currDraggableElement])
+  }, [onCompleteListeners, draggableArray, currDraggableElement, setCurrDraggableElement])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
     const now = Date.now()

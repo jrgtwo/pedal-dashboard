@@ -1,7 +1,9 @@
 import { useRotationData } from "../../state/useRotationData"
 
 export const mouseDownRotationHandler = ({
-  event, target, draggableMap, setCurrRotateElement, setCurrRotatable
+  event, target, draggableMap,
+  setCurrRotateElement,
+  setCurrRotatable
 }) => {
 
   if (!target?.classList?.contains('rotate') && !target?.parentElement?.classList.contains('rotate')) return

@@ -6,6 +6,8 @@ export const useDraggableData = create((set) => ({
   currDraggableXOffset: 0,
   currDraggableYOffset: 0,
   currDraggable: null,
+  currDraggableElement: null,
+  setCurrDraggableElement: (element: HTMLElement | null) => set({ currDraggableElement: element }),
   setCurrDraggable: (draggable) => set({ currDraggable: draggable }),
   setCurrDraggableData: ({
     width,

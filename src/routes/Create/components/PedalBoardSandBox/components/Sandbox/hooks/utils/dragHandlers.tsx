@@ -7,20 +7,19 @@ export const mouseDownDragHandler = ({
   target,
   sandboxElem,
   draggableMap,
-  setCurrDraggableElement,
-  // setCurrDraggable,
+  // setCurrDraggableElement,
   setIsDragging,
 
 }) => {
   const { setSandboxPosition } = useSandboxPosition.getState()
-  const { setCurrDraggableData, setCurrDraggable } = useDraggableData.getState()
+  const { setCurrDraggableData, setCurrDraggable, currDraggableElement: draggableElement } = useDraggableData.getState()
 
-  const draggableElement = target.classList.contains('draggable')
-    ? target
-    : target.parentElement
+  // const draggableElement = target.classList.contains('draggable')
+  //   ? target
+  //   : target.parentElement
 
-  if (draggableElement === null) return
-  setCurrDraggableElement(target)
+  // if (draggableElement === null) return
+  // setCurrDraggableElement(target)
 
   const draggableId = draggableElement.getAttribute('data-draggable-id')
   const draggable = draggableId === 'testboard'
