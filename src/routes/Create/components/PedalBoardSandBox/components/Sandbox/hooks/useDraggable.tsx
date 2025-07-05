@@ -3,6 +3,9 @@ import { mouseDownRotationHandler, mouseMoveRotationHandler } from './utils/rota
 import { mouseDownDragHandler, mouseMoveDragHandler } from './utils/dragHandlers'
 import { dataToMap } from './utils/data'
 import { triggerOnComplete } from './utils/listeners'
+import { useSandboxPosition } from '../state/useSandboxPosition'
+
+import { create } from 'zustand'
 
 export type RequiredDataValues = {
   id: number,
@@ -14,19 +17,22 @@ export type RequiredDataValues = {
   rotation: number,
 }
 
-const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
+const useRotationData = create((set) => ({
+  isRotating: false,
+  currRotateElement: null as HTMLElement | null,
+  currRotatable: null as RequiredDataValues | null,
+  currDraggableRotationXY: null as { x: number, y: number, rotation: number } | null,
+}))
 
+const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   // Draggable state
   const [lastDragTime, setLastDragTime] = useState<number | null>()
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data || []]))
   const [currDraggable, setCurrDraggable] = useState<T | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
-  // Sandbox state
-  const [sandboxTop, setSandboxTop] = useState(0)
-  const [sandboxLeft, setSandboxLeft] = useState(0)
-  const [sandboxWidth, setSandboxWidth] = useState(0)
-  const [sandboxHeight, setSandboxHeight] = useState(0)
+  const sandboxPosition = useSandboxPosition((state) => state.sandboxPosition)
+  const setSandboxPosition = useSandboxPosition((state) => state.setSandboxPosition)
 
   // Position settings
   const [currDraggableWidth, setCurrDraggableWidth] = useState(0)
@@ -68,25 +74,23 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
       target.classList.contains('draggable')
       || target.parentElement?.classList.contains('draggable')
     ) {
+
       return mouseDownDragHandler({
         event,
         target,
         sandboxElem,
         draggableMap,
+        setSandboxPosition,
         setCurrDraggableElement,
         setCurrDraggable,
-        setSandboxTop,
-        setSandboxLeft,
-        setSandboxWidth,
-        setSandboxHeight,
         setCurrDraggableHeight,
         setCurrDraggableWidth,
         setCurrDraggableXOffset,
         setCurrDraggableYOffset,
-        setIsDragging
+        setIsDragging,
       })
     }
-  }, [draggableMap]);
+  }, [draggableMap, setSandboxPosition, setCurrDraggable, setCurrDraggableElement, setIsDragging, setCurrRotatable, setCurrRotateElement, setCurrDraggableRotationXY]);
 
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
@@ -98,7 +102,6 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     setCurrDraggableElement(null)
     setCurrDraggable(null)
     setLastDragTime(null)
-
   }, [onCompleteListeners, draggableArray, currDraggableElement])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -116,20 +119,16 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
         currDraggable,
         draggableMap,
         setDraggableMap,
-        sandboxLeft,
-        sandboxTop,
-        sandboxWidth,
-        sandboxHeight,
         currDraggableHeight,
         currDraggableWidth,
         currDraggableXOffset,
         currDraggableYOffset,
-        setLastDragTime
+        setLastDragTime,
+        sandboxPosition
       })
     }
   }, [
-    isDragging, currDraggable, draggableMap,
-    sandboxTop, sandboxLeft, sandboxWidth, sandboxHeight,
+    isDragging, currDraggable, draggableMap, sandboxPosition,
     currDraggableWidth, currDraggableHeight, currDraggableXOffset, currDraggableYOffset,
     setDraggableMap, lastDragTime, currRotatable, currRotateElement, isRotating, currDraggableRotationXY
   ])

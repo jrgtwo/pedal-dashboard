@@ -30,7 +30,6 @@ export const mouseDownRotationHandler = ({
 export const mouseMoveRotationHandler = ({
   event, currDraggableRotationXY, currRotatable, setDraggableMap, setLastDragTime
 }) => {
-  console.log(currDraggableRotationXY, { x: event.clientX, Y: event.clientY })
 
   const xDiff = event.clientX - (currDraggableRotationXY?.x || 0)
   const yDiff = event.clientY - (currDraggableRotationXY?.y || 0)

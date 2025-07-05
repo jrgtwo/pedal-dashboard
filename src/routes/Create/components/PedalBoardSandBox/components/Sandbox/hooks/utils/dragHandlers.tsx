@@ -1,4 +1,5 @@
 import { keepInBounds } from './data'
+import { useSandboxPosition } from '../../state/useSandboxPosition'
 
 export const mouseDownDragHandler = ({
   event,
@@ -7,16 +8,15 @@ export const mouseDownDragHandler = ({
   draggableMap,
   setCurrDraggableElement,
   setCurrDraggable,
-  setSandboxTop,
-  setSandboxLeft,
-  setSandboxWidth,
-  setSandboxHeight,
   setCurrDraggableHeight,
   setCurrDraggableWidth,
   setCurrDraggableXOffset,
   setCurrDraggableYOffset,
-  setIsDragging
+  setIsDragging,
+
 }) => {
+  const { setSandboxPosition } = useSandboxPosition.getState((state) => state.setSandboxPosition)
+
   const draggableElement = target.classList.contains('draggable')
     ? target
     : target.parentElement
@@ -36,10 +36,13 @@ export const mouseDownDragHandler = ({
   }
 
   setCurrDraggable(draggable)
-  setSandboxTop(sandboxElem.offsetTop)
-  setSandboxLeft(sandboxElem.offsetLeft)
-  setSandboxWidth(sandboxElem.clientWidth)
-  setSandboxHeight(sandboxElem.clientHeight)
+
+  setSandboxPosition({
+    top: sandboxElem.offsetTop,
+    left: sandboxElem.offsetLeft,
+    width: sandboxElem.clientWidth,
+    height: sandboxElem.clientHeight
+  })
 
   setCurrDraggableHeight(draggableElement.clientHeight)
   setCurrDraggableWidth(draggableElement.clientWidth)
@@ -53,21 +56,19 @@ export const mouseMoveDragHandler = ({
   currDraggable,
   draggableMap,
   setDraggableMap,
-  sandboxLeft,
-  sandboxTop,
-  sandboxWidth,
-  sandboxHeight,
   currDraggableHeight,
   currDraggableWidth,
   currDraggableXOffset,
   currDraggableYOffset,
-  setLastDragTime
+  setLastDragTime,
 }) => {
+  const { sandboxPosition } = useSandboxPosition.getState((state) => state.sandboxPosition)
+
   const xPos = (keepInBounds(
-    event.clientX - sandboxLeft - currDraggableXOffset, sandboxWidth - currDraggableWidth
+    event.clientX - sandboxPosition.left - currDraggableXOffset, sandboxPosition.width - currDraggableWidth
   ))
   const yPos = (keepInBounds(
-    event.clientY - sandboxTop - currDraggableYOffset, sandboxHeight - currDraggableHeight
+    event.clientY - sandboxPosition.top - currDraggableYOffset, sandboxPosition.height - currDraggableHeight
   ))
 
   const isColliding = [...draggableMap].find(([id, { w, h, x, y }]) => {
