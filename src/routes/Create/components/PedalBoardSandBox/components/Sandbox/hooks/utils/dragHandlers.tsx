@@ -8,12 +8,12 @@ export const mouseDownDragHandler = ({
   sandboxElem,
   draggableMap,
   setCurrDraggableElement,
-  setCurrDraggable,
+  // setCurrDraggable,
   setIsDragging,
 
 }) => {
   const { setSandboxPosition } = useSandboxPosition.getState()
-  const { setCurrDraggableData } = useDraggableData.getState()
+  const { setCurrDraggableData, setCurrDraggable } = useDraggableData.getState()
 
   const draggableElement = target.classList.contains('draggable')
     ? target
@@ -53,7 +53,6 @@ export const mouseDownDragHandler = ({
 }
 export const mouseMoveDragHandler = ({
   event,
-  currDraggable,
   draggableMap,
   setDraggableMap,
 }) => {
@@ -64,8 +63,11 @@ export const mouseMoveDragHandler = ({
     currDraggableWidth,
     currDraggableHeight,
     currDraggableXOffset,
-    currDraggableYOffset
+    currDraggableYOffset,
+    currDraggable
   } = useDraggableData.getState((state) => state)
+
+  if (!currDraggable) return
 
   const xPos = (keepInBounds(
     event.clientX - sandboxPosition.left - currDraggableXOffset, sandboxPosition.width - currDraggableWidth
@@ -101,5 +103,6 @@ export const mouseMoveDragHandler = ({
 }
 
 export const mouseUpDragHandler = () => {
-
+  const { setCurrDraggable } = useDraggableData.getState()
+  setCurrDraggable(null)
 }
