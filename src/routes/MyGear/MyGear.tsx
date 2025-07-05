@@ -33,7 +33,7 @@ const MyGear = () => {
                   <div className="z-11">
                     <h4 className="text-xl font-heading line-clamp-2">{pedal?.pedals?.name}</h4>
                     <div className="flex gap-2">
-                      {pedal?.pedals?.type.map((type, index) => {
+                      {pedal?.pedals?.type.map((type) => {
                         return <Badge key={type}>{type}</Badge>
                       })}
                     </div>
