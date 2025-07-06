@@ -4,22 +4,13 @@ import { useDraggableData } from '../../state/useDraggableData'
 
 export const mouseDownDragHandler = ({
   event,
-  target,
   sandboxElem,
   draggableMap,
-  // setCurrDraggableElement,
   setIsDragging,
 
 }) => {
   const { setSandboxPosition } = useSandboxPosition.getState()
   const { setCurrDraggableData, setCurrDraggable, currDraggableElement: draggableElement } = useDraggableData.getState()
-
-  // const draggableElement = target.classList.contains('draggable')
-  //   ? target
-  //   : target.parentElement
-
-  // if (draggableElement === null) return
-  // setCurrDraggableElement(target)
 
   const draggableId = draggableElement.getAttribute('data-draggable-id')
   const draggable = draggableId === 'testboard'
@@ -98,7 +89,6 @@ export const mouseMoveDragHandler = ({
   setDraggableMap((prevDraggableMap) => {
     return new Map(prevDraggableMap.set(currDraggable.dragId, newCurrDraggable))
   })
-
 }
 
 export const mouseUpDragHandler = () => {

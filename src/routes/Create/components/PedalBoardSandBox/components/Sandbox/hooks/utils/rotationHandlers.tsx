@@ -1,16 +1,16 @@
 import { useRotationData } from "../../state/useRotationData"
+import { useDraggableData } from "../../state/useDraggableData"
 
 export const mouseDownRotationHandler = ({
-  event, target, draggableMap,
-  setCurrRotateElement,
-  setCurrRotatable
+  event, target, draggableMap, setCurrRotatable
 }) => {
 
   if (!target?.classList?.contains('rotate') && !target?.parentElement?.classList.contains('rotate')) return
 
   const { setIsRotating, setCurrDraggableRotationXY } = useRotationData.getState()
-  const draggableParent = target.closest('.draggable')
-  const draggableId = draggableParent?.getAttribute('data-draggable-id')
+  const { currDraggableElement } = useDraggableData.getState()
+
+  const draggableId = currDraggableElement?.getAttribute('data-draggable-id')
   const rotatable = draggableId === 'testboard'
     ? draggableMap.get(draggableId)
     : draggableMap.get(Number(draggableId))
@@ -18,12 +18,11 @@ export const mouseDownRotationHandler = ({
 
   if (!rotatable) return
 
-  if ((draggableParent as HTMLElement)?.style?.transform.includes('rotate')) {
-    currRotation = Number((draggableParent as HTMLElement)?.style?.transform?.split('(')[1]?.split('deg')?.[0] || 0)
+  if ((currDraggableElement as HTMLElement)?.style?.transform.includes('rotate')) {
+    currRotation = Number((currDraggableElement as HTMLElement)?.style?.transform?.split('(')[1]?.split('deg')?.[0] || 0)
     rotatable.rotation = currRotation
   }
 
-  setCurrRotateElement(draggableParent as HTMLElement)
   setCurrRotatable(rotatable)
   setCurrDraggableRotationXY({
     x: event.clientX,
@@ -34,11 +33,12 @@ export const mouseDownRotationHandler = ({
 }
 
 export const mouseMoveRotationHandler = ({
-  event, currRotatable, currRotateElement, setDraggableMap
+  event, currRotatable, setDraggableMap
 }) => {
   const { currDraggableRotationXY, isRotating } = useRotationData.getState()
+  const { currDraggableElement } = useDraggableData.getState()
 
-  if (!isRotating || !currRotatable || !currRotateElement) return
+  if (!isRotating || !currRotatable || !currDraggableElement) return
 
   const xDiff = event.clientX - (currDraggableRotationXY?.x || 0)
   const yDiff = event.clientY - (currDraggableRotationXY?.y || 0)
@@ -54,7 +54,6 @@ export const mouseMoveRotationHandler = ({
   setDraggableMap((prevDraggableMap) => {
     return new Map(prevDraggableMap.set(currRotatable.dragId, newCurrRotatable))
   })
-
 }
 
 export const mouseUpRotationHandler = () => {

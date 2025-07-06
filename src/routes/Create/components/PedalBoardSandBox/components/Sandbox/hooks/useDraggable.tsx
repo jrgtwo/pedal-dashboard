@@ -11,11 +11,10 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   const [lastDragTime, setLastDragTime] = useState<number | null>()
   const [draggableMap, setDraggableMap] = useState(dataToMap<T>([...data || []]))
   const [isDragging, setIsDragging] = useState(false)
+
   const currDraggableElement = useDraggableData((state) => state.currDraggableElement)
   const setCurrDraggableElement = useDraggableData((state) => state.setCurrDraggableElement)
 
-
-  const [currRotateElement, setCurrRotateElement] = useState<HTMLElement | null>(null)
   const [currRotatable, setCurrRotatable] = useState<T | null>(null)
 
   // Output data 
@@ -31,30 +30,30 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const sandboxElem = event.currentTarget as HTMLElement
     const currDraggableElement = target.closest('.draggable') || target.parentElement?.closest('.draggable')
     setCurrDraggableElement(currDraggableElement as HTMLElement | null)
+
     if (!currDraggableElement) {
       setIsDragging(false)
       return
     }
+
     setIsDragging(true);
+
     if (target.closest('.rotate') || target?.classList.contains('rotate')) {
       mouseDownRotationHandler({
         event,
         target,
         draggableMap,
-        setCurrRotateElement,
         setCurrRotatable,
       })
     } else {
-
       mouseDownDragHandler({
         event,
-        target,
         sandboxElem,
         draggableMap,
         setIsDragging,
       })
     }
-  }, [draggableMap, setIsDragging, setCurrRotatable, setCurrRotateElement, setCurrDraggableElement]);
+  }, [draggableMap, setIsDragging, setCurrRotatable, setCurrDraggableElement]);
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -65,7 +64,6 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     mouseUpRotationHandler()
     mouseUpDragHandler()
 
-    setCurrRotateElement(null)
     setCurrDraggableElement(null)
     setLastDragTime(null)
   }, [onCompleteListeners, draggableArray, currDraggableElement, setCurrDraggableElement])
@@ -74,7 +72,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     const now = Date.now()
 
     mouseMoveRotationHandler({
-      event, currRotatable, currRotateElement, setDraggableMap,
+      event, currRotatable, setDraggableMap,
     })
 
     if (isDragging && lastDragTime && now - lastDragTime > 9) {
@@ -90,8 +88,8 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     lastDragTime,
     currRotatable,
     draggableMap,
-    setDraggableMap,
-    currRotateElement
+    setDraggableMap
+
   ])
 
   useEffect(() => {
@@ -111,7 +109,16 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     setOnCompleteListeners((prev) => [...prev, callback])
   }, [])
 
-  return { handleMouseDown, handleMouseUp, handleMouseMove, draggableArray, setter, isDragging, onDraggingComplete, onCompleteListeners }
+  return {
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    draggableArray,
+    setter,
+    isDragging,
+    onDraggingComplete,
+    onCompleteListeners
+  }
 }
 
 export { useDraggable }
