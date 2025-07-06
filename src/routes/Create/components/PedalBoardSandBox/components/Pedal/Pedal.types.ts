@@ -6,15 +6,17 @@ export type BoardShape = Database['public']['Tables']['user_boards']['Row']
 export type UpdateBoardShape = Database['public']['Tables']['user_boards']['Insert']
 
 export interface DraggablePedalShape extends PedalShape {
-  dragId: number
+  dragId: number | string
   rotation: number
+  x: number
+  y: number
 }
 
 export type PedalProps = {
   w: number,
   h: number,
-  x: number,
-  y: number,
+  x?: number,
+  y?: number,
   rotation: number,
   pedalId: string,
   img?: string | null,

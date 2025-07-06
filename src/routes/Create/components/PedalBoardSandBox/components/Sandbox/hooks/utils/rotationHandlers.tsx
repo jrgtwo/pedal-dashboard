@@ -1,9 +1,23 @@
+import type { MouseEvent } from "react"
 import { useRotationData } from "../../state/useRotationData"
 import { useDraggableData } from "../../state/useDraggableData"
 
+type MouseDownRotationHandlerParams = {
+  event: MouseEvent<HTMLElement>
+  target: HTMLElement | null
+  draggableMap: Map<number | string, any>
+  setCurrRotatable: (rotatable: any) => void
+}
+
+type MouseMoveRotationHandlerParams = {
+  event: MouseEvent
+  currRotatable: any
+  setDraggableMap: (draggableMap: Map<number | string, any>) => void
+}
+
 export const mouseDownRotationHandler = ({
   event, target, draggableMap, setCurrRotatable
-}) => {
+}: MouseDownRotationHandlerParams) => {
 
   if (!target?.classList?.contains('rotate') && !target?.parentElement?.classList.contains('rotate')) return
 
@@ -34,7 +48,7 @@ export const mouseDownRotationHandler = ({
 
 export const mouseMoveRotationHandler = ({
   event, currRotatable, setDraggableMap
-}) => {
+}: MouseMoveRotationHandlerParams) => {
   const { currDraggableRotationXY, isRotating } = useRotationData.getState()
   const { currDraggableElement } = useDraggableData.getState()
 

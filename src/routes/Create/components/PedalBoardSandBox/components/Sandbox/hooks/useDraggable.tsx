@@ -22,7 +22,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
   // Client Listeners
   const [onCompleteListeners, setOnCompleteListeners] = useState<((data: T[], target: HTMLElement | null) => void)[]>([])
 
-  const handleMouseDown = useCallback((event: MouseEvent) => {
+  const handleMouseDown = useCallback((event: MouseEvent<HTMLElement>) => {
     event.preventDefault()
     setLastDragTime(Date.now())
 
@@ -55,7 +55,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     }
   }, [draggableMap, setIsDragging, setCurrRotatable, setCurrDraggableElement]);
 
-  const handleMouseUp = useCallback((event: MouseEvent) => {
+  const handleMouseUp = useCallback((event: MouseEvent<HTMLElement>) => {
     event.preventDefault()
 
     triggerOnComplete(draggableArray, currDraggableElement, onCompleteListeners)
@@ -68,7 +68,7 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     setLastDragTime(null)
   }, [onCompleteListeners, draggableArray, currDraggableElement, setCurrDraggableElement])
 
-  const handleMouseMove = useCallback((event: MouseEvent) => {
+  const handleMouseMove = useCallback((event: MouseEvent<HTMLElement>) => {
     const now = Date.now()
 
     mouseMoveRotationHandler({
@@ -78,19 +78,11 @@ const useDraggable = <T extends RequiredDataValues,>(data: T[] = []) => {
     if (isDragging && lastDragTime && now - lastDragTime > 9) {
       mouseMoveDragHandler({
         event,
-        draggableMap,
         setDraggableMap,
       })
     }
     setLastDragTime(Date.now())
-  }, [
-    isDragging,
-    lastDragTime,
-    currRotatable,
-    draggableMap,
-    setDraggableMap
-
-  ])
+  }, [isDragging, lastDragTime, currRotatable, setDraggableMap])
 
   useEffect(() => {
     setDraggableArray([...draggableMap.values()])

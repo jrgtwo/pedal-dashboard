@@ -1,6 +1,23 @@
 import { create } from "zustand"
 
-export const useDraggableData = create((set) => ({
+type DraggableData = {
+  currDraggableWidth: number
+  currDraggableHeight: number
+  currDraggableXOffset: number
+  currDraggableYOffset: number
+  currDraggable: any | null
+  currDraggableElement: HTMLElement | null
+  setCurrDraggableElement: (element: HTMLElement | null) => void
+  setCurrDraggable: (draggable: any) => void
+  setCurrDraggableData: (dimensions: {
+    width?: number
+    height?: number
+    xOffset?: number
+    yOffset?: number
+  }) => void
+}
+
+export const useDraggableData = create<DraggableData>((set) => ({
   currDraggableWidth: 0,
   currDraggableHeight: 0,
   currDraggableXOffset: 0,
@@ -14,11 +31,6 @@ export const useDraggableData = create((set) => ({
     height,
     xOffset,
     yOffset
-  }: {
-    width?: number
-    height?: number
-    xOffset?: number
-    yOffset?: number
   }) => set((state) => ({
     currDraggableWidth: width || state.currDraggableWidth,
     currDraggableHeight: height || state.currDraggableHeight,

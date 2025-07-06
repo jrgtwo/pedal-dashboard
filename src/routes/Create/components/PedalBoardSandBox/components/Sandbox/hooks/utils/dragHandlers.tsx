@@ -1,6 +1,20 @@
+import type { MouseEvent } from 'react'
 import { keepInBounds } from './data'
 import { useSandboxPosition } from '../../state/useSandboxPosition'
 import { useDraggableData } from '../../state/useDraggableData'
+import type { DraggablePedalShape } from '../../../Pedal/Pedal.types'
+
+type MouseDownDragHandlerParams = {
+  event: MouseEvent<HTMLElement>
+  sandboxElem: HTMLElement
+  draggableMap: Map<number | string, DraggablePedalShape>
+  setIsDragging: (isDragging: boolean) => void
+}
+
+type MouseMoveDragHandlerParams = {
+  event: MouseEvent<HTMLElement>
+  setDraggableMap: (draggableMap: Map<number | string, DraggablePedalShape>) => void
+}
 
 export const mouseDownDragHandler = ({
   event,
@@ -8,11 +22,11 @@ export const mouseDownDragHandler = ({
   draggableMap,
   setIsDragging,
 
-}) => {
+}: MouseDownDragHandlerParams) => {
   const { setSandboxPosition } = useSandboxPosition.getState()
   const { setCurrDraggableData, setCurrDraggable, currDraggableElement: draggableElement } = useDraggableData.getState()
 
-  const draggableId = draggableElement.getAttribute('data-draggable-id')
+  const draggableId = draggableElement?.getAttribute('data-draggable-id')
   const draggable = draggableId === 'testboard'
     ? draggableMap.get(draggableId)
     : draggableMap.get(Number(draggableId))
@@ -33,29 +47,29 @@ export const mouseDownDragHandler = ({
   })
 
   setCurrDraggableData({
-    width: draggableElement.clientWidth,
-    height: draggableElement.clientHeight,
-    xOffset: event.clientX - sandboxElem.offsetLeft - draggableElement.offsetLeft,
-    yOffset: event.clientY - sandboxElem.offsetTop - draggableElement.offsetTop
+    width: draggableElement?.clientWidth,
+    height: draggableElement?.clientHeight,
+    xOffset: event.clientX - sandboxElem.offsetLeft - (draggableElement?.offsetLeft || 0),
+    yOffset: event.clientY - sandboxElem.offsetTop - (draggableElement?.offsetTop || 0)
   })
 
   setIsDragging(true)
 }
+
 export const mouseMoveDragHandler = ({
   event,
-  draggableMap,
   setDraggableMap,
-}) => {
+}: MouseMoveDragHandlerParams) => {
   const {
     sandboxPosition
-  } = useSandboxPosition.getState((state) => state)
+  } = useSandboxPosition.getState()
   const {
     currDraggableWidth,
     currDraggableHeight,
     currDraggableXOffset,
     currDraggableYOffset,
     currDraggable
-  } = useDraggableData.getState((state) => state)
+  } = useDraggableData.getState()
 
   if (!currDraggable) return
 
@@ -65,21 +79,6 @@ export const mouseMoveDragHandler = ({
   const yPos = (keepInBounds(
     event.clientY - sandboxPosition.top - currDraggableYOffset, sandboxPosition.height - currDraggableHeight
   ))
-
-  const isColliding = [...draggableMap].find(([id, { w, h, x, y }]) => {
-    if (id === currDraggable.dragId) return
-    const pedalW = w * 30
-    const pedalH = h * 30
-
-    return (
-      (x < (xPos + currDraggableWidth)) &&
-      ((x + pedalW) > xPos) &&
-      (y < (yPos + currDraggableHeight)) &&
-      ((y + pedalH) > yPos)
-    )
-  })
-
-  console.log(isColliding)
 
   const newCurrDraggable = { ...currDraggable };
 

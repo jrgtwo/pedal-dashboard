@@ -1,6 +1,16 @@
 import { create } from 'zustand';
 
-export const useSandboxPosition = create((set) => ({
+type SandboxPosition = {
+  sandboxPosition: {
+    top: number
+    left: number
+    width: number
+    height: number
+  },
+  setSandboxPosition: (position: { top?: number; left?: number; width?: number; height?: number }) => void
+}
+
+export const useSandboxPosition = create<SandboxPosition>((set) => ({
   sandboxPosition: {
     top: 0,
     left: 0,
