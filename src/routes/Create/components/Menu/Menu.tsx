@@ -5,7 +5,7 @@ import { PedalSelector } from './PedalSelector'
 import { useGetAllPedals } from '@/queryHooks/pedalBoard/useGetAllPedals'
 
 const Menu = () => {
-  const { isSuccess, isLoading, pedalList } = useGetAllPedals()
+  const { isLoading, pedalList } = useGetAllPedals()
 
   const addNewPedal = usePedalStore((state) => state.addNewPedals)
 
@@ -20,8 +20,7 @@ const Menu = () => {
     })
 
     if (!pedalById) return
-
-    return addNewPedal({ ...pedalById, dragId: Date.now() })
+    return addNewPedal({ ...pedalById, dragId: Date.now(), rotation: 0, x: 0, y: 0 })
   }, [pedalList, addNewPedal])
 
   return (
