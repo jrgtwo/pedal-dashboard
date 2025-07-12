@@ -35,7 +35,7 @@ const useSandbox = () => {
     handleMouseUp,
     handleMouseMove,
   } = useDraggable<DraggablePedalShape>(pedals)
-
+   
   useEffect(() => {
     if (!pedals.find((pedal) => pedal.dragId === 'testboard')) {
       pedals.push({
@@ -51,7 +51,6 @@ const useSandbox = () => {
     }
     setter([...pedals])
   }, [pedals, setter])
-
 
   useEffect(() => {
     let ignore = false

@@ -1,7 +1,7 @@
 import type { Database } from "../../../database.types"
 import type { SupabaseClient } from "@supabase/supabase-js"
 import type { UpdateBoardShape } from "../../routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
-import { debug } from "console"
+
 class PedalBoard {
   db
 
@@ -12,6 +12,13 @@ class PedalBoard {
   getAllPedals = async () => {
     const { data, error } = await this.db
       .from('pedals')
+      .select()
+    return { data, error }
+  }
+
+  getAllBoards = async () => {
+    const { data, error } = await this.db
+      .from('boards')
       .select()
     return { data, error }
   }
