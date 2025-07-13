@@ -1,4 +1,4 @@
-import { type MouseEventHandler, useMemo, useState } from "react"
+import { type MouseEventHandler, useMemo, useState, useCallback } from "react"
 import { Tables } from "database.types"
 
 import { createFilterList, pedalListFilter } from "./utils"
@@ -60,6 +60,7 @@ const PedalSelector = ({
   const handleSortClick = (direction: SORT_DIRECTION) => () => {
     setSortDirection(direction)
   }
+
   return (
     <PedalSelectorComponent
       pedalList={filteredPedalList}
@@ -77,7 +78,7 @@ const PedalSelector = ({
         filterList={filterList}
       >
         <PedalList
-          pedalList={pedalList}
+          pedalList={filteredPedalList}
           savePedalDataById={savePedalDataById}
           deletePedalDataById={deletePedalDataById}
           myPedalIdList={myPedalIdList}

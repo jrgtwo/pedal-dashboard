@@ -33,7 +33,7 @@ class PedalBoard {
     return { data, error }
   }
 
-  getBoards = async () => {
+  getUserBoards = async () => {
     const { data, error } = await this.db
       .from('user_boards')
       .select('*')
