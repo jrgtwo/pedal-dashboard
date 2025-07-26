@@ -3,18 +3,20 @@ import { Tables } from "database.types"
 import { Button } from "@/components/ui/button"
 
 type PedalListProps = {
+  isBoards?: boolean,
   pedalList: Tables<'pedals'>[] | null | undefined,
   savePedalDataById: (event: React.MouseEvent<HTMLButtonElement>) => void,
   deletePedalDataById?: (event: React.MouseEvent<HTMLButtonElement>) => void,
   myPedalIdList?: number[],
 }
 
-export const PedalList = ({ pedalList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
+export const PedalList = ({ isBoards, gearList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
+
   return (
     <main className="overflow-scroll w-full">
       <h2>Select a Pedal</h2>
       <section className="flex flex-wrap mt-4 gap-2">
-        {pedalList && pedalList.map((item) => {
+        {gearList && gearList.map((item) => {
           const isOwned = myPedalIdList?.includes(item.id)
           return (
             <div

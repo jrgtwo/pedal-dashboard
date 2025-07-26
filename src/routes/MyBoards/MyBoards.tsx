@@ -1,21 +1,13 @@
 
 import { Link } from 'react-router'
 import { useGetBoards } from '../../queryHooks/pedalBoard/useGetBoards'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { useManageBoards } from './hooks/useManageBoards'
 
 const MyBoards = () => {
-  const { isError, isLoading, boards, error } = useGetBoards()
+  const { isError, isLoading, boards } = useGetBoards()
 
   const {
     selectedBoards,

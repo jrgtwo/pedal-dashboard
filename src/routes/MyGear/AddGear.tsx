@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { PedalSelector } from "../Create/components/Menu/PedalSelector"
+import { GearSelector } from "../Create/components/Menu/GearSelector"
 import { buttonVariants } from "@/components/ui/button"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 import { toast } from "sonner"
@@ -57,7 +57,7 @@ const AddGear = () => {
 
   return (
     <section>
-      <PedalSelector
+      <GearSelector
         className={`w-fit ${buttonVariants({ variant: "outline" })}`}
         myPedalIdList={myPedalList}
         savePedalDataById={handleSavepedalDataById}

@@ -1,6 +1,3 @@
-import type { Tables } from "database.types"
-import { SORT_DIRECTION, FILTER_TYPE } from "./PedalSelector"
-
 import {
   Dialog,
   DialogContent,
@@ -9,15 +6,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-type PedalSelectorComponentProps = {
+type GearSelectorComponentProps = {
   className?: string,
   children?: React.ReactNode
 }
 
-const PedalSelectorComponent = ({
+const GearSelectorComponent = ({
   className = '',
   children
-}: PedalSelectorComponentProps) => {
+}: GearSelectorComponentProps) => {
 
   return (
     <Dialog>
@@ -25,7 +22,7 @@ const PedalSelectorComponent = ({
         Pedal Selector
       </DialogTrigger>
       <DialogContent className="flex h-9/12 max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
-        <DialogTitle className="hidden">Pedal Selecsdtor</DialogTitle>
+        <DialogTitle className="hidden">Pedal Selector</DialogTitle>
         <DialogDescription className="hidden">
           Select a pedal to add to your gear.
         </DialogDescription>
@@ -35,4 +32,4 @@ const PedalSelectorComponent = ({
   )
 }
 
-export { PedalSelectorComponent }
+export { GearSelectorComponent }

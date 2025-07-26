@@ -10,7 +10,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
-import { SORT_DIRECTION, FILTER_TYPE } from "../PedalSelector"
+import { SORT_DIRECTION, FILTER_TYPE } from "../GearSelector"
 
 type SidebarWrapperProps = {
   children: React.ReactNode,
@@ -27,7 +27,7 @@ export const SidebarWrapper = ({
 }: SidebarWrapperProps) => {
   return (
     <SidebarProvider>
-      <Sidebar variant="sidebar">
+      <Sidebar variant="inset" className="relative">
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupLabel>Sort</SidebarGroupLabel>

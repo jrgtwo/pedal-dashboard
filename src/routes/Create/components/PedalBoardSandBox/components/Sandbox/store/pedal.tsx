@@ -103,7 +103,6 @@ const usePedalStore = create<PedalStore>((set) => ({
   }),
 
   updateFromFetch: ({ id, pedals, name }) => set(() => {
-
     return {
       boardId: id,
       pedals: pedals,

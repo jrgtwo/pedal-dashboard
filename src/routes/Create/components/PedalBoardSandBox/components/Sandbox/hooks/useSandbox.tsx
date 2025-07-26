@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, use } from 'react'
 import { useParams } from 'react-router'
 import type { DraggablePedalShape } from '../../Pedal/Pedal.types'
 import { usePedalStore } from '../store/pedal'
@@ -9,6 +9,7 @@ const useSandbox = () => {
   const [hasSetInitial, setHasSetInitial] = useState(false)
 
   const pedals = usePedalStore((state) => state.pedals)
+
   const updateHistory = usePedalStore((state) => state.updateHistory)
   const removeBy = usePedalStore((state) => state.removeBy)
 
@@ -35,20 +36,8 @@ const useSandbox = () => {
     handleMouseUp,
     handleMouseMove,
   } = useDraggable<DraggablePedalShape>(pedals)
-   
+
   useEffect(() => {
-    if (!pedals.find((pedal) => pedal.dragId === 'testboard')) {
-      pedals.push({
-        dragId: 'testboard',
-        x: 0,
-        y: 0,
-        w: 24,
-        h: 14.5,
-        name: 'Test Board',
-        img: 'test-board.png',
-        rotation: 0
-      })
-    }
     setter([...pedals])
   }, [pedals, setter])
 
