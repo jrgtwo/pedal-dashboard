@@ -19,10 +19,10 @@ const GearSelectorComponent = ({
   return (
     <Dialog>
       <DialogTrigger className={`${className}`}>
-        Pedal Selector
+        Gear Selector
       </DialogTrigger>
       <DialogContent className="flex h-9/12 max-h-9/12 max-w-9/12 w-9/12 sm:max-w-9/12 sm:w-9/12 overflow-hidden">
-        <DialogTitle className="hidden">Pedal Selector</DialogTitle>
+        <DialogTitle className="hidden">Gear Selector</DialogTitle>
         <DialogDescription className="hidden">
           Select a pedal to add to your gear.
         </DialogDescription>
