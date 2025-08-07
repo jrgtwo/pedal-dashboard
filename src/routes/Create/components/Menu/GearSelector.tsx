@@ -6,7 +6,7 @@ import { GearSelectorComponent } from "./GearSelectorComponent"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
 import { useGetAllBoards } from "@/queryHooks/pedalBoard/useGetAllBoards"
 import { SidebarWrapper } from "./GearSelector/SidebarWrapper"
-import { PedalList } from "./GearSelector/PedalList"
+import { GearList } from "./GearSelector/GearList"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
@@ -89,7 +89,7 @@ const GearSelector = ({
             handleFilterClick={handleFilterClick}
             filterList={filterList}
           >
-            <PedalList
+            <GearList
               isBoards={false}
               gearList={filteredGearList}
               savePedalDataById={savePedalDataById}
@@ -99,7 +99,7 @@ const GearSelector = ({
           </SidebarWrapper>
         </TabsContent>
         <TabsContent value="boards">
-          <PedalList
+          <GearList
             isBoards={true}
             gearList={boardList}
             savePedalDataById={saveBoardDataById}

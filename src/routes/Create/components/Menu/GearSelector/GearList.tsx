@@ -10,7 +10,7 @@ type PedalListProps = {
   myPedalIdList?: number[],
 }
 
-export const PedalList = ({ isBoards, gearList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
+export const GearList = ({ isBoards, gearList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
 
   return (
     <main className="overflow-scroll w-full">
