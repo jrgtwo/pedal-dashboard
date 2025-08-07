@@ -3,6 +3,7 @@ import { Tables } from "database.types"
 import { Button } from "@/components/ui/button"
 
 type PedalListProps = {
+  type?: keyof typeof GEAR_TYPE,
   isBoards?: boolean,
   pedalList: Tables<'pedals'>[] | null | undefined,
   savePedalDataById: (event: React.MouseEvent<HTMLButtonElement>) => void,
@@ -10,11 +11,35 @@ type PedalListProps = {
   myPedalIdList?: number[],
 }
 
-export const GearList = ({ isBoards, gearList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
+export enum GEAR_TYPE {
+  PEDAL = 'PEDAL',
+  BOARD = 'BOARD'
+}
+
+const GEAR_MESSAGES = {
+  HEADING: {
+    [GEAR_TYPE.PEDAL]: 'Select a Pedal',
+    [GEAR_TYPE.BOARD]: 'Select a Board'
+  },
+  ADD: {
+    [GEAR_TYPE.PEDAL]: 'Add Pedal',
+    [GEAR_TYPE.BOARD]: 'Add Board'
+  },
+  REMOVE: {
+    [GEAR_TYPE.PEDAL]: 'Remove Pedal',
+    [GEAR_TYPE.BOARD]: 'Remove Board'
+  }
+}
+
+export const GearList = ({ type, isBoards, gearList, savePedalDataById, deletePedalDataById, myPedalIdList }: PedalListProps) => {
+
+  const heading = type ? GEAR_MESSAGES.HEADING?.[type] : 'Select Gear'
+  const addBUttonText = type ? GEAR_MESSAGES.ADD?.[type] : 'Add Gear'
+  const removeButtonText = type ? GEAR_MESSAGES.REMOVE?.[type] : 'Remove Gear'
 
   return (
     <main className="overflow-scroll w-full">
-      <h2>Select a Pedal</h2>
+      <h2>{heading}</h2>
       <section className="flex flex-wrap mt-4 gap-2">
         {gearList && gearList.map((item) => {
           const isOwned = myPedalIdList?.includes(item.id)
@@ -33,7 +58,7 @@ export const GearList = ({ isBoards, gearList, savePedalDataById, deletePedalDat
                     data-pedal-id={`${item.id}`}
                     key={`${item.name}:${item.id}`}
                     className="max-w-full"
-                    onClick={savePedalDataById}>Add Pedal</Button>
+                    onClick={savePedalDataById}>{addBUttonText}</Button>
                 )}
                 {isOwned && (
                   <Button
@@ -42,7 +67,7 @@ export const GearList = ({ isBoards, gearList, savePedalDataById, deletePedalDat
                     data-pedal-id={`${item.id}`}
                     onClick={deletePedalDataById}
                     className="max-w-full"
-                  >Remove Pedal</Button>
+                  >{removeButtonText}</Button>
                 )}
               </div>
               <div className="flex flex-col">

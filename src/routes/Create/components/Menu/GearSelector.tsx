@@ -1,6 +1,7 @@
 import { type MouseEventHandler, useMemo, useState } from "react"
 import { Tables } from "database.types"
 
+import { GEAR_TYPE } from "./GearSelector/GearList"
 import { createFilterList, pedalListFilter } from "./utils"
 import { GearSelectorComponent } from "./GearSelectorComponent"
 import { useGetAllPedals } from "@/queryHooks/pedalBoard/useGetAllPedals"
@@ -28,10 +29,6 @@ export enum FILTER_TYPE {
   TYPE = 'type'
 }
 
-export enum GEAR_TYPE {
-  PEDAL = 'pedal',
-  BOARD = 'board'
-}
 
 const GearSelector = ({
   savePedalDataById,
@@ -90,6 +87,7 @@ const GearSelector = ({
             filterList={filterList}
           >
             <GearList
+              type={GEAR_TYPE.PEDAL}
               isBoards={false}
               gearList={filteredGearList}
               savePedalDataById={savePedalDataById}
@@ -100,6 +98,7 @@ const GearSelector = ({
         </TabsContent>
         <TabsContent value="boards">
           <GearList
+            type={GEAR_TYPE.BOARD}
             isBoards={true}
             gearList={boardList}
             savePedalDataById={saveBoardDataById}
