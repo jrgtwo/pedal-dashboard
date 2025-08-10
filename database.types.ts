@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instanciate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
@@ -18,6 +18,8 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          gear_type: Database["public"]["Enums"]["geartype"] | null
+          gearType: Database["public"]["Enums"]["geartype"] | null
           h: number | null
           id: number
           img: string
@@ -28,6 +30,8 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          gear_type?: Database["public"]["Enums"]["geartype"] | null
+          gearType?: Database["public"]["Enums"]["geartype"] | null
           h?: number | null
           id?: number
           img: string
@@ -38,6 +42,8 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          gear_type?: Database["public"]["Enums"]["geartype"] | null
+          gearType?: Database["public"]["Enums"]["geartype"] | null
           h?: number | null
           id?: number
           img?: string
@@ -51,6 +57,7 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          gear_type: Database["public"]["Enums"]["geartype"] | null
           h: number | null
           id: number
           img: string
@@ -62,6 +69,7 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          gear_type?: Database["public"]["Enums"]["geartype"] | null
           h?: number | null
           id?: number
           img: string
@@ -73,6 +81,7 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          gear_type?: Database["public"]["Enums"]["geartype"] | null
           h?: number | null
           id?: number
           img?: string
@@ -177,7 +186,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      geartype: "pedal" | "board"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -304,6 +313,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      geartype: ["pedal", "board"],
+    },
   },
 } as const

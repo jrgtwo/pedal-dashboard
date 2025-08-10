@@ -13,13 +13,14 @@ export interface DraggablePedalShape extends Omit<PedalShape, 'id' | 'created_at
 }
 
 export type PedalProps = {
-  w: number,
-  h: number,
+  w: number | null,
+  h: number | null,
   x?: number,
   y?: number,
   rotation: number,
   pedalId: string,
   img?: string | null,
   name?: string,
+  gearType?: 'pedal' | 'board' | undefined | null,
   handleRemove?: (key: keyof DraggablePedalShape, value: string) => void
 }

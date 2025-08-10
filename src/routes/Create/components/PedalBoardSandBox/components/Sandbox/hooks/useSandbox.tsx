@@ -22,7 +22,7 @@ const useSandbox = () => {
       setHasSetInitial(true)
       updateFromFetch({
         id: query.data?.data?.[0].id,
-        pedals: JSON.parse(query.data?.data?.[0].board),
+        pedals: JSON.parse(query.data?.data?.[0]?.board),
         name: query.data?.data?.[0].name
       })
     }

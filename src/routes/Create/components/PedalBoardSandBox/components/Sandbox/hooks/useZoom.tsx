@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Zoom as ZoomComponent } from "../components/Zoom"
 
 const useZoom = () => {
   const [zoomLevel, setZoomLevel] = useState(1)
@@ -15,7 +16,17 @@ const useZoom = () => {
     setZoomLevel(1)
   }
 
-  return { onZoomIn, onZoomOut, onResetZoom, zoomLevel }
+  const Zoom = () => {
+    return (
+      <ZoomComponent
+        onZoomIn={onZoomIn}
+        onZoomOut={onZoomOut}
+        onResetZoom={onResetZoom}
+        zoomLevel={zoomLevel} />
+    )
+  }
+
+  return { Zoom, onZoomIn, onZoomOut, onResetZoom, zoomLevel }
 }
 
 export { useZoom }

@@ -12,7 +12,6 @@ const useManageBoards = () => {
   const [selectedBoards, setSelectedBoards] = useState(new Set<number>())
 
   const handleDelete = () => {
-    console.log([...selectedBoards])
     // Call delete API here
     mutation.mutate([...selectedBoards])
   }

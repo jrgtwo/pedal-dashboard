@@ -10,15 +10,16 @@ const Pedal = ({
   pedalId,
   img,
   name,
-  handleRemove
+  handleRemove,
+  gearType
 }: PedalProps) => {
 
   return (
     <div
       data-draggable-id={pedalId}
       role="pedal"
-      className={` group draggable hover:z-20 hover:cursor-grab active:cursor-grabbing active:outline-4 active:outline-red-500 drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]`}
-      style={{ transform: `rotate(${rotation}deg)`, position: 'absolute', top: y, left: x, height: (h * 30), width: (w * 30) }}>
+      className={` group draggable ${gearType === 'pedal' ? 'z-10 hover:z-20' : 'z-1hover:z-9'} hover:cursor-grab active:cursor-grabbing active:outline-4 active:outline-red-500 drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]' : ''}`}
+      style={{ transform: `rotate(${rotation}deg)`, position: 'absolute', top: y, left: x, height: ((h || 1) * 30), width: ((w || 1) * 30) }}>
       <button
         onClick={(event) => {
           event.preventDefault()
@@ -33,7 +34,7 @@ const Pedal = ({
         <img
           src={`/src/assets/${img}`}
           alt={name}
-          className={`w-${w * 30} h-${h * 30} absolute top-0 left-0 z-0`}
+          className={`w-${(w || 1) * 30} h-${(h || 1) * 30} absolute top-0 left-0 z-0`}
         />
       }
     </div >
