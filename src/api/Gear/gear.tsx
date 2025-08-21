@@ -33,6 +33,16 @@ class Gear {
     return { data, error }
   }
 
+  getMyBoards = async () => {
+    // TODO: currently user_boards is for fully built board layouts
+    // we need to either change that name or create a new table for user boards
+    const { data, error } = await this.db
+      .from('user_boards')
+      .select(`id, notes, title, board_id, boards(id, name, img, type, mfg, description)`);
+
+    return { data, error }
+  }
+
   saveUserPedal = async ({ pedal_id, notes = {} }: { pedal_id: number, notes: Record<string, string> }) => {
 
     const { data, error } = await this.db

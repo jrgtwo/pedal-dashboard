@@ -1,15 +1,24 @@
 import { Fragment } from "react"
 import { Link } from "react-router"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
+import { useGetMyBoards } from "@/queryHooks/myGear/useGetMyBoards"
 import { Separator } from "@/components/ui/separator"
 import { AddGear } from "./AddGear"
 import { Badge } from "@/components/ui/badge"
 import { GearBreadcrumbs } from "./GearBreadcrumbs"
+
 const MyGear = () => {
   const { isLoading, isSuccess, data } = useGetMyPedals()
+  const { isLoading: isBoardsLoading, isSuccess: isBoardsSuccess, data: boardsData } = useGetMyBoards()
 
-  if (isLoading) return <h2>...Loading</h2>
-  if (!isSuccess || !data || data.length === 0) return <h2>No Pedals Found</h2>
+  if (isLoading || isBoardsLoading) return <h2>...Loading</h2>
+
+  // TODO: currently user_boards is for fully built board layouts
+  // we need to either change that name or create a new table for user boards
+  if ((!isSuccess || !isBoardsSuccess) || (!data || !boardsData) || (data.length === 0 || boardsData.length === 0)) {
+    return <h2>No Pedals Found</h2>
+  }
+
   return (
     <>
       <section className="flex gap-16 mt-4 mb-4">
