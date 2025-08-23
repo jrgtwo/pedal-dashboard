@@ -25,7 +25,7 @@ class PedalBoard {
 
   getBoardById = async (id: number) => {
     const { data, error } = await this.db
-      .from('user_boards')
+      .from('user_pedalboards')
       .select('*')
       .eq('id', id)
       .limit(1)
@@ -35,7 +35,7 @@ class PedalBoard {
 
   getUserBoards = async () => {
     const { data, error } = await this.db
-      .from('user_boards')
+      .from('user_pedalboards')
       .select('*')
 
     return { data, error }
@@ -45,7 +45,7 @@ class PedalBoard {
     if (!toSave.board) return { error: 'no board found', data: null }
 
     const { data, error } = await this.db
-      .from('user_boards')
+      .from('user_pedalboards')
       .upsert(toSave)
       .select()
 
@@ -58,7 +58,7 @@ class PedalBoard {
     const idsArray = Array.isArray(ids) ? ids : [ids]
 
     const { data, error } = await this.db
-      .from('user_boards')
+      .from('user_pedalboards')
       .delete()
       .in('id', idsArray)
 

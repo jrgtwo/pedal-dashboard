@@ -2,8 +2,8 @@ import type { Database } from "../../../../../../../database.types"
 
 
 export type PedalShape = Database['public']['Tables']['pedals']['Row']
-export type BoardShape = Database['public']['Tables']['user_boards']['Row']
-export type UpdateBoardShape = Database['public']['Tables']['user_boards']['Insert']
+export type BoardShape = Database['public']['Tables']['user_pedalboards']['Row']
+export type UpdateBoardShape = Database['public']['Tables']['user_pedalboards']['Insert']
 
 export interface DraggablePedalShape extends Omit<PedalShape, 'id' | 'created_at' | 'mfg' | 'description' | 'type'> {
   dragId: number | string
