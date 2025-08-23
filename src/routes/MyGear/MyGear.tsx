@@ -11,12 +11,6 @@ const MyGear = () => {
   const { isLoading, isSuccess, data } = useGetMyPedals()
   const { isLoading: isBoardsLoading, isSuccess: isBoardsSuccess, data: boardsData } = useGetMyBoards()
 
-
-
-  // TODO: currently user_boards is for fully built board layouts
-  // we need to either change that name or create a new table for user boards
-
-
   const PedalComponent = () => {
     if (isLoading) return <h2>...Loading</h2>
     if (!isSuccess || !data || data.length === 0) {

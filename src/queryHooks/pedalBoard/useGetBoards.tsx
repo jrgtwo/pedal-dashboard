@@ -5,7 +5,7 @@ function useGetBoards() {
   const {
     isLoading, isSuccess, data, isError
   } = useQuery({
-    queryKey: ['myBoards'], queryFn: API.pedalBoard.getUserBoards
+    queryKey: ['myPedalBoards'], queryFn: API.pedalBoard.getUserBoards
   })
 
 

@@ -15,6 +15,8 @@ type GearSelectorProps = {
   pedalList?: Tables<'pedals'>[] | null | undefined,
   savePedalDataById: MouseEventHandler<HTMLButtonElement>,
   deletePedalDataById?: MouseEventHandler<HTMLButtonElement>,
+  saveBoardDataById?: MouseEventHandler<HTMLButtonElement>,
+  deleteBoardDataById?: MouseEventHandler<HTMLButtonElement>,
   myPedalIdList?: number[],
   className?: string
 }

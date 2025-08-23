@@ -35,7 +35,7 @@ const useManageBoards = () => {
     if (!mutation.isSuccess) return;
     toast.success('Boards deleted successfully!')
     setSelectedBoards(new Set<number>())
-    queryClient.invalidateQueries({ queryKey: ['myBoards'] })
+    queryClient.invalidateQueries({ queryKey: ['myPedalBoards'] })
   }, [mutation.isSuccess, queryClient])
   return {
     selectedBoards,
