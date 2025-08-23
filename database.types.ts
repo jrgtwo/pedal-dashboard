@@ -94,30 +94,41 @@ export type Database = {
       }
       user_boards: {
         Row: {
-          board: Json
+          board_id: number
           created_at: string
           id: number
-          name: string | null
-          snapshot: string | null
+          notes: Json | null
+          title: string | null
           user_id: string
+          user_title: string | null
         }
         Insert: {
-          board: Json
+          board_id: number
           created_at?: string
           id?: number
-          name?: string | null
-          snapshot?: string | null
+          notes?: Json | null
+          title?: string | null
           user_id?: string
+          user_title?: string | null
         }
         Update: {
-          board?: Json
+          board_id?: number
           created_at?: string
           id?: number
-          name?: string | null
-          snapshot?: string | null
+          notes?: Json | null
+          title?: string | null
           user_id?: string
+          user_title?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_boards_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_gear: {
         Row: {

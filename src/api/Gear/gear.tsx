@@ -38,7 +38,7 @@ class Gear {
     // we need to either change that name or create a new table for user boards
     const { data, error } = await this.db
       .from('user_boards')
-      .select(`id, notes, title, board_id, boards(id, name, img, type, mfg, description)`);
+      .select(`id, notes, title, board_id`);
 
     return { data, error }
   }
