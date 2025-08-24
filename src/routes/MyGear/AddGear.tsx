@@ -49,7 +49,7 @@ const AddGear = () => {
     const elem = event.currentTarget as HTMLElement
     const boardId = elem && parseInt(elem.dataset?.pedalId || '', 10)
 
-    // deleteMutation.mutate({ board_id: boardId })
+    boardDeleteMutation.mutate({ board_id: boardId })
   }
 
   useEffect(() => {

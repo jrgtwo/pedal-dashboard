@@ -19,7 +19,7 @@ const GearBreadcrumbs = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className={" text-2xl font-heading"}>Pedals</BreadcrumbPage>
+          <BreadcrumbPage className={" text-2xl font-heading"}>All Gear</BreadcrumbPage>
         </BreadcrumbItem>
         {/* <BreadcrumbSeparator />
         <BreadcrumbItem>
