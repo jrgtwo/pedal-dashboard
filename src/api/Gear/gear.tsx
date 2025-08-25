@@ -64,6 +64,19 @@ class Gear {
     return { data, error }
   }
 
+  updateUserBoard = async ({ id, notes, title }: { id: number, notes?: string, title?: string }) => {
+    const toUpdate = {}
+    if (notes) toUpdate.notes = { plain: notes }
+    if (title) toUpdate.title = title
+
+    const { data, error } = await this.db
+      .from('user_boards')
+      .update(toUpdate)
+      .eq('id', id)
+      .select()
+    return { data, error }
+  }
+
   deleteUserPedal = async ({ pedal_id }: { pedal_id: number }) => {
     const deleteRes = await this.db
       .from('user_pedals')
@@ -99,6 +112,15 @@ class Gear {
       .from('user_pedals')
       .select(`id, notes, title, pedal_id, pedals(id, name, img, type, mfg, description)`)
       .eq('id', userPedalId)
+
+    return { data, error }
+  }
+
+  getMyBoardById = async ({ userBoardId }: { userBoardId: number }) => {
+    const { data, error } = await this.db
+      .from('user_boards')
+      .select(`id, notes, title, board_id, boards(id, name, img, mfg, description)`)
+      .eq('id', userBoardId)
 
     return { data, error }
   }

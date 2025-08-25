@@ -2,6 +2,7 @@ const ROUTES = {
   MY_BOARDS: '/my-boards',
   MY_GEAR: '/my-gear',
   MY_GEAR_PEDALS: '/my-gear/pedals/:userPedalId/:pedalId/:name',
+  MY_GEAR_BOARDS: '/my-gear/boards/:userBoardId/:boardId/:name',
   ADD_GEAR: '/my-gear/add-gear',
   HOME: '/',
   CREATE: '/create',
