@@ -1,5 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 
+type Notes = { notes?: { plain: string }, title?: string }
+
 class Gear {
   db
 
@@ -52,7 +54,7 @@ class Gear {
   }
 
   updateUserPedal = async ({ id, notes, title }: { id: number, notes?: string, title?: string }) => {
-    const toUpdate = {}
+    const toUpdate: Notes = {}
     if (notes) toUpdate.notes = { plain: notes }
     if (title) toUpdate.title = title
 
@@ -65,7 +67,7 @@ class Gear {
   }
 
   updateUserBoard = async ({ id, notes, title }: { id: number, notes?: string, title?: string }) => {
-    const toUpdate = {}
+    const toUpdate: Notes = {}
     if (notes) toUpdate.notes = { plain: notes }
     if (title) toUpdate.title = title
 
