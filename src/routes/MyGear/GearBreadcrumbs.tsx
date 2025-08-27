@@ -8,7 +8,25 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router";
 
-const GearBreadcrumbs = () => {
+export enum crumbOptions {
+  all = 'all',
+  boards = 'boards',
+  pedals = 'pedals',
+}
+const crumbText = {
+  all: 'All Gear',
+  boards: 'Boards',
+  pedals: 'Pedals',
+}
+
+const crumbComponents = {
+  all: <BreadcrumbPage className={" text-2xl font-heading"}>{crumbText[crumbOptions.all]}</BreadcrumbPage>,
+  boards: <BreadcrumbPage className={" text-2xl font-heading"}>{crumbText[crumbOptions.boards]}</BreadcrumbPage>,
+  pedals: <BreadcrumbPage className={" text-2xl font-heading"}>{crumbText[crumbOptions.pedals]}</BreadcrumbPage>,
+}
+
+const GearBreadcrumbs = ({ crumb }: { crumb?: keyof typeof crumbOptions }) => {
+
   return (
     <Breadcrumb>
       <BreadcrumbList className={"flex flex-row gap-2 items-center justify-start "}>
@@ -18,13 +36,11 @@ const GearBreadcrumbs = () => {
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage className={" text-2xl font-heading"}>All Gear</BreadcrumbPage>
-        </BreadcrumbItem>
-        {/* <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Pedal Details</BreadcrumbPage>
-        </BreadcrumbItem> */}
+        {
+          crumb && crumbComponents?.[crumb]
+            ? crumbComponents?.[crumb]
+            : crumbComponents.all
+        }
       </BreadcrumbList>
     </Breadcrumb>
   );

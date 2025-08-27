@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useEffect } from "react"
 import { MyGearDisplay } from "../MyGearDisplay"
+import { GearBreadcrumbs, crumbOptions } from "../GearBreadcrumbs"
 
 const MyBoard = () => {
   const { userBoardId } = useParams<{
@@ -31,6 +32,7 @@ const MyBoard = () => {
 
   return (
     <div>
+      <GearBreadcrumbs crumb={crumbOptions.boards} />
       <h2 className="text-4xl font-heading py-4">My Board</h2>
       <Separator />
 

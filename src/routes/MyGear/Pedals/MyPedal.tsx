@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useEffect } from "react"
 import { MyGearDisplay } from "../MyGearDisplay"
+import { GearBreadcrumbs, crumbOptions } from "../GearBreadcrumbs"
 
 const MyPedal = () => {
   const { userPedalId } = useParams<{
@@ -31,6 +32,7 @@ const MyPedal = () => {
 
   return (
     <div>
+      <GearBreadcrumbs crumb={crumbOptions.pedals} />
       <h2 className="text-4xl font-heading py-4">My Pedal</h2>
       <Separator />
 
