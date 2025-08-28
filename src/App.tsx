@@ -50,13 +50,13 @@ function App() {
                 </ProtectedRoute>
               } />
             <Route
-              path={ROUTES.MY_GEAR_PEDALS} element={
+              path={ROUTES.MY_GEAR_PEDALS_BY_ID} element={
                 <ProtectedRoute>
                   <MyPedal />
                 </ProtectedRoute>
               } />
             <Route
-              path={ROUTES.MY_GEAR_BOARDS} element={
+              path={ROUTES.MY_GEAR_BOARDS_BY_ID} element={
                 <ProtectedRoute>
                   <MyBoard />
                 </ProtectedRoute>
