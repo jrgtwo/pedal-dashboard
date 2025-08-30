@@ -2,8 +2,8 @@ import { Separator } from "@/components/ui/separator"
 import { AddGear } from "./AddGear"
 import { GearBreadcrumbs } from "./GearBreadcrumbs"
 
-import { MyGearPedals } from "./MyGearPedals"
-import { MyGearBoards } from "./MyGearBoards"
+import { MyGearPedalsList } from "./MyGearPedalsList"
+import { MyGearBoardsList } from "./MyGearBoardsList"
 
 const MyGear = () => {
 
@@ -16,10 +16,10 @@ const MyGear = () => {
       <Separator />
       <div className="flex flex-col mx-auto w-full justify-items-center">
         <h2 className="text-4xl font-heading mt-4 px-8">Pedals</h2>
-        <MyGearPedals />
+        <MyGearPedalsList />
         <Separator className="my-8" />
         <h2 className="text-4xl font-heading mt-4 px-8">Boards</h2>
-        <MyGearBoards />
+        <MyGearBoardsList />
       </div>
     </>
   )

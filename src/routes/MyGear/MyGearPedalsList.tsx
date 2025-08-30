@@ -3,7 +3,7 @@ import { Link } from "react-router"
 import { useGetMyPedals } from "@/queryHooks/myGear/useGetMyPedals"
 import { Badge } from "@/components/ui/badge"
 
-const MyGearPedals = () => {
+const MyGearPedalsList = () => {
   const { isLoading, isSuccess, data } = useGetMyPedals()
 
   if (isLoading) return <h2>...Loading</h2>
@@ -38,4 +38,4 @@ const MyGearPedals = () => {
   )
 }
 
-export { MyGearPedals }
+export { MyGearPedalsList }

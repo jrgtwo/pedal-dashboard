@@ -17,8 +17,8 @@ import { MyBoard } from './routes/MyGear/Boards/MyBoard'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
-import { MyGearPedals } from './routes/MyGear/MyGearPedals'
-import { MyGearBoards } from './routes/MyGear/MyGearBoards'
+import { MyGearPedalsList } from './routes/MyGear/MyGearPedalsList'
+import { MyGearBoardsList } from './routes/MyGear/MyGearBoardsList'
 
 function App() {
   useGetSession()
@@ -54,13 +54,13 @@ function App() {
             <Route
               path={ROUTES.MY_GEAR_PEDALS} element={
                 <ProtectedRoute>
-                  <MyGearPedals />
+                  <MyGearPedalsList />
                 </ProtectedRoute>
               } />
             <Route
               path={ROUTES.MY_GEAR_BOARDS} element={
                 <ProtectedRoute>
-                  <MyGearBoards />
+                  <MyGearBoardsList />
                 </ProtectedRoute>
               } />
             <Route

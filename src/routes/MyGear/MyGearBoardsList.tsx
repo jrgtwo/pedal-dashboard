@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { Link } from "react-router"
 import { useGetMyBoards } from "@/queryHooks/myGear/useGetMyBoards"
 
-const MyGearBoards = () => {
+const MyGearBoardsList = () => {
   const { isLoading, isSuccess, data } = useGetMyBoards()
 
   if (isLoading) return <h2>...Loading</h2>
@@ -32,4 +32,4 @@ const MyGearBoards = () => {
   )
 }
 
-export { MyGearBoards }
+export { MyGearBoardsList }
