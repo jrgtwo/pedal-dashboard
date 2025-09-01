@@ -1,4 +1,3 @@
-import { useParams } from "react-router"
 import { useGetMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { useSaveMyPedal } from "../../../queryHooks/myGear/pedals/useGetMyPedal"
 import { PedalShape } from "@/routes/Create/components/PedalBoardSandBox/components/Pedal/Pedal.types"
@@ -6,12 +5,9 @@ import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useEffect } from "react"
 import { MyGearDisplay } from "../MyGearDisplay"
-import { GearBreadcrumbs, crumbOptions } from "../GearBreadcrumbs"
 
-const MyPedal = () => {
-  const { userPedalId } = useParams<{
-    userPedalId: string
-  }>()
+const MyPedal = ({ userGearId: userPedalId }: { userGearId: string | undefined, gearId?: string, name?: string }) => {
+
   const mutation = useSaveMyPedal()
 
   const onSubmitSaveNotes = (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +28,6 @@ const MyPedal = () => {
 
   return (
     <div>
-      <GearBreadcrumbs crumb={crumbOptions.pedals} />
       <h2 className="text-4xl font-heading py-4">My Pedal</h2>
       <Separator />
 

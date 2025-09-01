@@ -25,7 +25,8 @@ const crumbComponents = {
   pedals: <BreadcrumbPage className={" text-2xl font-heading"}>{crumbText[crumbOptions.pedals]}</BreadcrumbPage>,
 }
 
-const GearBreadcrumbs = ({ crumb }: { crumb?: keyof typeof crumbOptions }) => {
+const GearBreadcrumbs = ({ page, subpage }: { page?: crumbOptions | undefined, subpage?: string }) => {
+  const pageLink = page && page !== crumbOptions.all ? `/my-gear/${page}` : '/my-gear'
 
   return (
     <Breadcrumb>
@@ -36,11 +37,17 @@ const GearBreadcrumbs = ({ crumb }: { crumb?: keyof typeof crumbOptions }) => {
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
-        {
-          crumb && crumbComponents?.[crumb]
-            ? crumbComponents?.[crumb]
-            : crumbComponents.all
-        }
+        <BreadcrumbPage className={" text-2xl font-heading"}>
+          <BreadcrumbLink asChild>
+            <Link to={pageLink} className={" text-2xl font-heading"}>
+              {
+                page
+                  ? crumbComponents?.[page]
+                  : crumbComponents.all
+              }
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbPage>
       </BreadcrumbList>
     </Breadcrumb>
   );

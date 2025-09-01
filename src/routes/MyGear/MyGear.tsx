@@ -8,7 +8,6 @@ const MyGear = () => {
 
   return (
     <>
-
       <Separator />
       <div className="flex flex-col mx-auto w-full justify-items-center">
         <h2 className="text-4xl font-heading mt-4 px-8">Pedals</h2>

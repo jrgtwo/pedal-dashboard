@@ -1,16 +1,11 @@
-import { useParams } from "react-router"
 import { useGetMyBoard, useSaveMyBoard } from "../../../queryHooks/myGear/boards/useGetMyBoard"
-// import { BoardShape } from "@/routes/Create/components/PedalBoardSandBox/components/Board/Board.types"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useEffect } from "react"
 import { MyGearDisplay } from "../MyGearDisplay"
-import { GearBreadcrumbs, crumbOptions } from "../GearBreadcrumbs"
 
-const MyBoard = () => {
-  const { userBoardId } = useParams<{
-    userBoardId: string
-  }>()
+const MyBoard = ({ userGearId: userBoardId }: { userGearId: string | undefined, gearId?: string, name?: string }) => {
+
   const mutation = useSaveMyBoard()
 
   const onSubmitSaveNotes = (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +27,6 @@ const MyBoard = () => {
 
   return (
     <div>
-      <GearBreadcrumbs crumb={crumbOptions.boards} />
       <h2 className="text-4xl font-heading py-4">My Board</h2>
       <Separator />
 

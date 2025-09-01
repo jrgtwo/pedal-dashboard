@@ -12,17 +12,12 @@ import { MyGear } from './routes/MyGear/MyGear'
 import { AddGear } from './routes/MyGear/AddGear'
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from './components/ui/separator'
-import { MyPedal } from './routes/MyGear/Pedals/MyPedal'
-import { MyBoard } from './routes/MyGear/Boards/MyBoard'
+import { MyGearById } from './routes/MyGear/MyGearById'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
 import { MyGearLayout } from './routes/MyGear/MyGearLayout'
-
-import { MyGearBoards } from './routes/MyGear/Boards/MyGearBoards'
-
-import { MyGearPedalsList } from './routes/MyGear/MyGearPedalsList'
-
+import { MyGearByType } from './routes/MyGear/MyGearByType'
 
 function App() {
   useGetSession()
@@ -44,81 +39,55 @@ function App() {
                 <Home />
               } />
             <Route element={<MyGearLayout />}>
-              <Route
-                path={ROUTES.MY_BOARDS} element={
-                  <ProtectedRoute>
-                    <MyBoards />
-                  </ProtectedRoute>
-                } />
-              <Route
-                path={ROUTES.MY_GEAR} element={
-                  <ProtectedRoute>
-                    <MyGear />
-                  </ProtectedRoute>
-                } />
-              <Route
-                path={ROUTES.MY_GEAR_PEDALS} element={
-                  <ProtectedRoute>
-                    <MyGearPedalsList />
-                  </ProtectedRoute>
-                } />
-              <Route
-                path={ROUTES.MY_GEAR_BOARDS} element={
-                  <ProtectedRoute>
-                    <MyGearBoards />
-                  </ProtectedRoute>
-                } />
-              <Route
-                path={ROUTES.MY_GEAR_PEDALS_BY_ID} element={
-                  <ProtectedRoute>
-                    <MyPedal />
-                  </ProtectedRoute>
-                } />
-              <Route
-                path={ROUTES.MY_GEAR_BOARDS_BY_ID} element={
-                  <ProtectedRoute>
-                    <MyBoard />
-                  </ProtectedRoute>
-                } />
-            </Route>
-            <Route
-              path={ROUTES.ADD_GEAR} element={
+              <Route path={ROUTES.MY_BOARDS} element={
                 <ProtectedRoute>
-                  <AddGear />
+                  <MyBoards />
                 </ProtectedRoute>
               } />
-            <Route
-              path={ROUTES.CREATE}
+              <Route path={ROUTES.MY_GEAR} element={
+                <ProtectedRoute>
+                  <MyGear />
+                </ProtectedRoute>
+              } />
+              <Route path={ROUTES.MY_GEAR_BY_TYPE} element={
+                <ProtectedRoute>
+                  <MyGearByType />
+                </ProtectedRoute>
+              } />
+              <Route path={ROUTES.MY_GEAR_BY_TYPE_BY_ID} element={
+                <ProtectedRoute>
+                  <MyGearById />
+                </ProtectedRoute>
+              } />
+            </Route>
+            <Route path={ROUTES.ADD_GEAR} element={
+              <ProtectedRoute>
+                <AddGear />
+              </ProtectedRoute>
+            } />
+            <Route path={ROUTES.CREATE}
               element={
                 <Create />
               } />
-            <Route
-              path={ROUTES.CREATE_BY_BOARD_ID}
+            <Route path={ROUTES.CREATE_BY_BOARD_ID}
               element={
                 <ProtectedRoute>
                   <Create />
                 </ProtectedRoute>
               } />
-            <Route
-              path={ROUTES.ABOUT} element={
-                <About />
-              } />
+            <Route path={ROUTES.ABOUT} element={
+              <About />
+            } />
 
-            <Route
-              path={ROUTES.LOGIN}
-              element={
-                <Login />
-              } />
-            <Route
-              path={ROUTES.LOGOUT}
-              element={
-                <Logout />
-              } />
-            <Route
-              path={ROUTES.REGISTER}
-              element={
-                <Register />
-              } />
+            <Route path={ROUTES.LOGIN} element={
+              <Login />
+            } />
+            <Route path={ROUTES.LOGOUT} element={
+              <Logout />
+            } />
+            <Route path={ROUTES.REGISTER} element={
+              <Register />
+            } />
           </Routes>
         </section>
         <Footer />
