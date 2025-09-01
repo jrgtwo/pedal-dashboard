@@ -1,18 +1,14 @@
 import { Separator } from "@/components/ui/separator"
-import { AddGear } from "./AddGear"
-import { GearBreadcrumbs } from "./GearBreadcrumbs"
 
-import { MyGearPedalsList } from "./MyGearPedalsList"
-import { MyGearBoardsList } from "./MyGearBoardsList"
+
+import { MyGearPedalsList } from "./MyGearPedalsList.tsx"
+import { MyGearBoardsList } from "./MyGearBoardsList.tsx"
 
 const MyGear = () => {
 
   return (
     <>
-      <section className="flex gap-16 mt-4 mb-4">
-        <GearBreadcrumbs />
-        <AddGear />
-      </section>
+
       <Separator />
       <div className="flex flex-col mx-auto w-full justify-items-center">
         <h2 className="text-4xl font-heading mt-4 px-8">Pedals</h2>

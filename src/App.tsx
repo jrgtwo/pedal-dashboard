@@ -17,11 +17,11 @@ import { MyBoard } from './routes/MyGear/Boards/MyBoard'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { ROUTES } from './constants/routes'
 import { useGetSession } from './queryHooks/auth/useGetSession'
+import { MyGearLayout } from './routes/MyGear/MyGearLayout'
 
 import { MyGearBoards } from './routes/MyGear/Boards/MyGearBoards'
 
 import { MyGearPedalsList } from './routes/MyGear/MyGearPedalsList'
-
 
 
 function App() {
@@ -43,42 +43,44 @@ function App() {
               element={
                 <Home />
               } />
-            <Route
-              path={ROUTES.MY_BOARDS} element={
-                <ProtectedRoute>
-                  <MyBoards />
-                </ProtectedRoute>
-              } />
-            <Route
-              path={ROUTES.MY_GEAR} element={
-                <ProtectedRoute>
-                  <MyGear />
-                </ProtectedRoute>
-              } />
-            <Route
-              path={ROUTES.MY_GEAR_PEDALS} element={
-                <ProtectedRoute>
-                  <MyGearPedalsList />
-                </ProtectedRoute>
-              } />
-            <Route
-              path={ROUTES.MY_GEAR_BOARDS} element={
-                <ProtectedRoute>
-                  <MyGearBoards />
-                </ProtectedRoute>
-              } />
-            <Route
-              path={ROUTES.MY_GEAR_PEDALS_BY_ID} element={
-                <ProtectedRoute>
-                  <MyPedal />
-                </ProtectedRoute>
-              } />
-            <Route
-              path={ROUTES.MY_GEAR_BOARDS_BY_ID} element={
-                <ProtectedRoute>
-                  <MyBoard />
-                </ProtectedRoute>
-              } />
+            <Route element={<MyGearLayout />}>
+              <Route
+                path={ROUTES.MY_BOARDS} element={
+                  <ProtectedRoute>
+                    <MyBoards />
+                  </ProtectedRoute>
+                } />
+              <Route
+                path={ROUTES.MY_GEAR} element={
+                  <ProtectedRoute>
+                    <MyGear />
+                  </ProtectedRoute>
+                } />
+              <Route
+                path={ROUTES.MY_GEAR_PEDALS} element={
+                  <ProtectedRoute>
+                    <MyGearPedalsList />
+                  </ProtectedRoute>
+                } />
+              <Route
+                path={ROUTES.MY_GEAR_BOARDS} element={
+                  <ProtectedRoute>
+                    <MyGearBoards />
+                  </ProtectedRoute>
+                } />
+              <Route
+                path={ROUTES.MY_GEAR_PEDALS_BY_ID} element={
+                  <ProtectedRoute>
+                    <MyPedal />
+                  </ProtectedRoute>
+                } />
+              <Route
+                path={ROUTES.MY_GEAR_BOARDS_BY_ID} element={
+                  <ProtectedRoute>
+                    <MyBoard />
+                  </ProtectedRoute>
+                } />
+            </Route>
             <Route
               path={ROUTES.ADD_GEAR} element={
                 <ProtectedRoute>
