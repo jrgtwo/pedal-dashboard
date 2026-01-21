@@ -14,7 +14,7 @@ const MyGearByType = () => {
 
   return (
     <section>
-      <h2>My Boards</h2>
+      <h2>My {params?.type}</h2>
       {PageComponent?.()}
     </section>
   )

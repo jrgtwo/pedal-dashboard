@@ -7,35 +7,37 @@ import { Button } from "@/components/ui/button"
 type MyGearDisplayProps = {
   data?: Record<string, any>
   onSubmitSaveNotes?: (event: React.FormEvent<HTMLFormElement>) => void
+  gearType?: 'pedals' | 'boards'
 }
 
 const MyGearDisplay = ({
-  data = {}, onSubmitSaveNotes = () => { }
+  data = {}, onSubmitSaveNotes = () => { }, gearType = 'pedals'
 }: MyGearDisplayProps) => {
+  debugger
   return (
     <div className="mt-8 px-8">
       <div className="flex flex-row gap-8 justify-center">
         <img
-          src={`/src/assets/${data?.pedals?.img}`}
-          alt={data?.pedals?.name}
+          src={`/src/assets/${data?.[gearType]?.img}`}
+          alt={data?.[gearType]?.name}
           width={250}
 
           className="min-w-[250px] h-max drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)] "
         />
         <section>
           <div className="flex flex-row justify-start items-baseline gap-2">
-            <h3 className="text-2xl font-heading">{data?.pedals?.name}</h3>
-            <h3>{data?.pedals?.mfg}</h3>
+            <h3 className="text-2xl font-heading">{data?.[gearType]?.name}</h3>
+            <h3>{data?.[gearType]?.mfg}</h3>
           </div>
           <div className="flex flex-row gap-2 flex-wrap">
-            {data?.pedals?.type?.map((type, index) => {
+            {data?.[gearType]?.type?.map((type, index) => {
               return <Badge key={type}>{type}</Badge>
             })}
           </div>
-          {data?.pedals?.description && (
+          {data?.[gearType]?.description && (
             <>
               <Separator className="my-4" />
-              <p className="mt-4">{data?.pedals?.description}</p>
+              <p className="mt-4">{data?.[gearType]?.description}</p>
               <Separator className="my-4" />
             </>
           )}

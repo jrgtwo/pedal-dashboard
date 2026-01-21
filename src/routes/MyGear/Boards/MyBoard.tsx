@@ -22,8 +22,7 @@ const MyBoard = ({ userGearId: userBoardId }: { userGearId: string | undefined, 
   }, [mutation.isSuccess])
 
   const { isLoading, isSuccess, isError, data } = useGetMyBoard(Number(userBoardId))
-  // const boardData = data?.data?.[0]?.boards as BoardShape | undefined
-  const boardData = data?.data?.[0]?.boards
+  const boardData = data?.data?.[0]
 
   return (
     <div>
@@ -34,7 +33,7 @@ const MyBoard = ({ userGearId: userBoardId }: { userGearId: string | undefined, 
       {isError && <p>Error loading board data.</p>}
 
       {isSuccess && data && (
-        <MyGearDisplay data={boardData} onSubmitSaveNotes={onSubmitSaveNotes} />
+        <MyGearDisplay data={boardData} onSubmitSaveNotes={onSubmitSaveNotes} gearType="boards" />
       )}
     </div >
   )
