@@ -24,7 +24,7 @@ const MyPedal = ({ userGearId: userPedalId }: { userGearId: string | undefined, 
   }, [mutation.isSuccess])
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
-  const pedalData = data?.data?.[0]?.pedals as PedalShape | undefined
+  const pedalInfo = data?.data?.[0]
 
   return (
     <div>
@@ -35,7 +35,7 @@ const MyPedal = ({ userGearId: userPedalId }: { userGearId: string | undefined, 
       {isError && <p>Error loading pedal data.</p>}
 
       {isSuccess && data && (
-        <MyGearDisplay data={pedalData} onSubmitSaveNotes={onSubmitSaveNotes} />
+        <MyGearDisplay data={pedalInfo} onSubmitSaveNotes={onSubmitSaveNotes} />
       )}
     </div >
   )
