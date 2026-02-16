@@ -3,9 +3,29 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 
+type MyGearDisplayData = {
+  pedals?: {
+    name: string
+    img: string
+    type: string[]
+    mfg: string
+    description?: string
+  }
+  boards?: {
+    name: string
+    img: string
+    type: string[]
+    mfg: string
+    description?: string
+  }
+  notes?: {
+    plain: string
+  }
+}
+
 // TODO: Define proper types
 type MyGearDisplayProps = {
-  data?: Record<string, any>
+  data?: MyGearDisplayData
   onSubmitSaveNotes?: (event: React.FormEvent<HTMLFormElement>) => void
   gearType?: 'pedals' | 'boards'
 }
@@ -13,7 +33,6 @@ type MyGearDisplayProps = {
 const MyGearDisplay = ({
   data = {}, onSubmitSaveNotes = () => { }, gearType = 'pedals'
 }: MyGearDisplayProps) => {
-  debugger
   return (
     <div className="mt-8 px-8">
       <div className="flex flex-row gap-8 justify-center">
@@ -30,7 +49,7 @@ const MyGearDisplay = ({
             <h3>{data?.[gearType]?.mfg}</h3>
           </div>
           <div className="flex flex-row gap-2 flex-wrap">
-            {data?.[gearType]?.type?.map((type, index) => {
+            {data?.[gearType]?.type?.map((type) => {
               return <Badge key={type}>{type}</Badge>
             })}
           </div>

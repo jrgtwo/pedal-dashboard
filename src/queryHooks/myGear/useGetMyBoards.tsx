@@ -1,10 +1,11 @@
 import { API } from "../../api/api"
 import { useQuery } from "@tanstack/react-query"
+import { QueryKeys } from "../queryKeys"
 
 const useGetMyBoards = () => {
 
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
-    queryKey: ['myBoards'],
+    queryKey: QueryKeys.myBoard.all,
     queryFn: API.gear.getMyBoards
   })
 

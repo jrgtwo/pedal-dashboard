@@ -1,9 +1,10 @@
 import { API } from "../../api/api"
 import { useQuery } from "@tanstack/react-query"
+import { QueryKeys } from "../queryKeys"
 
 const useGetMyGear = () => {
   const { isLoading, isSuccess, isError, data } = useQuery({
-    queryKey: ['myGear'],
+    queryKey: QueryKeys.myGear.all,
     queryFn: API.gear.getMyGear
   })
 

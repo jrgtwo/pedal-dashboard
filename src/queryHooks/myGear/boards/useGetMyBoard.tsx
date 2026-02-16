@@ -1,9 +1,10 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { API } from '../../../api/api';
+import { QueryKeys } from '../../../queryHooks/queryKeys';
 
 const useGetMyBoard = (userBoardId: number) => {
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
-    queryKey: ['myBoard', userBoardId],
+    queryKey: QueryKeys.myBoard.byId(userBoardId),
     queryFn: () => API.gear.getMyBoardById({ userBoardId })
   })
 

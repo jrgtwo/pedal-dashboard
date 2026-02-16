@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { API } from '../../api/api'
 import { LOGIN_STATES, useLoginStore } from '../../store/login'
+import { QueryKeys } from '../queryKeys'
 
 const useGetSession = () => {
   const setLoginStatus = useLoginStore((state) => state.setLoginStatus)
@@ -10,7 +11,8 @@ const useGetSession = () => {
   const {
     isLoading, isSuccess, data, error
   } = useQuery({
-    queryKey: ['session'], queryFn: API.auth.getSession
+    queryKey: QueryKeys.session.all,
+    queryFn: API.auth.getSession
   })
   if (error) {
     // TODO: handle error more gracefully

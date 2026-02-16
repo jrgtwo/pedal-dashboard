@@ -1,9 +1,10 @@
 import { API } from "../../api/api"
 import { useQuery } from "@tanstack/react-query"
+import { QueryKeys } from "../../queryHooks/queryKeys"
 
 const useGetBoardById = (boardId: number) => {
   const query = useQuery({
-    queryKey: ['myPedalBoards', boardId],
+    queryKey: QueryKeys.myPedalBoards.byId(boardId),
     queryFn: () => API.pedalBoard.getBoardById(boardId),
     enabled: !!boardId,
     refetchOnWindowFocus: false,

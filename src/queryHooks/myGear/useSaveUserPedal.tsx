@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query"
 import { API } from "@/api/api"
+import { QueryKeys } from "../queryKeys"
 
 const useSaveUserPedal = () => {
   const mutation = useMutation({
-    mutationKey: ['myPedals'],
+    mutationKey: QueryKeys.myPedals.all,
     mutationFn: API.gear.saveUserPedal
   })
 

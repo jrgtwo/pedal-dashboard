@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { API } from '../../api/api'
+import { QueryKeys } from '../../queryHooks/queryKeys'
 
 function useGetBoards() {
   const {
     isLoading, isSuccess, data, isError
   } = useQuery({
-    queryKey: ['myPedalBoards'], queryFn: API.pedalBoard.getUserBoards
+    queryKey: QueryKeys.myPedalBoards.all,
+    queryFn: API.pedalBoard.getUserBoards
   })
 
 
