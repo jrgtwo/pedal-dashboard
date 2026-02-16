@@ -1,14 +1,25 @@
 import { useMutation } from "@tanstack/react-query"
 import { API } from "@/api/api"
 import { QueryKeys } from "../queryKeys"
+import { useQueryClient } from "@tanstack/react-query"
 
-const useSaveUserPedal = () => {
-  const mutation = useMutation({
-    mutationKey: QueryKeys.myPedals.all,
-    mutationFn: API.gear.saveUserPedal
-  })
+// const useSaveUserPedal = () => {
+//   const mutation = useMutation({
+//     mutationKey: QueryKeys.myPedals.all,
+//     mutationFn: API.gear.saveUserPedal
+//   })
 
-  return mutation
+//   return mutation
+// }
+
+function useSaveUserPedal() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: API.gear.saveUserPedal,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QueryKeys.myPedals.all });
+    },
+  });
 }
 
 const useDeleteUserPedal = () => {
