@@ -23,7 +23,6 @@ export const useToSave = () => {
   useEffect(() => {
     if (mutation.isSuccess) {
       toast('Board saved successfully!')
-      queryClient.invalidateQueries({ queryKey: ['myPedalBoards', boardId] })
     }
   }, [mutation.isSuccess, boardId, queryClient])
 
