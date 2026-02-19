@@ -6,10 +6,11 @@ const useGetMyPedals = () => {
 
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
     queryKey: QueryKeys.myPedals.all,
-    queryFn: API.gear.getMyPedals
+    queryFn: API.gear.getMyPedals,
+    select: (res) => res.data,
   })
 
-  return { isLoading, isSuccess, isError, data: data?.data, status, refetch }
+  return { isLoading, isSuccess, isError, data, status, refetch }
 }
 
 export { useGetMyPedals }
