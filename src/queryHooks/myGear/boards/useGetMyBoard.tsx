@@ -5,7 +5,8 @@ import { QueryKeys } from '../../../queryHooks/queryKeys';
 const useGetMyBoard = (userBoardId: number) => {
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
     queryKey: QueryKeys.myBoard.byId(userBoardId),
-    queryFn: () => API.gear.getMyBoardById({ userBoardId })
+    queryFn: () => API.gear.getMyBoardById({ userBoardId }),
+    enabled: !!userBoardId
   })
 
   return { isLoading, isSuccess, isError, data, status, refetch }

@@ -5,7 +5,8 @@ import { QueryKeys } from '../../../queryHooks/queryKeys';
 const useGetMyPedal = (userPedalId: number) => {
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
     queryKey: QueryKeys.myPedal.byId(userPedalId),
-    queryFn: () => API.gear.getMyPedalById({ userPedalId })
+    queryFn: () => API.gear.getMyPedalById({ userPedalId }),
+    enabled: !!userPedalId
   })
 
   return { isLoading, isSuccess, isError, data, status, refetch }
