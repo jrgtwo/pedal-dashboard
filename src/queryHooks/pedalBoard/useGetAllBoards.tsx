@@ -11,7 +11,7 @@ const useGetAllBoards = () => {
     queryFn: API.pedalBoard.getAllBoards
   })
 
-  return { isLoading, isSuccess, isError, boardList: data?.data, error: data?.error }
+  return { isLoading, isSuccess, isError, boardList: data }
 }
 
 export { useGetAllBoards }

@@ -11,7 +11,7 @@ const useGetAllPedals = () => {
     queryFn: API.pedalBoard.getAllPedals
   })
 
-  return { isLoading, isSuccess, isError, pedalList: data?.data, error: data?.error }
+  return { isLoading, isSuccess, isError, pedalList: data }
 }
 
 export { useGetAllPedals }

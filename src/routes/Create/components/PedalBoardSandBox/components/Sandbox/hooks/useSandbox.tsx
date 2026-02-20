@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, use } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router'
 import type { DraggablePedalShape } from '../../Pedal/Pedal.types'
 import { usePedalStore } from '../store/pedal'
@@ -21,9 +21,9 @@ const useSandbox = () => {
     if (query.isSuccess && !hasSetInitial) {
       setHasSetInitial(true)
       updateFromFetch({
-        id: query.data?.data?.[0].id,
-        pedals: JSON.parse(query.data?.data?.[0]?.board),
-        name: query.data?.data?.[0].name
+        id: query.data?.[0].id,
+        pedals: JSON.parse(query.data?.[0]?.board as string ?? '{}'),
+        name: query.data?.[0].name
       })
     }
   }, [hasSetInitial, query.isSuccess, query.data, updateFromFetch])

@@ -8,7 +8,7 @@ const useSaveBoard = () => {
   const mutation = useMutation({
     mutationFn: API.pedalBoard.saveBoard,
     onSuccess: (data) => {
-      const boardId = data?.data?.[0]?.id;
+      const boardId = data?.[0]?.id;
       if (!boardId) return;
       queryClient.invalidateQueries({ queryKey: QueryKeys.myPedalBoards.byId(boardId) })
     },

@@ -11,7 +11,7 @@ function useGetBoards() {
   })
 
 
-  return { isLoading, isSuccess, isError, boards: data?.data, error: data?.error }
+  return { isLoading, isSuccess, isError, boards: data }
 }
 
 export { useGetBoards }
