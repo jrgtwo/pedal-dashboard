@@ -6,11 +6,10 @@ const useGetMyBoards = () => {
 
   const { isLoading, isSuccess, isError, data, status, refetch } = useQuery({
     queryKey: QueryKeys.myBoard.all,
-    queryFn: API.gear.getMyBoards,
-    select: (res) => res.data,
+    queryFn: API.gear.getMyBoards
   })
 
-  return { isLoading, isSuccess, isError, data: data, status, refetch }
+  return { isLoading, isSuccess, isError, data, status, refetch }
 }
 
 export { useGetMyBoards }

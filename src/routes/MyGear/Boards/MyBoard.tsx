@@ -22,7 +22,7 @@ const MyBoard = ({ userGearId: userBoardId }: { userGearId: string | undefined, 
   }, [mutation.isSuccess])
 
   const { isLoading, isSuccess, isError, data } = useGetMyBoard(Number(userBoardId))
-  const boardData = data?.data?.[0]
+  const boardData = data?.[0]
 
   return (
     <div>

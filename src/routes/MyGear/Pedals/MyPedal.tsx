@@ -24,7 +24,7 @@ const MyPedal = ({ userGearId: userPedalId }: { userGearId: string | undefined, 
   }, [mutation.isSuccess])
 
   const { isLoading, isSuccess, isError, data } = useGetMyPedal(Number(userPedalId))
-  const pedalInfo = data?.data?.[0]
+  const pedalInfo = data?.[0]
 
   return (
     <div>

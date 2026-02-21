@@ -18,7 +18,7 @@ const AddGear = () => {
   } = useAddGear();
 
   if (isError)
-    return <h2>...Error!, {JSON.stringify(data?.error || {})}</h2>
+    return <h2>...Error!, {JSON.stringify(data || {})}</h2>
 
   if (!isSuccess || isLoading || !data || data.length === 0) {
     return <h2>No Pedals Found</h2>
