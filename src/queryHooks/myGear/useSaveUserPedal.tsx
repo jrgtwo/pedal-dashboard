@@ -14,8 +14,12 @@ function useSaveUserPedal() {
 }
 
 const useDeleteUserPedal = () => {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: API.gear.deleteUserPedal
+    mutationFn: API.gear.deleteUserPedal,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QueryKeys.myPedals.all });
+    },
   })
 
   return mutation
