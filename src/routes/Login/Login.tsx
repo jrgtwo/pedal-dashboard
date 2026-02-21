@@ -17,8 +17,8 @@ const Login = () => {
 
   }, [mutation, email, password]);
 
-  if (mutation?.isSuccess && mutation?.data?.data?.session?.user) {
-    setLoginStatus(mutation.data.data.user)
+  if (mutation?.isSuccess && mutation?.data?.session?.user) {
+    setLoginStatus(mutation.data.user)
     navigate('/')
   }
 

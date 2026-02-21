@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
+import { throwOnError } from "../helpers"
 
 class Auth {
   db
@@ -8,7 +9,7 @@ class Auth {
 
   getSession = async () => {
     const { data, error } = await this.db.auth.getSession()
-    return { data, error }
+    return throwOnError({ data, error })
   }
 
   login = async ({
@@ -21,13 +22,13 @@ class Auth {
       password
     })
 
-    return { data, error }
+    return throwOnError({ data, error })
   }
 
   logout = async () => {
     const { error } = await this.db.auth.signOut()
 
-    return { error }
+    return throwOnError({ error })
   }
 
   register = async ({
@@ -40,7 +41,7 @@ class Auth {
       password
     })
 
-    return { data, error }
+    return throwOnError({ data, error })
   }
 }
 export { Auth }

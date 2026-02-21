@@ -20,8 +20,8 @@ const useGetSession = () => {
   }
   useEffect(() => {
     if (user_status === LOGIN_STATES.NOT_CHECKED) {
-      if (isSuccess && data && data.data?.session?.user) {
-        setLoginStatus(data.data.session.user)
+      if (isSuccess && data && data?.session?.user) {
+        setLoginStatus(data.session.user)
       } else if (!isLoading && isSuccess) {
         setLoginStatus(null)
       }

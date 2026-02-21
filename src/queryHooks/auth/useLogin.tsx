@@ -13,9 +13,9 @@ const useAuthLogin = () => {
     console.error(mutation.error)
     return { mutation: null, setLoginStatus: null }
   }
-  if (mutation.isSuccess && mutation.data && mutation.data.data?.session?.user) {
+  if (mutation.isSuccess && mutation.data && mutation.data?.session?.user) {
 
-    setLoginStatus(mutation.data.data.session.user)
+    setLoginStatus(mutation.data.session.user)
   }
 
   return { mutation, setLoginStatus }
