@@ -39,11 +39,6 @@ function App() {
                 <Home />
               } />
             <Route element={<MyGearLayout />}>
-              <Route path={ROUTES.MY_BOARDS} element={
-                <ProtectedRoute>
-                  <MyBoards />
-                </ProtectedRoute>
-              } />
               <Route path={ROUTES.MY_GEAR} element={
                 <ProtectedRoute>
                   <MyGear />
@@ -75,6 +70,11 @@ function App() {
                   <Create />
                 </ProtectedRoute>
               } />
+            <Route path={ROUTES.MY_BOARDS} element={
+              <ProtectedRoute>
+                <MyBoards />
+              </ProtectedRoute>
+            } />
             <Route path={ROUTES.ABOUT} element={
               <About />
             } />
